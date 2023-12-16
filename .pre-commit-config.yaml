@@ -1,5 +1,0 @@
-repos:
-  - repo: https://github.com/pxldigital-s2it/internship-wordtool-2324-team2
-    rev: v4.1.0
-    hooks:
-      - id: no-commit-to-branch
