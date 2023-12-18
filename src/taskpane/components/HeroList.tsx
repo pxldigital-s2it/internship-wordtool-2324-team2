@@ -12,33 +12,33 @@ export interface HeroListProps {
 }
 
 const useStyles = makeStyles({
-  list: {
-    marginTop: "20px",
-  },
-  listItem: {
-    paddingBottom: "20px",
-    display: "flex",
-  },
   icon: {
-    marginRight: "10px",
+    marginRight: "10px"
   },
   itemText: {
-    fontSize: tokens.fontSizeBase300,
     fontColor: tokens.colorNeutralBackgroundStatic,
+    fontSize: tokens.fontSizeBase300
   },
-  welcome__main: {
-    width: "100%",
+  list: {
+    marginTop: "20px"
+  },
+  listItem: {
     display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
+    paddingBottom: "20px"
   },
   message: {
-    fontSize: tokens.fontSizeBase500,
     fontColor: tokens.colorNeutralBackgroundStatic,
+    fontSize: tokens.fontSizeBase500,
     fontWeight: tokens.fontWeightRegular,
     paddingLeft: "10px",
-    paddingRight: "10px",
+    paddingRight: "10px"
   },
+  welcome__main: {
+    alignItems: "center",
+    display: "flex",
+    flexDirection: "column",
+    width: "100%"
+  }
 });
 
 const HeroList = (props: HeroListProps) => {

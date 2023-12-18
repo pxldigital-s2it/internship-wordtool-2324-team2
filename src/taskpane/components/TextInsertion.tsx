@@ -6,21 +6,21 @@ import insertText from "../office-document";
 const useStyles = makeStyles({
   instructions: {
     fontWeight: tokens.fontWeightSemibold,
-    marginTop: "20px",
     marginBottom: "10px",
-  },
-  textPromptAndInsertion: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
+    marginTop: "20px"
   },
   textAreaField: {
-    marginLeft: "20px",
-    marginTop: "30px",
     marginBottom: "20px",
+    marginLeft: "20px",
     marginRight: "20px",
-    maxWidth: "50%",
+    marginTop: "30px",
+    maxWidth: "50%"
   },
+  textPromptAndInsertion: {
+    alignItems: "center",
+    display: "flex",
+    flexDirection: "column"
+  }
 });
 
 const TextInsertion: React.FC = () => {

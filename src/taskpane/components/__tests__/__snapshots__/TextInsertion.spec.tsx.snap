@@ -3,10 +3,10 @@
 exports[`TextInsertion Test Suite should render the TextInsertion component 1`] = `
 <div>
   <div
-    class="___1k51a3e_0000000 f22iagw f1vx9l62 f122n59"
+    class="___vu2z5u0_0000000 f122n59 f22iagw f1vx9l62"
   >
     <div
-      class="fui-Field ___1tp5ccm_8mwtfy0 f13qh94s f12lm4oi f1x6dt3l f140knbv fzaimmi f1s01aqp"
+      class="fui-Field ___12ib90y_90s7z80 f13qh94s f140knbv f12lm4oi fzaimmi f1x6dt3l f1s01aqp"
     >
       <label
         class="fui-Label fui-Field__label ___yi16cv0_1g3uqb5 fk6fouc f19n0e5 fod5ikn faaz57k fl43uef f1sl3k7w f1brlhvm f8l5zjj"
@@ -27,7 +27,7 @@ exports[`TextInsertion Test Suite should render the TextInsertion component 1`] 
       </span>
     </div>
     <div
-      class="fui-Field ___1vgken5_eqe6n20 f13qh94s fl43uef f7w72kx f1dl2k97"
+      class="fui-Field ___n4oika0_19638wr f13qh94s fl43uef f1dl2k97 f7w72kx"
     >
       Click the button to insert text.
     </div>

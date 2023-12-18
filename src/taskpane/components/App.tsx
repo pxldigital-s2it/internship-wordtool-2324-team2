@@ -11,8 +11,8 @@ interface AppProps {
 
 const useStyles = makeStyles({
   root: {
-    minHeight: "100vh",
-  },
+    minHeight: "100vh"
+  }
 });
 
 const App = (props: AppProps) => {
@@ -22,16 +22,16 @@ const App = (props: AppProps) => {
   const listItems: HeroListItem[] = [
     {
       icon: <Ribbon24Regular />,
-      primaryText: "Achieve more with Office integration",
+      primaryText: "Achieve more with Office integration"
     },
     {
       icon: <LockOpen24Regular />,
-      primaryText: "Unlock features and functionality",
+      primaryText: "Unlock features and functionality"
     },
     {
       icon: <DesignIdeas24Regular />,
-      primaryText: "Create and visualize like a pro",
-    },
+      primaryText: "Create and visualize like a pro"
+    }
   ];
 
   return (

@@ -1,4 +1,5 @@
 import React from "react";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { fireEvent, render, screen } from "@testing-library/react";
 import TextInsertion from "../TextInsertion";
 import insertText from "../../office-document";
@@ -10,6 +11,10 @@ describe("TextInsertion Test Suite", () => {
   it("should render the TextInsertion component", () => {
     const { container } = render(<TextInsertion />);
 
+    /*
+     * Not something to rely on. Very error prone -> If something in the tree changes, snapshot needs to be redone.
+     * Unit testing the component is a better approach.
+     */
     expect(container).toMatchSnapshot();
   });
 
@@ -32,7 +37,7 @@ describe("TextInsertion Test Suite", () => {
     // screen.debug(getByLabelText("Enter text to be inserted into the document."));
 
     fireEvent.change(getByLabelText("Enter text to be inserted into the document."), {
-      target: { value: newText },
+      target: { value: newText }
     });
     fireEvent.click(getByText("Insert text"));
 

@@ -3,6 +3,7 @@ import { createRoot } from "react-dom/client";
 import App from "./components/App";
 import { FluentProvider, webLightTheme } from "@fluentui/react-components";
 
+// eslint-disable-next-line no-redeclare
 /* global document, Office, module, require */
 
 const title = "Contoso Task Pane Add-in";

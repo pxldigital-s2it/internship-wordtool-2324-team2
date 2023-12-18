@@ -24,7 +24,9 @@
     "stop": "office-addin-debugging stop manifest.xml",
     "validate": "office-addin-manifest validate manifest.xml",
     "watch": "webpack --mode development --watch",
-    "test":  "npx tsc --skipLibCheck && jest"
+    "test:only": "jest",
+    "ts:check": "npx tsc --skipLibCheck",
+    "test": "npm run lint && npm run ts:check && npm run test:only"
   },
   "dependencies": {
     "@fluentui/react-components": "^9.30.4",
