@@ -1,31 +1,37 @@
-import * as React from 'react';
-import { useState } from 'react';
-import Section from './Section';
-import { mergeStyleSets } from '@fluentui/react/lib/Styling';
-import { IconButton } from '@fluentui/react/lib/Button';
+import * as React from "react";
+import { useState } from "react";
+import Section from "./Section";
+import { mergeStyleSets } from "@fluentui/react/lib/Styling";
+import { IconButton } from "@fluentui/react/lib/Button";
 
 // styles for category components
 const categoryClassNames = mergeStyleSets({
-  arrowIcon: {
-    color: "#005a9e", // Word's blue color
-    fontSize: "12px"
-  },
-  categoryContent: {
-    padding: "10px 20px"
-  },
-  categoryHeader: {
-    alignItems: "center",
-    backgroundColor: "#eff6fc", // light blue background
-    borderBottom: "1px solid #cccccc", // light grey border
-    color: "#005a9e", // Word's blue color
-    cursor: "pointer",
-    display: "flex",
-    fontSize: "16px",
-    fontWeight: "600",
-    justifyContent: "space-between",
-    padding: "10px 20px"
-  }
-});
+    categoryHeader: {
+      backgroundColor: "#eff6fc",
+      fontSize: "16px",
+      fontWeight: "600",
+      color: "#005a9e",
+      display: "flex",
+      alignItems: "center",
+      cursor: "pointer",
+      padding: "10px 20px",
+      borderBottom: "1px solid #cccccc"
+    },
+    categoryTitle: {
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "flex-start",
+      flexGrow: 1
+    },
+    arrowIcon: {
+      fontSize: "12px",
+      color: "#005a9e",
+      marginRight: 10
+    },
+    categoryContent: {
+      padding: "10px 20px"
+    }
+  });
 
 // category component with expandable/collapsible sections
 interface CategoryProps {
@@ -42,12 +48,12 @@ const Category: React.FC<CategoryProps> = ({ name, sections }) => {
         className={categoryClassNames.categoryHeader}
         onClick={() => setIsOpen(!isOpen)}
       >
-        {name} ({sections})
         <IconButton
-          iconProps={{ iconName: isOpen ? 'ChevronUp' : 'ChevronDown' }}
+          iconProps={{ iconName: isOpen ? "ChevronDown" : "ChevronRight" }}
           className={categoryClassNames.arrowIcon}
           onClick={() => setIsOpen(!isOpen)}
         />
+        {name} ({sections})
       </div>
       {isOpen && (
         <div className={categoryClassNames.categoryContent}>
