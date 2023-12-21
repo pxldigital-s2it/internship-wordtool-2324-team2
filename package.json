@@ -31,6 +31,7 @@
     "start:all": "npm start && npm run json-server"
   },
   "dependencies": {
+    "@fluentui/react": "^8.113.1",
     "@fluentui/react-components": "^9.30.4",
     "@fluentui/react-icons": "^2.0.214",
     "@reduxjs/toolkit": "^2.0.1",
