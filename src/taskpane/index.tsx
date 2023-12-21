@@ -4,7 +4,10 @@ import App from "./components/App";
 import { FluentProvider, webLightTheme } from "@fluentui/react-components";
 import { Provider } from "react-redux";
 import store from "../redux/store";
+import { initializeIcons } from '@fluentui/react/lib/Icons';
 
+// initialize icons before the app renders
+initializeIcons();
 const rootElement: HTMLElement = document.getElementById("container");
 const root = createRoot(rootElement);
 
