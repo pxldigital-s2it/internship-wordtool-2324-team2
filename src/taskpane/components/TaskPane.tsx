@@ -1,21 +1,21 @@
-import * as React from "react";
-import Category from "./Category";
-import AddButton from "./AddButton";
-import { mergeStyleSets } from "@fluentui/react/lib/Styling";
+import * as React from 'react';
+import Category from './Category';
+import AddButton from './AddButton';
+import { mergeStyleSets } from '@fluentui/react/lib/Styling';
 
 // styles for the taskpane and the title bar
 const taskPaneClassNames = mergeStyleSets({
-  taskPane: {
-    padding: "10px 0" // padding above and below the task pane content
-  },
   titleBar: {
-    // dark blue background for the title bar
-    backgroundColor: "#005a9e",
-    color: "white",
-    fontSize: "20px",
-    fontWeight: "600",
-    padding: "10px 20px",
-    textAlign: "center"
+     // dark blue background for the title bar
+    backgroundColor: '#005a9e',
+    color: 'white',
+    fontSize: '20px',
+    fontWeight: '600',
+    padding: '10px 20px',
+    textAlign: 'center',
+  },
+  taskPane: {
+    padding: '10px 0', // padding above and below the task pane content
   }
 });
 
