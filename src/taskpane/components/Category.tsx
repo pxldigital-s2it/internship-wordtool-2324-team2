@@ -6,25 +6,31 @@ import { IconButton } from '@fluentui/react/lib/Button';
 
 // styles for category components
 const categoryClassNames = mergeStyleSets({
-  categoryHeader: {
-    backgroundColor: '#eff6fc', // light blue background
+    categoryHeader: {
+    backgroundColor: '#eff6fc',
     fontSize: '16px',
     fontWeight: '600',
-    color: '#005a9e', // Word's blue color
+    color: '#005a9e',
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'space-between',
     cursor: 'pointer',
     padding: '10px 20px',
-    borderBottom: '1px solid #cccccc', // light grey border
+    borderBottom: '1px solid #cccccc',
   },
-  categoryContent: {
-    padding: '10px 20px',
+  categoryTitle: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    flexGrow: 1,
   },
   arrowIcon: {
     fontSize: '12px',
-    color: '#005a9e', // Word's blue color
+    color: '#005a9e',
+    marginRight: 10,
   },
+  categoryContent: {
+    padding: '10px 20px',
+  }
 });
 
 // category component with expandable/collapsible sections
@@ -41,12 +47,12 @@ const Category: React.FC<CategoryProps> = ({ name, sections }) => {
         className={categoryClassNames.categoryHeader}
         onClick={() => setIsOpen(!isOpen)}
       >
-        {name} ({sections})
         <IconButton
-          iconProps={{ iconName: isOpen ? 'ChevronUp' : 'ChevronDown' }}
+          iconProps={{ iconName: isOpen ? 'ChevronDown' : 'ChevronRight' }}
           className={categoryClassNames.arrowIcon}
           onClick={() => setIsOpen(!isOpen)}
         />
+        {name} ({sections})
       </div>
       {isOpen && (
         <div className={categoryClassNames.categoryContent}>
