@@ -1,49 +1,21 @@
 import * as React from "react";
-import { useState } from "react";
-import Header from "./Header";
-import HeroList, { HeroListItem } from "./HeroList";
-import TextInsertion from "./TextInsertion";
-import { makeStyles } from "@fluentui/react-components";
-import { DesignIdeas24Regular, LockOpen24Regular, Ribbon24Regular } from "@fluentui/react-icons";
-import { ColourPicker } from "../../components";
+import TaskPane from "./TaskPane";
+import { mergeStyleSets } from "@fluentui/react/lib/Styling";
 
-interface AppProps {
-  title: string;
-}
-
-const useStyles = makeStyles({
+// styles for the app container
+const useStyles = mergeStyleSets({
   root: {
-    minHeight: "100vh"
+    background: "#f3f2f1",
+    // use Word's default background color for the task pane
+    minHeight: "100vh",
+    padding: 10
   }
 });
 
-const App = (props: AppProps) => {
-  const styles = useStyles();
-  // The list items are static and won't change at runtime,
-  // so this should be an ordinary const, not a part of state.
-  const listItems: HeroListItem[] = [
-    {
-      icon: <Ribbon24Regular />,
-      primaryText: "Achieve more with Office integration"
-    },
-    {
-      icon: <LockOpen24Regular />,
-      primaryText: "Unlock features and functionality"
-    },
-    {
-      icon: <DesignIdeas24Regular />,
-      primaryText: "Create and visualize like a pro"
-    }
-  ];
-  //Const to demonstrate ColourPicker component
-  const [selectedColor, setSelectedColor] = useState<string>("#000000"); // Default color
-
+const App: React.FC = () => {
   return (
-    <div className={styles.root}>
-      <Header logo="assets/logo-filled.png" title={props.title} message="Welcome" />
-      <HeroList message="Discover what this add-in can do for you today!" items={listItems} />
-      <TextInsertion />
-      <ColourPicker selectedColor={selectedColor} setSelectedColor={setSelectedColor} /> {/*Testing purposes*/}
+    <div className={useStyles.root}>
+      <TaskPane />
     </div>
   );
 };

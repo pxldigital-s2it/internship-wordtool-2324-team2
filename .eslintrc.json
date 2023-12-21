@@ -12,7 +12,8 @@
   ],
   "globals": {
     "Nullable": true,
-    "JSX": "readonly"
+    "JSX": "readonly",
+    "Office": true
   },
   "rules": {
     "comma-dangle": ["error", "never"],
