@@ -1,5 +1,5 @@
-import * as React from 'react';
-import { mergeStyleSets } from '@fluentui/react/lib/Styling';
+import * as React from "react";
+import { mergeStyleSets } from "@fluentui/react/lib/Styling";
 
 // styles for each section within a category
 const sectionClassNames = mergeStyleSets({
@@ -13,9 +13,9 @@ const sectionClassNames = mergeStyleSets({
     }
   },
   sectionText: {
-    color: '#323130', // using a color from the Fluent UI neutral palette
-    fontSize: '14px',
-    padding: '4px 0' // slight padding for the text
+    color: "#323130", // using a color from the Fluent UI neutral palette
+    fontSize: "14px",
+    padding: "4px 0" // slight padding for the text
   }
 });
 

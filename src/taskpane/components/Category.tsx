@@ -6,32 +6,32 @@ import { IconButton } from "@fluentui/react/lib/Button";
 
 // styles for category components
 const categoryClassNames = mergeStyleSets({
-    categoryHeader: {
-      backgroundColor: "#eff6fc",
-      fontSize: "16px",
-      fontWeight: "600",
-      color: "#005a9e",
-      display: "flex",
-      alignItems: "center",
-      cursor: "pointer",
-      padding: "10px 20px",
-      borderBottom: "1px solid #cccccc"
-    },
-    categoryTitle: {
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "flex-start",
-      flexGrow: 1
-    },
-    arrowIcon: {
-      fontSize: "12px",
-      color: "#005a9e",
-      marginRight: 10
-    },
-    categoryContent: {
-      padding: "10px 20px"
-    }
-  });
+  arrowIcon: {
+    color: '#005a9e',
+    fontSize: '12px',
+    marginRight: 10
+  },
+  categoryHeader: {
+    alignItems: 'center',
+    backgroundColor: '#eff6fc',
+    borderBottom: '1px solid #cccccc',
+    color: '#005a9e',
+    cursor: 'pointer',
+    display: 'flex',
+    fontSize: '16px',
+    fontWeight: '600',
+    padding: '10px 20px'
+  },
+  categoryTitle: {
+    alignItems: 'center',
+    display: 'flex',
+    flexGrow: 1,
+    justifyContent: 'flex-start'
+  },
+  categoryContent: {
+    padding: '10px 20px'
+  }
+});
 
 // category component with expandable/collapsible sections
 interface CategoryProps {
