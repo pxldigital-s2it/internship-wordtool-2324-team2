@@ -4,6 +4,7 @@ node_modules/
 # Compiled TypeScript
 *.js
 !*.config.js
+!setupTests.js
 *.js.map
 
 # Visual Studio Code

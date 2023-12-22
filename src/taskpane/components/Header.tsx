@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Image, tokens, makeStyles } from "@fluentui/react-components";
-import {/*AligningWithIcons, */ CustomTrigger} from "./ContextMenu";
+import ContextMenu from "../../components/contextmenu/ContextMenu";
 
 export interface HeaderProps {
   title: string;
@@ -24,15 +24,29 @@ const useStyles = makeStyles({
   }
 });
 
+const exampleContextMenuItems = [
+  {
+    handler: () => console.log("Nieuw"),
+    label: "Nieuw"
+  },
+  {
+    handler: () => console.log("Wijzigen"),
+    label: "Wijzigen"
+  },
+  {
+    handler: () => console.log("Verwijderen"),
+    label: "Verwijderen"
+  }
+];
+
 const Header: React.FC<HeaderProps> = (props: HeaderProps) => {
-  const { title, logo, message} = props;
+  const { title, logo, message } = props;
   const styles = useStyles();
 
   return (
     <section className={styles.welcome__header}>
       <Image width="90" height="90" src={logo} alt={title} />
-      <h1 className={styles.message}>{ message }</h1>
-      <CustomTrigger menu1={"Favorites"} menu2={"Edit"} menu3={"Delete"}></CustomTrigger>
+      <ContextMenu trigger={<h1 className={styles.message}>{message}</h1>} menuItems={exampleContextMenuItems} />
     </section>
   );
 };
