@@ -14,7 +14,7 @@ const ColourPicker: React.FC<ColourPickerProps> = ({ selectedColor,setSelectedCo
     };
 
     return (
-        <div>
+        <div data-testid="color-picker">
             <ColorPicker color={selectedColor} onChange={onColorChanged} alphaType={"none"} showPreview={true} />
         </div>
     );
