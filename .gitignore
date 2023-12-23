@@ -38,3 +38,6 @@ yarn-error.log
 
 # npm package files
 npm-debug.log
+
+# coverage
+coverage

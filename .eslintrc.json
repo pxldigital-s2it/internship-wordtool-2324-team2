@@ -3,7 +3,8 @@
     "office-addins"
   ],
   "env": {
-    "jest": true
+    "jest": true,
+    "node": true
   },
   "extends": [
     "plugin:office-addins/react"

@@ -1,6 +1,7 @@
 import * as React from "react";
-import { Image, tokens, makeStyles } from "@fluentui/react-components";
+import { Image, makeStyles, tokens } from "@fluentui/react-components";
 import ContextMenu from "../../components/contextmenu/ContextMenu";
+import { categoryContextMenu } from "../../patterns/observer";
 
 export interface HeaderProps {
   title: string;
@@ -26,16 +27,16 @@ const useStyles = makeStyles({
 
 const exampleContextMenuItems = [
   {
-    handler: () => console.log("Nieuw"),
-    label: "Nieuw"
+    handler: () => console.log("Sub Categorie"),
+    label: categoryContextMenu.getSubCategoryLabel()
   },
   {
     handler: () => console.log("Wijzigen"),
-    label: "Wijzigen"
+    label: categoryContextMenu.getEditLabel()
   },
   {
     handler: () => console.log("Verwijderen"),
-    label: "Verwijderen"
+    label: categoryContextMenu.getDeleteLabel()
   }
 ];
 
