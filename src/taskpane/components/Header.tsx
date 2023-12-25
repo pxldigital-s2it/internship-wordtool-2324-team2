@@ -1,5 +1,7 @@
 import * as React from "react";
-import { Image, tokens, makeStyles } from "@fluentui/react-components";
+import { Image, makeStyles, tokens } from "@fluentui/react-components";
+import ContextMenu from "../../components/contextmenu/ContextMenu";
+import { categoryContextMenu } from "../../patterns/observer";
 
 export interface HeaderProps {
   title: string;
@@ -23,6 +25,21 @@ const useStyles = makeStyles({
   }
 });
 
+const exampleContextMenuItems = [
+  {
+    handler: () => console.log("Sub Categorie"),
+    label: categoryContextMenu.getSubCategoryLabel()
+  },
+  {
+    handler: () => console.log("Wijzigen"),
+    label: categoryContextMenu.getEditLabel()
+  },
+  {
+    handler: () => console.log("Verwijderen"),
+    label: categoryContextMenu.getDeleteLabel()
+  }
+];
+
 const Header: React.FC<HeaderProps> = (props: HeaderProps) => {
   const { title, logo, message } = props;
   const styles = useStyles();
@@ -30,7 +47,7 @@ const Header: React.FC<HeaderProps> = (props: HeaderProps) => {
   return (
     <section className={styles.welcome__header}>
       <Image width="90" height="90" src={logo} alt={title} />
-      <h1 className={styles.message}>{ message }</h1>
+      <ContextMenu trigger={<h1 className={styles.message}>{message}</h1>} menuItems={exampleContextMenuItems} />
     </section>
   );
 };

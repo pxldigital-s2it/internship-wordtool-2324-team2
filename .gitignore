@@ -4,6 +4,7 @@ node_modules/
 # Compiled TypeScript
 *.js
 !*.config.js
+!setupTests.js
 *.js.map
 
 # Visual Studio Code
@@ -37,3 +38,6 @@ yarn-error.log
 
 # npm package files
 npm-debug.log
+
+# coverage
+coverage

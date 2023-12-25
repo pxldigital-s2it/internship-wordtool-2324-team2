@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ContextMenu Test Suite Initial render 1`] = `
+<body>
+  <div>
+    <div
+      data-tabster="{"restorer":{"type":1}}"
+      id="menur0"
+    >
+      <h1
+        role="trigger"
+      >
+        Trigger
+      </h1>
+    </div>
+  </div>
+</body>
+`;

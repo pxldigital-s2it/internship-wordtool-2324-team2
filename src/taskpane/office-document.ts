@@ -1,3 +1,4 @@
+/* eslint-disable */
 /* global Word console */
 
 const insertText = async (text: string) => {
