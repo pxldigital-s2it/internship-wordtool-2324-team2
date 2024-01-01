@@ -1,0 +1,73 @@
+{
+  "categories": [
+    {
+      "id": "category_1",
+      "title": "Categorie 1",
+      "colour": "#000000"
+    }
+  ],
+  "subCategories": [
+    {
+      "categoryId": "category_1",
+      "code": "code12",
+      "description": "Some other description",
+      "id": "sub_category_1"
+    },
+    {
+      "categoryId": "category_1",
+      "code": "Some short code",
+      "description": "Some very long description",
+      "id": "NMPKQt_"
+    },
+    {
+      "categoryId": "category_1",
+      "code": "another short code",
+      "description": "Another very long description",
+      "id": "ArYcvOF"
+    },
+    {
+      "categoryId": "category_1",
+      "code": "short code",
+      "description": "And yet another very long description",
+      "id": "dMGfzfX"
+    },
+    {
+      "categoryId": "category_1",
+      "code": "b",
+      "description": "a",
+      "id": "wzjae20"
+    },
+    {
+      "categoryId": "category_1",
+      "code": "code",
+      "description": "long ass description",
+      "id": "rsqcV9q"
+    },
+    {
+      "categoryId": "category_1",
+      "code": "b",
+      "description": "a",
+      "id": "WTTlMXI"
+    },
+    {
+      "categoryId": "123",
+      "id": "q6CGcjD"
+    },
+    {
+      "categoryId": "123",
+      "id": "rZzaUyD"
+    },
+    {
+      "categoryId": "123",
+      "code": "testCode",
+      "description": "testDescription",
+      "id": "swcq8SG"
+    },
+    {
+      "categoryId": "123",
+      "code": "testCode",
+      "description": "testDescription",
+      "id": "wi5kj0Q"
+    }
+  ]
+}
