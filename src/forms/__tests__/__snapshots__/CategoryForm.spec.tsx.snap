@@ -1,0 +1,129 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CategoryForm Test Suite No data 1`] = `<div />`;
+
+exports[`CategoryForm Test Suite initial render 1`] = `
+<div>
+  <form>
+    <div
+      class="fui-DialogBody r71plkv"
+    >
+      <h2
+        class="fui-DialogTitle rztv7rx ___mh25s00_kwrsjh0 fsyjsko"
+        style="text-decoration: underline;"
+      />
+      <div
+        class="fui-DialogContent r1e0mpcm ___5zz7g20_1dlhfox f22iagw f1vx9l62 fd7ph1c"
+      >
+        <table
+          class="fui-Table ___422ui00_e7lxxb0 fgkb47j fhovq9v f1w4nmp0 fmrv4ls fly5x3f f14m3nip"
+        >
+          <tbody
+            class="fui-TableBody ___1gw3ddd_19kkhse f1tp1avn"
+          >
+            <tr
+              class="fui-TableRow ___1o398xn_1gb0u4b f19n0e5 f1ewtqcl f1jazu75 f1xeqee6 fz36nt7 f9znhxp fqrak0z f1o2ludy f1kjnpwc fxmnebo f1witrsb f7tkmfy f1r2dosr f15ngxrw fjbbrdp f1t94bn6 feu1g3u f1uorfem fw60kww f1vxd6vx fg706s2 fnzw4c6 f1u0rzck f16xkysk f1bh3yvw fmi79ni f11fozsx fqlf3fd f9dpb3h f1yat0gj fw2muls f7nae3y fkbere7 fmtyzcc fa97sf3 fb6zhgp fyowp6c f9dii88 fz08sq8 f1afxoft flqq2yx f1b5xrmd f1831rx6 fd94n53 f1e0wld5"
+            >
+              <td
+                class="fui-TableCell ___18c4fhz_1qt9bvz f10pi13n f1nbblvp f1vdfbxk f1ov4xf1 f1f5gg8d fz36nt7 f9znhxp fqrak0z f1o2ludy f1kjnpwc fxmnebo f1witrsb f15pt5es fmrv4ls f1ft4266"
+              >
+                <label
+                  class="fui-Label ___1yevxz2_yljzsa0 fk6fouc f19n0e5 fkhj508 f1i3iumi"
+                  for="category-input"
+                >
+                  Categorie:
+                </label>
+              </td>
+              <td
+                class="fui-TableCell ___18c4fhz_1qt9bvz f10pi13n f1nbblvp f1vdfbxk f1ov4xf1 f1f5gg8d fz36nt7 f9znhxp fqrak0z f1o2ludy f1kjnpwc fxmnebo f1witrsb f15pt5es fmrv4ls f1ft4266"
+              >
+                <span
+                  class="fui-Text ___nzdt000_bc09y70 fk6fouc fkhj508 f1i3iumi figsok6 fpgzoln f1w7gpdv f6juhto f1mtd64y f1y7q3j9 f2jf649"
+                >
+                  [Test Title]
+                </span>
+              </td>
+            </tr>
+            <tr
+              class="fui-TableRow ___1o398xn_1gb0u4b f19n0e5 f1ewtqcl f1jazu75 f1xeqee6 fz36nt7 f9znhxp fqrak0z f1o2ludy f1kjnpwc fxmnebo f1witrsb f7tkmfy f1r2dosr f15ngxrw fjbbrdp f1t94bn6 feu1g3u f1uorfem fw60kww f1vxd6vx fg706s2 fnzw4c6 f1u0rzck f16xkysk f1bh3yvw fmi79ni f11fozsx fqlf3fd f9dpb3h f1yat0gj fw2muls f7nae3y fkbere7 fmtyzcc fa97sf3 fb6zhgp fyowp6c f9dii88 fz08sq8 f1afxoft flqq2yx f1b5xrmd f1831rx6 fd94n53 f1e0wld5"
+            >
+              <td
+                class="fui-TableCell ___18c4fhz_1qt9bvz f10pi13n f1nbblvp f1vdfbxk f1ov4xf1 f1f5gg8d fz36nt7 f9znhxp fqrak0z f1o2ludy f1kjnpwc fxmnebo f1witrsb f15pt5es fmrv4ls f1ft4266"
+              >
+                <label
+                  class="fui-Label ___1yevxz2_yljzsa0 fk6fouc f19n0e5 fkhj508 f1i3iumi"
+                  for="description-input"
+                >
+                  Beschrijving:
+                </label>
+              </td>
+              <td
+                class="fui-TableCell ___18c4fhz_1qt9bvz f10pi13n f1nbblvp f1vdfbxk f1ov4xf1 f1f5gg8d fz36nt7 f9znhxp fqrak0z f1o2ludy f1kjnpwc fxmnebo f1witrsb f15pt5es fmrv4ls f1ft4266"
+              >
+                <span
+                  class="fui-Textarea ___yvnocc0_ob5ctq0 ftuwxu6 f1ewtqcl f10pi13n f1g0x7ka fhxju0i f1ean75l f1cnd47f f1hu3pq6 f11qmguv f19f4twv f1tyq0we f1aa9q02 f16jpd5f f1jar5jt fyu767a fxugw4r f192inf7 f5tn483 f1vxd6vx f1ojsxk5 fzkkow9 fcdblym fg706s2 fjik90z fj3muxo f1akhkt f1c1zstj f1lxtadh f1gw3sf2 f13zj6fq f1mdlcz9 f1a7op3 f1gboi2j f1cjjd47 ffyw7fx f1kp91vd f1ibwz09 f14pi962 f1lh990p f1jc6hxc fj2g8qd f1yk9hq fhwpy7i f14ee0xe f1xhbsuh fv8e3ye ftb5wc6 fjw5xc1 f1xdyd5c fatpbeo fb7uyps f1cmft4k f1x58t8o f1ibeo51 f1vnc8sk f3e99gv fhljsf7 f7ic3uo f1omjgsz fn6xmsl f1snvl17 f1sn8sm0 f1wovo5e fm0h710 f716mnf fvcxoqz f1ub3y4t f1l4zc64 f1m52nbi fk7lb2a f1knhbbd f15pjvi3 f17itt0b f6ginmj f1grcyuh fk1xjsr fgzu20w fvs00aa f1assf6x f1z0osm6 f4ruux4 fu7v4fk f1fnaxjy f7hodha fwory1w f8jkv7v f1f3jaeo f19usxel fh8au0q f12oevn0 fvdgz8d f1so894s f1cq0lt5"
+                >
+                  <textarea
+                    class="fui-Textarea__textarea ___vxzxgk0_17t7cfl f1ern45e f1n71otn f1h8hb77 f1deefiw f1hu3pq6 f11qmguv f19f4twv f1tyq0we f3rmtva f1ewtqcl f19n0e5 fqerorx fk6fouc f1l02sjl fwyc1cq f13ta7ih f1vw9udw fbb3kq8 f1s6fcnf fvmd9f fp2oml8 f135dnwl f1tdddsa f1e60jzv f1if7ixc fkhj508 figsok6 f1i3iumi f1o1s39h"
+                    id="description-input"
+                    required=""
+                  >
+                    testDescription
+                  </textarea>
+                </span>
+              </td>
+            </tr>
+            <tr
+              class="fui-TableRow ___1o398xn_1gb0u4b f19n0e5 f1ewtqcl f1jazu75 f1xeqee6 fz36nt7 f9znhxp fqrak0z f1o2ludy f1kjnpwc fxmnebo f1witrsb f7tkmfy f1r2dosr f15ngxrw fjbbrdp f1t94bn6 feu1g3u f1uorfem fw60kww f1vxd6vx fg706s2 fnzw4c6 f1u0rzck f16xkysk f1bh3yvw fmi79ni f11fozsx fqlf3fd f9dpb3h f1yat0gj fw2muls f7nae3y fkbere7 fmtyzcc fa97sf3 fb6zhgp fyowp6c f9dii88 fz08sq8 f1afxoft flqq2yx f1b5xrmd f1831rx6 fd94n53 f1e0wld5"
+            >
+              <td
+                class="fui-TableCell ___18c4fhz_1qt9bvz f10pi13n f1nbblvp f1vdfbxk f1ov4xf1 f1f5gg8d fz36nt7 f9znhxp fqrak0z f1o2ludy f1kjnpwc fxmnebo f1witrsb f15pt5es fmrv4ls f1ft4266"
+              >
+                <label
+                  class="fui-Label ___1yevxz2_yljzsa0 fk6fouc f19n0e5 fkhj508 f1i3iumi"
+                  for="code-input"
+                >
+                  Code:
+                </label>
+              </td>
+              <td
+                class="fui-TableCell ___18c4fhz_1qt9bvz f10pi13n f1nbblvp f1vdfbxk f1ov4xf1 f1f5gg8d fz36nt7 f9znhxp fqrak0z f1o2ludy f1kjnpwc fxmnebo f1witrsb f15pt5es fmrv4ls f1ft4266"
+              >
+                <span
+                  class="fui-Input r1jtohuq ___1hqg9x8_unzdaf0 f1c21dwh f1krrbdw f1deotkl f10ostut f1ozlkrg f1ern45e f1n71otn f1deefiw f1n6gb5g f15yvnhg f1l4zc64 f1klwx88 f1nf3wye feulmo5 f18vqdqu f53nyzz"
+                >
+                  <input
+                    class="fui-Input__input rvp2gzh"
+                    id="code-input"
+                    required=""
+                    type="text"
+                    value="testCode"
+                  />
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div
+        class="fui-DialogActions r78gbj ___pj8zjl0_1y84z0u f1a7i8kp fd46tj4 fsyjsko f1f41i0t f1jaqex3 f2ao6jk"
+      >
+        <button
+          class="fui-Button r1alrhcs"
+          data-tabster="{"restorer":{"type":1}}"
+          type="button"
+        >
+          Sluiten
+        </button>
+        <button
+          class="fui-Button r1alrhcs ___1b744ob_186160c f1bg9a2p f1p3nwhy f11589ue f1q5o8ev f1pdflbu f1s2aq7o f1falr9n f1s2uweq fr80ssc f1ukrpxl fecsdlb fvgxktp f1t6o4dc f1h0usnq fs4ktlq f16h9ulv fx2bmrt fcvwxyo f4lkoma fg455y9 f1rvyvqg f1cwzwz f14g86mu f1dcs8yz fkc42ay f1vmkb5g f53ppgq f1663y11 f18v5270 f80fkiy f1kc2mi9 f1y0svfh fihuait fnxhupq fx507ft fyd6l6x fb3rf2x fdrzuqr f15x8b5r fphbwmw f19vpps7 fv5swzo f1al02dq f8w4c43 f1ol4fw6 f1q1lw4e f1dwjv2g fjwq6ea f1lr3nhc fn5gmvv f1mbxvi6 f17t0x8g f194v5ow f1qgg65p fk7jm04 fhgccpy f32wu9k fu5nqqq f13prjl2 f1czftr5 f1nl83rv f12k37oa fr96u23"
+          disabled=""
+          type="button"
+        >
+          Bevestigen
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
+`;

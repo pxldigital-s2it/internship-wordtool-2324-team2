@@ -4,11 +4,15 @@
   ],
   "env": {
     "jest": true,
-    "node": true
+    "node": true,
+    "browser": true
   },
   "extends": [
     "plugin:office-addins/react"
   ],
+  "globals": {
+    "Nullable": true
+  },
   "rules": {
     "comma-dangle": ["error", "never"],
     "object-curly-spacing": ["error", "always"],
