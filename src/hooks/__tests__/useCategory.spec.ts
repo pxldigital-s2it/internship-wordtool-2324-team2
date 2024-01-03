@@ -40,14 +40,17 @@ describe("useCategory Test Suite", () => {
       _unmount = unmount;
 
       expect(result.current).toStrictEqual(expect.objectContaining({
-            categoryTitle: undefined,
-            data: undefined,
-            handleSubmit: expect.any(Function)
-          }));
+        categoryTitle: undefined,
+        data: undefined,
+        handleSubmit: expect.any(Function)
+      }));
     });
 
     test("state contains category & subCategory", () => {
-      const { result, unmount } = renderHookWithProviders(() => useCategory(), { preloadedState: stateWithCategoryAndSubCategory });
+      const {
+        result,
+        unmount
+      } = renderHookWithProviders(() => useCategory(), { preloadedState: stateWithCategoryAndSubCategory });
       _unmount = unmount;
 
       expect(result.current).toStrictEqual(expect.objectContaining({
@@ -58,7 +61,10 @@ describe("useCategory Test Suite", () => {
     });
 
     test("state contains only category", () => {
-      const { result, unmount } = renderHookWithProviders(() => useCategory(), { preloadedState: stateWithOnlyCategory });
+      const {
+        result,
+        unmount
+      } = renderHookWithProviders(() => useCategory(), { preloadedState: stateWithOnlyCategory });
       _unmount = unmount;
 
       expect(result.current).toStrictEqual(expect.objectContaining({
@@ -73,66 +79,67 @@ describe("useCategory Test Suite", () => {
   describe("handleSubmit", () => {
     let axiosMock = addMockAdapterSupport();
 
-    test("create subCategory", () => {
-      const {  unmount } = renderHookWithProviders(() => {
-        const result = useCategory();
-        const form = addFormSupport(new Map([
-          ["code-input", "testCode"],
-          ["description-input", "testDescription"]
-        ]));
-        const ref = useRef<HTMLFormElement>(form);
+    test("create subCategory", async () => {
+      await act(() => {
+        const { unmount } = renderHookWithProviders(async () => {
+          const result = useCategory();
+          const form = addFormSupport(new Map([
+            ["code-input", "testCode"],
+            ["description-input", "testDescription"]
+          ]));
+          const ref = useRef<HTMLFormElement>(form);
 
-        axiosMock.onPost("http://localhost:3001/subCategories").reply(200, {});
+          axiosMock.onPost("http://localhost:3001/subCategories").reply(200, {});
 
-        act(async () => {
           await result.handleSubmit(ref);
-        });
 
-        expect(axiosMock.history.post.length).toBe(1);
-        expect(axiosMock.history.post[0].data).toBe(JSON.stringify({
-          categoryId: "123",
-          code: "testCode",
-          description: "testDescription"
-        }));
-      }, { preloadedState: stateWithCategoryAndSubCategory });
-      _unmount = unmount;
+          expect(axiosMock.history.post.length).toBe(1);
+          expect(axiosMock.history.post[0].data).toBe(JSON.stringify({
+            categoryId: "123",
+            code: "testCode",
+            description: "testDescription"
+          }));
+        }, { preloadedState: stateWithCategoryAndSubCategory });
+        _unmount = unmount;
+      });
     });
 
-    test("update subCategory", () => {
+    test("update subCategory", async () => {
+      await act(() => {
+        const { unmount } = renderHookWithProviders(async () => {
+          const result = useCategory();
 
-      const { unmount } = renderHookWithProviders( () => {
-        const result = useCategory();
+          const form = addFormSupport(new Map([
+            ["code-input", "testCode"],
+            ["description-input", "testDescription"]
+          ]));
+          const ref = useRef<HTMLFormElement>(form);
 
-        const form = addFormSupport(new Map([
-          ["code-input", "testCode"],
-          ["description-input", "testDescription"]
-        ]));
-        const ref = useRef<HTMLFormElement>(form);
+          axiosMock.onPut("http://localhost:3001/subCategories/123").reply(200, {});
 
-        axiosMock.onPut("http://localhost:3001/subCategories/123").reply(200, {});
-
-        act(async () => {
           await result.handleSubmit(ref);
-        });
 
-        expect(axiosMock.history.put.length).toBe(1);
-        expect(axiosMock.history.put[0].data).toBe(JSON.stringify({
-          categoryId: "123",
-          code: "testCode",
-          description: "testDescription"
-        }));
-      }, {
-        preloadedState: { ...stateWithCategoryAndSubCategory,
-        modal: {
-          ...stateWithCategoryAndSubCategory.modal,
-          create: false,
-          subCategory: {
-            ...stateWithCategoryAndSubCategory.modal.subCategory,
-            id: "123"
+          expect(axiosMock.history.put.length).toBe(1);
+          expect(axiosMock.history.put[0].data).toBe(JSON.stringify({
+            categoryId: "123",
+            code: "testCode",
+            description: "testDescription"
+          }));
+        }, {
+          preloadedState: {
+            ...stateWithCategoryAndSubCategory,
+            modal: {
+              ...stateWithCategoryAndSubCategory.modal,
+              create: false,
+              subCategory: {
+                ...stateWithCategoryAndSubCategory.modal.subCategory,
+                id: "123"
+              }
+            }
           }
-        }
-      } });
-      _unmount = unmount;
+        });
+        _unmount = unmount;
+      });
     });
 
   });

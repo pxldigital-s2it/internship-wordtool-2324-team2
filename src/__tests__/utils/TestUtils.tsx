@@ -1,8 +1,8 @@
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
-import { AppDispatch, AppStore, initialState as STATE, RootState } from "../../redux/store";
+import { AppDispatch, AppStore, RootState } from "../../redux/store";
 import { configureStore } from "@reduxjs/toolkit";
-import React, { createElement, PropsWithChildren } from "react";
+import React, { PropsWithChildren } from "react";
 import { Provider } from "react-redux";
 import modalReducer from "../../redux/modal/modal.slice";
 import { render, renderHook, RenderOptions } from "@testing-library/react";
@@ -83,14 +83,6 @@ export function renderHookWithProviders<
     return <Provider store={store}>{children}</Provider>
   }
 
-  // @ts-ignore
   return { store, ...renderHook(render, { wrapper: Wrapper, ...renderOptions }) }
 }
-
-export const withProvider = (component, props, initialState = STATE, createStore = configureTestStore) => {
-  return (<Provider store={createStore(initialState)}>
-    {createElement(component, props)}
-  </Provider>);
-};
-
 export const addFormSupport = (data: Map<string, string>) => ({ ...(document.createElement("form")), elements: { namedItem: jest.fn((key) => ({ value: data.get(key) })) } } as unknown as HTMLFormElement)

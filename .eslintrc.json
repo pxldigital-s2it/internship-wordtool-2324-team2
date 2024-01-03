@@ -11,7 +11,8 @@
     "plugin:office-addins/react"
   ],
   "globals": {
-    "Nullable": true
+    "Nullable": true,
+    "JSX": "readonly"
   },
   "rules": {
     "comma-dangle": ["error", "never"],

@@ -6,7 +6,6 @@ import CategoryForm from "../CategoryForm";
 import { renderWithProviders } from "../../__tests__/utils/TestUtils";
 import { initialState } from "../../redux/store";
 import Category from "../../types/Category";
-import { useAppDispatch } from "../../redux/hooks";
 import { setOpen } from "../../redux/modal/modal.slice";
 
 jest.mock("../../hooks/useCategory");
