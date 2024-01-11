@@ -1,6 +1,6 @@
-import * as React from 'react';
-import { mergeStyleSets } from '@fluentui/react/lib/Styling';
-import { AddButton, Category, ContextMenu, Modal } from "../../components";
+import * as React from "react";
+import { mergeStyleSets } from "@fluentui/react/lib/Styling";
+import { AddButton, Category, Modal } from "../../components";
 
 // styles for the taskpane and the title bar
 const taskPaneClassNames = mergeStyleSets({
@@ -25,20 +25,7 @@ const TaskPane = () => {
       <div className={taskPaneClassNames.titleBar}>MayDay</div>
       <Modal />
       <div className={taskPaneClassNames.taskPane}>
-        <ContextMenu trigger={<Category id={0} name="Categorie 1" sections={7} />} menuItems={
-          [
-            {
-              handler: () => {
-              },
-              label: "Edit"
-            },
-            {
-              handler: () => {
-              },
-              label: "Delete"
-            }
-          ]
-        } />
+        <Category id={0} name="Categorie 1" sections={7} />
         <Category id={1} name="Categorie 2" sections={1} />
         <Category id={2} name="Categorie 3" sections={1} />
         <AddButton />
