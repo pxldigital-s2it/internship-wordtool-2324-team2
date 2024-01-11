@@ -4,49 +4,49 @@
       "id": "category_1",
       "title": "Spelling",
       "code": "SP",
-      "colour": "#000000"
+      "colour": "#FFFF25"
     },
     {
       "id": "category_2",
       "title": "Zinsbouw",
       "code": "ZB",
-      "colour": "#000000"
+      "colour": "#00FF41"
     },
     {
       "id": "category_3",
       "title": "Naamwoordstijl",
       "code": "NWS",
-      "colour": "#000000"
+      "colour": "#00FFFF"
     },
     {
       "id": "category_4",
       "title": "Academische stijl",
       "code": "AS",
-      "colour": "#000000"
+      "colour": "#817D0C"
     },
     {
       "id": "category_5",
       "title": "Werkwoordsvormen",
       "code": "WW",
-      "colour": "#000000"
+      "colour": "#FF0000"
     },
     {
       "id": "category_6",
       "title": "Woordenschat & Grammatica",
       "code": "WO/GR",
-      "colour": "#000000"
+      "colour": "#FF00F9"
     },
     {
       "id": "category_7",
       "title": "Bronvermelding",
       "code": "BV",
-      "colour": "#000000"
+      "colour": "#807D78"
     },
     {
       "id": "category_8",
       "title": "Lay-out",
       "code": "L",
-      "colour": "#000000"
+      "colour": "#C4C1BB"
     }
   ],
   "subCategories": [
