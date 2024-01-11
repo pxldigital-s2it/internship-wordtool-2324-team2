@@ -1,11 +1,11 @@
 import * as React from "react";
+import { useState } from "react";
 import Header from "./Header";
 import HeroList, { HeroListItem } from "./HeroList";
 import TextInsertion from "./TextInsertion";
 import { makeStyles } from "@fluentui/react-components";
-import { Ribbon24Regular, LockOpen24Regular, DesignIdeas24Regular } from "@fluentui/react-icons";
-import ColourPicker from "./ColourPicker";
-import {useState} from "react";
+import { DesignIdeas24Regular, LockOpen24Regular, Ribbon24Regular } from "@fluentui/react-icons";
+import { ColourPicker } from "../../components";
 
 interface AppProps {
   title: string;
@@ -36,14 +36,14 @@ const App = (props: AppProps) => {
     }
   ];
   //Const to demonstrate ColourPicker component
-  const [selectedColor , setSelectedColor] = useState<string>("#000000"); // Default color
-  
+  const [selectedColor, setSelectedColor] = useState<string>("#000000"); // Default color
+
   return (
     <div className={styles.root}>
       <Header logo="assets/logo-filled.png" title={props.title} message="Welcome" />
       <HeroList message="Discover what this add-in can do for you today!" items={listItems} />
       <TextInsertion />
-      <ColourPicker selectedColor={selectedColor} setSelectedColor={setSelectedColor}/>  {/*Testing purposes*/}
+      <ColourPicker selectedColor={selectedColor} setSelectedColor={setSelectedColor} /> {/*Testing purposes*/}
     </div>
   );
 };
