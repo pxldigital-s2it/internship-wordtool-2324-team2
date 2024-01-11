@@ -6,7 +6,7 @@ import { mergeStyleSets } from '@fluentui/react/lib/Styling';
 // styles for the taskpane and the title bar
 const taskPaneClassNames = mergeStyleSets({
   titleBar: {
-     // dark blue background for the title bar
+    // dark blue background for the title bar
     backgroundColor: '#005a9e',
     color: 'white',
     fontSize: '20px',
@@ -25,9 +25,9 @@ const TaskPane = () => {
     <div>
       <div className={taskPaneClassNames.titleBar}>MayDay</div>
       <div className={taskPaneClassNames.taskPane}>
-        <Category name="Categorie 1" sections={7} />
-        <Category name="Categorie 2" sections={1} />
-        <Category name="Categorie 3" sections={1} />
+        <Category id={0} name="Categorie 1" sections={7} />
+        <Category id={1} name="Categorie 2" sections={1} />
+        <Category id={2} name="Categorie 3" sections={1} />
         <AddButton />
       </div>
     </div>
