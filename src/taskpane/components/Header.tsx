@@ -1,10 +1,9 @@
 import * as React from "react";
 import { Image, makeStyles, tokens } from "@fluentui/react-components";
-import ContextMenu from "../../components/contextmenu/ContextMenu";
 import { categoryContextMenu } from "../../patterns/observer";
-import Modal from "../../components/modal/Modal";
 import { useAppDispatch } from "../../redux/hooks";
 import { runOpenCreateSubCategoryModal, runOpenUpdateSubCategoryModal } from "../../middleware/modal/ModalMiddleware";
+import { ContextMenu, Modal } from "../../components";
 
 export interface HeaderProps {
   title: string;
