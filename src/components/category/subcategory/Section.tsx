@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { sectionClassNames } from './Section.styles';
 import {ContextMenu} from "../../index";
-import {runOpenCreateSubCategoryModal, runOpenUpdateSubCategoryModal} from "../../../middleware/modal/ModalMiddleware";
+import {runOpenUpdateSubCategoryModal} from "../../../middleware/modal/ModalMiddleware";
 import {categoryContextMenu} from "../../../patterns/observer";
 import {useAppDispatch} from "../../../redux/hooks";
 
