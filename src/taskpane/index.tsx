@@ -18,9 +18,6 @@ Office.onReady(() => {
       <Provider store={store}>
         <App />
       </Provider>
-      <App /> {
-      /* removed the title prop */
-    }
     </FluentProvider>
   );
 });

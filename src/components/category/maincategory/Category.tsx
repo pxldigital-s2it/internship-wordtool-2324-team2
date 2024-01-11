@@ -1,51 +1,10 @@
 import * as React from 'react';
 import { useState, useRef } from 'react';
-import Section from './Section';
-import { mergeStyleSets } from '@fluentui/react/lib/Styling';
 import { IconButton } from '@fluentui/react/lib/Button';
+import Section from "../subcategory/Section";
+import { CategoryProps } from "./Category.types";
+import { categoryClassNames } from './Category.styles';
 
-// styles for category components
-const categoryClassNames = mergeStyleSets({
-    categoryHeader: {
-    backgroundColor: '#eff6fc',
-    fontSize: '16px',
-    fontWeight: '600',
-    color: '#005a9e',
-    display: 'flex',
-    alignItems: 'center',
-    cursor: 'pointer',
-    padding: '10px 20px',
-    borderBottom: '1px solid #cccccc',
-  },
-  categoryTitle: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    flexGrow: 1,
-  },
-  arrowIcon: {
-    fontSize: '12px',
-    color: '#005a9e',
-    marginRight: 10,
-  },
-  categoryContent: {
-    padding: '10px 20px'
-  },
-  colorSquare: {
-    width: '20px',
-    height: '20px',
-    marginLeft: '10px',
-    border: '1px solid #ccc',
-    cursor: 'pointer',
-  }
-});
-
-// category component with expandable/collapsible sections
-interface CategoryProps {
-  id: number;
-  name: string;
-  sections: number;
-}
 
 const Category: React.FC<CategoryProps> = ({ id, name, sections }) => {
   const [isOpen, setIsOpen] = useState(false);
