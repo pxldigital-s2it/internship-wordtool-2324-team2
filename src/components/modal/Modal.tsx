@@ -2,7 +2,7 @@ import * as React from "react";
 import { Dialog, DialogSurface } from "@fluentui/react-components";
 import { useAppSelector } from "../../redux/hooks";
 import { selectOpen } from "../../redux/modal/modal.slice";
-import NewSubCategoryForm from "../../forms/CategoryForm";
+import CategoryForm from "../../forms/CategoryForm";
 
 
 const Modal = () => {
@@ -11,7 +11,7 @@ const Modal = () => {
   return (
     <Dialog modalType="non-modal" open={open}>
       <DialogSurface aria-describedby={undefined}>
-        <NewSubCategoryForm />
+        <CategoryForm />
       </DialogSurface>
     </Dialog>
   );

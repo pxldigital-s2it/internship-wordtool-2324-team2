@@ -4,7 +4,7 @@ import { selectCategory, selectCreate, selectSubCategory } from "../redux/modal/
 import { saveSubCategory, updateSubCategory } from "../middleware/modal/ModalMiddleware";
 import { readFormField } from "../forms/utils/FormUtils";
 
-import { isSubCategory } from "../types/IsType";
+import { isCategory, isSubCategory } from "../types/IsType";
 
 
 const useCategory = () => {
@@ -18,10 +18,21 @@ const useCategory = () => {
   const data = subCategory ? subCategory : category;
 
   const handleSubmit = async (formRef: MutableRefObject<HTMLFormElement>) => {
+    if (isCategory(data)) {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const category = {
+        code: readFormField(formRef, "code"),
+        title: readFormField(formRef, "title")
+      }
+      if (create) {
+        // dispatch(saveCategory(category));
+      } else {
+        // dispatch(updateCategory(data.id, category));
+      }
+    }
     if (isSubCategory(data)) {
       const subCategory = {
         categoryId: data.categoryId,
-        code: readFormField(formRef, "code"),
         description: readFormField(formRef, "description")
       };
       if (create) {

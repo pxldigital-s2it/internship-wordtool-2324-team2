@@ -3,7 +3,8 @@ enum FieldType {
   TEXTAREA = "textarea",
   INPUT = "input",
   LABEL = "label",
-  SPAN = "span"
+  SPAN = "span",
+  COLOUR_INPUT = "colour-input",
 }
 
 export default FieldType;

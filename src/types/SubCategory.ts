@@ -4,7 +4,6 @@ interface SubCategory {
   id?: string;
   categoryId: string;
   description?: string;
-  code: Nullable<string>;
 }
 
 export interface DisplayableSubCategory {

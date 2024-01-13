@@ -16,7 +16,7 @@ describe("useCategory Test Suite", () => {
     ...STATE,
     modal: {
       ...STATE.modal,
-      category: { colour: "#000000", id: "123", title: "123" }
+      category: { code: "123", colour: "#000000", id: "123", title: "123" }
     }
   };
 
@@ -24,8 +24,8 @@ describe("useCategory Test Suite", () => {
     ...STATE,
     modal: {
       ...STATE.modal,
-      category: { colour: "#000000", id: "123", title: "123" },
-      subCategory: { categoryId: "123", code: "123", description: "123" }
+      category: { code: "123", colour: "#000000", id: "123", title: "123" },
+      subCategory: { categoryId: "123", description: "123" }
     }
   };
 
@@ -84,7 +84,6 @@ describe("useCategory Test Suite", () => {
         const { unmount } = renderHookWithProviders(async () => {
           const result = useCategory();
           const form = addFormSupport(new Map([
-            ["code-input", "testCode"],
             ["description-input", "testDescription"]
           ]));
           const ref = useRef<HTMLFormElement>(form);
@@ -96,7 +95,6 @@ describe("useCategory Test Suite", () => {
           expect(axiosMock.history.post.length).toBe(1);
           expect(axiosMock.history.post[0].data).toBe(JSON.stringify({
             categoryId: "123",
-            code: "testCode",
             description: "testDescription"
           }));
         }, { preloadedState: stateWithCategoryAndSubCategory });
@@ -110,7 +108,6 @@ describe("useCategory Test Suite", () => {
           const result = useCategory();
 
           const form = addFormSupport(new Map([
-            ["code-input", "testCode"],
             ["description-input", "testDescription"]
           ]));
           const ref = useRef<HTMLFormElement>(form);
@@ -122,7 +119,6 @@ describe("useCategory Test Suite", () => {
           expect(axiosMock.history.put.length).toBe(1);
           expect(axiosMock.history.put[0].data).toBe(JSON.stringify({
             categoryId: "123",
-            code: "testCode",
             description: "testDescription"
           }));
         }, {

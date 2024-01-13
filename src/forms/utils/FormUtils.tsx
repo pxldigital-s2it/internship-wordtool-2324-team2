@@ -5,12 +5,31 @@ import Category from "../../types/Category";
 import SubCategory, { DisplayableSubCategory } from "../../types/SubCategory";
 import { isCategory } from "../../types/IsType";
 import FieldType from "../../types/FieldType";
+import { categoryClassNames } from "../../components/category/maincategory/Category.styles";
 
 export const formatData = (data: Category | SubCategory, categoryTitle?: string) => {
   if (isCategory(data)) {
-    return [{}];
+    return [
+      {
+        content: data.title,
+        id: "title",
+        label: "Titel:",
+        type: FieldType.INPUT
+      },
+      {
+        content: data.code,
+        id: "code",
+        label: "Code:",
+        type: FieldType.INPUT
+      },
+      {
+        content: data.colour,
+        id: "colour",
+        label: "Kleur:",
+        type: FieldType.COLOUR_INPUT
+      }
+    ];
   }
-
   return [
     {
       content: `[${categoryTitle || "Categorie onbekend"}]`,
@@ -23,12 +42,6 @@ export const formatData = (data: Category | SubCategory, categoryTitle?: string)
       id: "description",
       label: "Beschrijving:",
       type: FieldType.TEXTAREA
-    },
-    {
-      content: data.code || "",
-      id: "code",
-      label: "Code:",
-      type: FieldType.INPUT
     }
   ];
 };
@@ -48,6 +61,11 @@ const renderCell = (type: FieldType, id: string, content: string) => {
     case FieldType.TEXTAREA:
       cell = <Textarea appearance="outline" required id={`${id}-input`} defaultValue={content} />;
       break;
+    case FieldType.COLOUR_INPUT:
+      cell = <div
+        className={categoryClassNames.colorSquare}
+        style={{ backgroundColor: "#fff" }}
+      />;
   }
 
   return <TableCell>{cell}</TableCell>;

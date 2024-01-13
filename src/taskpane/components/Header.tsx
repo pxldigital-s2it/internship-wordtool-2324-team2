@@ -2,7 +2,7 @@ import * as React from "react";
 import { Image, makeStyles, tokens } from "@fluentui/react-components";
 import { categoryContextMenu } from "../../patterns/observer";
 import { useAppDispatch } from "../../redux/hooks";
-import { runOpenCreateSubCategoryModal, runOpenUpdateSubCategoryModal } from "../../middleware/modal/ModalMiddleware";
+import { openCreateSubCategoryModal, openUpdateSubCategoryModal } from "../../middleware/modal/ModalMiddleware";
 import { ContextMenu, Modal } from "../../components";
 
 export interface HeaderProps {
@@ -34,11 +34,11 @@ const Header: React.FC<HeaderProps> = (props: HeaderProps) => {
 
   const exampleContextMenuItems = [
     {
-      handler: () => dispatch(runOpenCreateSubCategoryModal("category_1")),
+      handler: () => dispatch(openCreateSubCategoryModal("category_1")),
       label: categoryContextMenu.getSubCategoryLabel()
     },
     {
-      handler: () => dispatch(runOpenUpdateSubCategoryModal("sub_category_1")),
+      handler: () => dispatch(openUpdateSubCategoryModal("sub_category_1")),
       label: categoryContextMenu.getEditLabel()
     },
     {

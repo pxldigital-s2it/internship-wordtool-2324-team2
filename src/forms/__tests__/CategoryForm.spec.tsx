@@ -13,7 +13,6 @@ jest.mock("../../hooks/useCategory");
 describe("CategoryForm Test Suite", () => {
   const subCategory: SubCategory = {
     categoryId: "testCategoryId",
-    code: "testCode",
     description: "testDescription",
     id: "testId"
   };
@@ -53,9 +52,6 @@ describe("CategoryForm Test Suite", () => {
     expect(getByText("Bevestigen")).toBeDisabled();
 
     fireEvent.change(container.querySelector("textarea#description-input"), { target: { value: "test" } });
-    expect(getByText("Bevestigen")).toBeDisabled();
-
-    fireEvent.change(container.querySelector("input#code-input"), { target: { value: "test" } });
     expect(getByText("Bevestigen")).not.toBeDisabled();
 
     fireEvent.click(getByText("Bevestigen"));

@@ -9,17 +9,16 @@ import FieldType from "../../../types/FieldType";
 describe("FormUtils Test Suite", () => {
 
   const category: Category = {
+    code: "123",
     colour: "#000000",
     id: "1",
     title: "Category 1"
   };
   const partialSubCategory: SubCategory = {
-    categoryId: "1",
-    code: null
+    categoryId: "1"
   };
   const subCategory: SubCategory = {
     ...partialSubCategory,
-    code: "1",
     description: "SubCategory 1",
     id: "1"
   };
@@ -28,38 +27,51 @@ describe("FormUtils Test Suite", () => {
 
     // TODO: isCategory
     test("isCategory", () => {
-      expect(formatData(category)).toEqual([{}]);
+      expect(formatData(category)).toEqual([{
+        content: "Category 1",
+        id: "title",
+        label: "Titel:",
+        type: "input"
+      },
+        {
+          content: "123",
+          id: "code",
+          label: "Code:",
+          type: "input"
+        },
+        {
+          content: "#000000",
+          id: "colour",
+          label: "Kleur:",
+          type: "colour-input"
+        }]);
     });
 
     test("isSubCategory partial with categoryTitle", () => {
       expect(formatData(partialSubCategory, category.title)).toEqual([
         { content: "[Category 1]", id: "category", label: "Categorie:", type: "text" },
-        { content: "", id: "description", label: "Beschrijving:", type: "textarea" },
-        { content: "", id: "code", label: "Code:", type: "input" }
+        { content: "", id: "description", label: "Beschrijving:", type: "textarea" }
       ]);
     });
 
     test("isSubCategory partial without categoryTitle", () => {
       expect(formatData(partialSubCategory)).toEqual([
         { content: "[Categorie onbekend]", id: "category", label: "Categorie:", type: "text" },
-        { content: "", id: "description", label: "Beschrijving:", type: "textarea" },
-        { content: "", id: "code", label: "Code:", type: "input" }
+        { content: "", id: "description", label: "Beschrijving:", type: "textarea" }
       ]);
     });
 
     test("isSubCategory with categoryTitle", () => {
       expect(formatData(subCategory, category.title)).toEqual([
         { content: "[Category 1]", id: "category", label: "Categorie:", type: "text" },
-        { content: "SubCategory 1", id: "description", label: "Beschrijving:", type: "textarea" },
-        { content: "1", id: "code", label: "Code:", type: "input" }
+        { content: "SubCategory 1", id: "description", label: "Beschrijving:", type: "textarea" }
       ]);
     });
 
     test("isSubCategory without categoryTitle", () => {
       expect(formatData(subCategory)).toEqual([
         { content: "[Categorie onbekend]", id: "category", label: "Categorie:", type: "text" },
-        { content: "SubCategory 1", id: "description", label: "Beschrijving:", type: "textarea" },
-        { content: "1", id: "code", label: "Code:", type: "input" }
+        { content: "SubCategory 1", id: "description", label: "Beschrijving:", type: "textarea" }
       ]);
     });
 
@@ -109,11 +121,10 @@ describe("FormUtils Test Suite", () => {
       const { container } = render(_renderRow(partialSubCategory));
 
       checkRows(container,
-        ["Categorie:", "Beschrijving:", "Code:"],
+        ["Categorie:", "Beschrijving:"],
         [
           { fieldType: FieldType.SPAN, value: "[Categorie onbekend]" },
-          { fieldType: FieldType.TEXTAREA, value: "" },
-          { fieldType: FieldType.INPUT, value: "" }]
+          { fieldType: FieldType.TEXTAREA, value: "" }]
       );
     });
 
@@ -121,11 +132,10 @@ describe("FormUtils Test Suite", () => {
       const { container } = render(_renderRow(subCategory, category.title));
 
       checkRows(container,
-        ["Categorie:", "Beschrijving:", "Code:"],
+        ["Categorie:", "Beschrijving:"],
         [
           { fieldType: FieldType.SPAN, value: "[Category 1]" },
-          { fieldType: FieldType.TEXTAREA, value: "SubCategory 1" },
-          { fieldType: FieldType.INPUT, value: "1" }]
+          { fieldType: FieldType.TEXTAREA, value: "SubCategory 1" }]
       );
     });
 
