@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { mergeStyleSets } from '@fluentui/react/lib/Styling';
-import {AddButton, Category, Modal} from "../../components";
+import { AddButton, Category, Modal } from "../../components";
 
 // styles for the taskpane and the title bar
 const taskPaneClassNames = mergeStyleSets({
