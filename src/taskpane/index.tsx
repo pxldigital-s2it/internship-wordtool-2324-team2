@@ -5,11 +5,16 @@ import { FluentProvider, webLightTheme } from "@fluentui/react-components";
 import { Provider } from "react-redux";
 import store from "../redux/store";
 import { initializeIcons } from "@fluentui/react/lib/Icons";
+import { setIconOptions } from "@fluentui/react";
 
 // initialize icons before the app renders
 initializeIcons();
+setIconOptions({
+  disableWarnings: true
+});
+
 const rootElement: HTMLElement = document.getElementById("container");
-const root = createRoot(rootElement);
+const root = createRoot(rootElement)
 
 /* Render application after Office initializes */
 Office.onReady(() => {

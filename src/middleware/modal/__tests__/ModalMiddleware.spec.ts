@@ -1,8 +1,8 @@
 import { setCategory, setCreate, setOpen, setSubCategory, setTitle } from "../../../redux/modal/modal.slice";
 import { addMockAdapterSupport, callAndCheckDispatchCalls } from "../../../__tests__/utils/TestUtils";
 import {
-  runOpenCreateSubCategoryModal,
-  runOpenUpdateSubCategoryModal,
+  openCreateSubCategoryModal,
+  openUpdateSubCategoryModal,
   saveSubCategory,
   updateSubCategory
 } from "../ModalMiddleware";
@@ -22,7 +22,7 @@ describe("ModalMiddleware Test Suite", () => {
     const categoryId = "123";
     const URL = `http://localhost:3001/categories?id=${categoryId}`;
 
-    const _callAndCheckDispatchCalls = async (dispatchCalls: string[]) => await callAndCheckDispatchCalls(runOpenCreateSubCategoryModal(categoryId), dispatchCalls);
+    const _callAndCheckDispatchCalls = async (dispatchCalls: string[]) => await callAndCheckDispatchCalls(openCreateSubCategoryModal(categoryId), dispatchCalls);
 
     test("happy path", async () => {
       const dispatchCalls = [
@@ -68,11 +68,11 @@ describe("ModalMiddleware Test Suite", () => {
     const subCategoryId = "123";
     const subCategory: SubCategory = {
       categoryId: "Some categoryId",
-      code: "Some code",
       description: "Some description",
       id: subCategoryId
     };
     const category: Category = {
+      code: "Some code",
       colour: "#000000",
       id: "1",
       title: "testTitle"
@@ -80,7 +80,7 @@ describe("ModalMiddleware Test Suite", () => {
     const SUBCATEGORY_URL = `http://localhost:3001/subCategories?id=${subCategoryId}`
     const CATEGORY_URL = `http://localhost:3001/categories?id=${subCategory.categoryId}`;
 
-    const _callAndCheckDispatchCalls = async (dispatchCalls) => await callAndCheckDispatchCalls(runOpenUpdateSubCategoryModal(subCategoryId), dispatchCalls);
+    const _callAndCheckDispatchCalls = async (dispatchCalls) => await callAndCheckDispatchCalls(openUpdateSubCategoryModal(subCategoryId), dispatchCalls);
 
     test("happy path", async () => {
       const dispatchCalls = [

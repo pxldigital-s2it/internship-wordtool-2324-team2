@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { mergeStyleSets } from '@fluentui/react/lib/Styling';
-import { AddButton, Category } from "../../components";
+import { AddButton, Category, Modal } from "../../components";
 
 // styles for the taskpane and the title bar
 const taskPaneClassNames = mergeStyleSets({
@@ -23,6 +23,7 @@ const TaskPane = () => {
   return (
     <div>
       <div className={taskPaneClassNames.titleBar}>MayDay</div>
+      <Modal />
       <div className={taskPaneClassNames.taskPane}>
         <Category id={0} name="Categorie 1" sections={7} />
         <Category id={1} name="Categorie 2" sections={1} />
