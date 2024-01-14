@@ -7,9 +7,9 @@ import { CategoryComponent } from "../../../index";
 
 describe('CategoryComponent Test Suite', () => {
   const DEFAULT_PROPS: { id: string; title: string, code: Nullable<string>, colour: string, subCategories: SubCategory[] } = {
-    code: null, // random id
+    code: null,
     colour: "#" + Math.floor(Math.random() * 16777215).toString(16),  // random colour
-    id: Math.random().toString(36),
+    id: Math.random().toString(36), // random id
     subCategories: [],
     title: "Category"
   };
