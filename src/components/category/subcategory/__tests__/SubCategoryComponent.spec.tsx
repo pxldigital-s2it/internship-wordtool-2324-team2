@@ -28,14 +28,14 @@ describe('SubCategoryComponent Integration Test Suite', () => {
     title: "Test Category"
   };
   test('Initial render', () => {
-    const { getByText } = render(<SubCategoryComponent categoryId={mockCategory.id} />);
-    expect(getByText('SubCategoryComponent Content')).toBeInTheDocument();
+    const { getByText } = renderWithProviders(<SubCategoryComponent key={mockSubCategories[0].id} {...mockSubCategories[0]} />, { preloadedState: initialState });
+    expect(getByText(mockSubCategories[0].description)).toBeInTheDocument();
   });
 
   test('Context menu opens on right click', () => {
-    const { getByText } = render(<SubCategoryComponent categoryId={mockCategory.id} />);
+    const { getByText } = renderWithProviders(<SubCategoryComponent categoryId={mockCategory.id} {...mockSubCategories[0]} />, { preloadedState: initialState });
 
-    const subCategoryComponentContent = getByText('SubCategoryComponent Content');
+    const subCategoryComponentContent = getByText(mockSubCategories[0].description);
 
     fireEvent.contextMenu(subCategoryComponentContent);
 
@@ -46,7 +46,7 @@ describe('SubCategoryComponent Integration Test Suite', () => {
   });
   
   test('SubCategoryComponent renders within CategoryComponent', () => {
-    const { getByText, queryByText, container } = render(<CategoryComponent {...mockCategory} />);
+    const { getByText, queryByText, container } = renderWithProviders(<CategoryComponent {...mockCategory} />, { preloadedState: initialState });
     const categoryTitleWithCount = `${mockCategory.title} (${mockSubCategories.length})`;
 
     // check if CategoryComponent renders correctly with title and subcategory count
