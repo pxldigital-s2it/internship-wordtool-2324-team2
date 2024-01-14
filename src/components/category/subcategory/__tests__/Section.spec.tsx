@@ -1,28 +1,17 @@
 import React from "react";
 import Section from "../Section";
-import {fireEvent, render} from "@testing-library/react";
-
-import { Provider } from 'react-redux';
-import configureStore from 'redux-mock-store';
-import {initialState as DEFAULT_MODAL_STATE} from "../../../../redux/modal/modal.slice";
+import { fireEvent } from "@testing-library/react";
+import { initialState } from "../../../../redux/store";
+import {renderWithProviders} from "../../../../__tests__/utils/TestUtils";
 
 describe('Section Test Suite', () => {
     test('Initial render', () => {
-      const { getByText } = render(<Section />);
+      const { getByText } = renderWithProviders(<Section />, { preloadedState: initialState });
       expect(getByText('Section Content')).toBeInTheDocument();
     });
 
     test('Context menu opens on right click', () => {
-        const initialState = {
-            modal: DEFAULT_MODAL_STATE
-        };
-        const mockStore = configureStore();
-        const store = mockStore(initialState);
-
-        const { getByText } = render(
-            <Provider store={store}>
-                <Section />
-            </Provider>);
+        const { getByText } = renderWithProviders(<Section />, { preloadedState: initialState });
 
         const sectionContent = getByText('Section Content');
 
