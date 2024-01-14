@@ -9,7 +9,7 @@ import {useAppDispatch} from "../../../redux/hooks";
 const Section: React.FC = () => {
     const dispatch = useAppDispatch();
 
-    const exampleContextMenuItems = [
+    const menuItems = [
         {
             handler: () => dispatch(runOpenUpdateSubCategoryModal("sub_category_1")),
             label: categoryContextMenu.getEditLabel()
@@ -22,7 +22,7 @@ const Section: React.FC = () => {
 
   return (
     <div className={sectionClassNames.section}>
-        <ContextMenu trigger={<span className={sectionClassNames.sectionText}>Section Content</span>} menuItems={exampleContextMenuItems} />
+        <ContextMenu trigger={<span className={sectionClassNames.sectionText}>Section Content</span>} menuItems={menuItems} />
     </div>
   );
 };

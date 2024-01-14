@@ -18,6 +18,8 @@ describe('Section Test Suite', () => {
         fireEvent.contextMenu(sectionContent);
 
         const contextMenuWijzigen = getByText('Wijzigen');
+        const contextMenuVerwijderen = getByText('Verwijderen');
         expect(contextMenuWijzigen).toBeInTheDocument();
+        expect(contextMenuVerwijderen).toBeInTheDocument();
     });
 });
