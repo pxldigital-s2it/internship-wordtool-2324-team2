@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { sectionClassNames } from './Section.styles';
 import {ContextMenu} from "../../index";
-import {runOpenUpdateSubCategoryModal} from "../../../middleware/modal/ModalMiddleware";
+import {openUpdateSubCategoryModal} from "../../../middleware/modal/ModalMiddleware";
 import {categoryContextMenu} from "../../../patterns/observer";
 import {useAppDispatch} from "../../../redux/hooks";
 
@@ -11,7 +11,7 @@ const Section: React.FC = () => {
 
     const menuItems = [
         {
-            handler: () => dispatch(runOpenUpdateSubCategoryModal("sub_category_1")),
+            handler: () => dispatch(openUpdateSubCategoryModal("sub_category_1")),
             label: categoryContextMenu.getEditLabel()
         },
         {
