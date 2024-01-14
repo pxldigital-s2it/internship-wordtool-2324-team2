@@ -11,7 +11,7 @@ const Section: React.FC = () => {
 
     const menuItems = [
         {
-            handler: () => dispatch(openUpdateSubCategoryModal("sub_category_1")),
+            handler: () => dispatch(openUpdateSubCategoryModal("sub_category_1_1")),
             label: categoryContextMenu.getEditLabel()
         },
         {
@@ -19,7 +19,7 @@ const Section: React.FC = () => {
             label: categoryContextMenu.getDeleteLabel()
         }
     ];
-// TESTS: zit buiten de container
+
   return (
     <div className={sectionClassNames.section}>
         <ContextMenu trigger={<span className={sectionClassNames.sectionText}>Section Content</span>} menuItems={menuItems} />
