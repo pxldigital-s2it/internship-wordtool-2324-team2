@@ -14,7 +14,7 @@ const SubCategoryComponent: React.FC<SubCategory> = ({ id, categoryId, descripti
 
   const menuItems = [
     {
-      handler: () => dispatch(openUpdateSubCategoryModal("sub_category_1_1")),
+      handler: () => dispatch(openUpdateSubCategoryModal(id)),
       label: categoryContextMenu.getEditLabel()
     },
     {
