@@ -52,7 +52,7 @@ describe('CategoryComponent Test Suite', () => {
     const { getByText, queryByText } = render(createComponent(DEFAULT_PROPS));
 
     // Simulate right-click on the header
-    fireEvent.contextMenu(getByText(`${DEFAULT_PROPS.name} (${DEFAULT_PROPS.sections})`));
+    fireEvent.contextMenu(getByText(`${DEFAULT_PROPS.title}${DEFAULT_PROPS.subCategories.length > 0 ? ` (${DEFAULT_PROPS.subCategories.length})` : ''}`));
 
     // Check if the context menu opens with the correct options
     expect(queryByText('Bewerken')).toBeInTheDocument();

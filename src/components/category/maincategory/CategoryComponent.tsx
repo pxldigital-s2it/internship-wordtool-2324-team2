@@ -1,9 +1,8 @@
 import * as React from 'react';
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import { IconButton } from '@fluentui/react/lib/Button';
 import SubCategoryComponent from "../subcategory/SubCategoryComponent";
 import Category from '../../../types/Category';
-import { CategoryProps } from "./Category.types";
 import { categoryClassNames } from './CategoryComponent.styles';
 import { ContextMenu } from "../../index";
 
