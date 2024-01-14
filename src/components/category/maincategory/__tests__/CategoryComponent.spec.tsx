@@ -1,24 +1,27 @@
-import { CategoryProps } from "../Category.types";
-import Category from "../Category";
 import React from "react";
 import { fireEvent, render } from "@testing-library/react";
-import { categoryClassNames } from "../Category.styles";
+import { categoryClassNames } from "../CategoryComponent.styles";
+import Category from "../../../../types/Category";
+import SubCategory from "../../../../types/SubCategory";
+import { CategoryComponent } from "../../../index";
 
-describe('Category Test Suite', () => {
-  const DEFAULT_PROPS: CategoryProps = {
-    id: 1,
-    name: 'Category',
-    sections: 2
+describe('CategoryComponent Test Suite', () => {
+  const DEFAULT_PROPS: { id: string; title: string, code: Nullable<string>, colour: string, subCategories: SubCategory[] } = {
+    code: null, // random id
+    colour: "#" + Math.floor(Math.random() * 16777215).toString(16),  // random colour
+    id: Math.random().toString(36),
+    subCategories: [],
+    title: "Category"
   };
 
-  const createComponent = (props: CategoryProps) => {
-    return <Category {...props} />;
+  const createComponent = (props: Category) => {
+    return <CategoryComponent {...props} />;
   }
 
   test('Initial render', () => {
     const { getByText } = render(createComponent(DEFAULT_PROPS));
 
-    expect(getByText(`${DEFAULT_PROPS.name} (${DEFAULT_PROPS.sections})`)).toBeInTheDocument();
+    expect(getByText(`${DEFAULT_PROPS.title}`)).toBeInTheDocument();
   });
 
   test('Clicking on the header toggles the content', () => {
@@ -27,7 +30,7 @@ describe('Category Test Suite', () => {
     expect(container.querySelector(`div.${categoryClassNames.categoryContent}`)).not.toBeInTheDocument();
     expect(container.querySelector('i[data-icon-name="ChevronRight"]')).toBeInTheDocument();
 
-    fireEvent.click(getByText(`${DEFAULT_PROPS.name} (${DEFAULT_PROPS.sections})`));
+    fireEvent.click(getByText(`${DEFAULT_PROPS.title}`));
 
     expect(container.querySelector(`div.${categoryClassNames.categoryContent}`)).toBeInTheDocument();
     expect(container.querySelector('i[data-icon-name="ChevronDown"]')).toBeInTheDocument();
