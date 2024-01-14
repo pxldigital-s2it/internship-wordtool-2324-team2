@@ -45,4 +45,15 @@ describe('Category Test Suite', () => {
     expect(container.querySelector('i[data-icon-name="ChevronDown"]')).toBeInTheDocument();
   });
 
+  test('Right-clicking on the header opens the context menu with correct options', () => {
+    const { getByText, queryByText } = render(createComponent(DEFAULT_PROPS));
+
+    // Simulate right-click on the header
+    fireEvent.contextMenu(getByText(`${DEFAULT_PROPS.name} (${DEFAULT_PROPS.sections})`));
+
+    // Check if the context menu opens with the correct options
+    expect(queryByText('Bewerken')).toBeInTheDocument();
+    expect(queryByText('Verwijderen')).toBeInTheDocument();
+  });
+
 });
