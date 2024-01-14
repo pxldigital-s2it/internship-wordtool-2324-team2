@@ -19,7 +19,7 @@ const Section: React.FC = () => {
             label: categoryContextMenu.getDeleteLabel()
         }
     ];
-// TESTS: zit buiten de container
+
   return (
     <div className={sectionClassNames.section}>
         <ContextMenu trigger={<span className={sectionClassNames.sectionText}>Section Content</span>} menuItems={exampleContextMenuItems} />
