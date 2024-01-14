@@ -4,6 +4,9 @@ import CategoryComponent from "../../maincategory/CategoryComponent";
 import Category from "../../../../types/Category";
 import SubCategory from "../../../../types/SubCategory";
 import { categoryClassNames } from "../../maincategory/CategoryComponent.styles";
+import SubCategoryComponent from "../SubCategoryComponent";
+import { renderWithProviders } from "../../../../__tests__/utils/TestUtils";
+import { initialState } from "../../../../redux/store";
 
 describe('SubCategoryComponent Integration Test Suite', () => {
   const mockSubCategories: SubCategory[] = [
@@ -24,7 +27,24 @@ describe('SubCategoryComponent Integration Test Suite', () => {
     subCategories: mockSubCategories,
     title: "Test Category"
   };
+  test('Initial render', () => {
+    const { getByText } = render(<SubCategoryComponent categoryId={mockCategory.id} />);
+    expect(getByText('SubCategoryComponent Content')).toBeInTheDocument();
+  });
 
+  test('Context menu opens on right click', () => {
+    const { getByText } = render(<SubCategoryComponent categoryId={mockCategory.id} />);
+
+    const subCategoryComponentContent = getByText('SubCategoryComponent Content');
+
+    fireEvent.contextMenu(subCategoryComponentContent);
+
+    const contextMenuWijzigen = getByText('Wijzigen');
+    const contextMenuVerwijderen = getByText('Verwijderen');
+    expect(contextMenuWijzigen).toBeInTheDocument();
+    expect(contextMenuVerwijderen).toBeInTheDocument();
+  });
+  
   test('SubCategoryComponent renders within CategoryComponent', () => {
     const { getByText, queryByText, container } = render(<CategoryComponent {...mockCategory} />);
     const categoryTitleWithCount = `${mockCategory.title} (${mockSubCategories.length})`;
