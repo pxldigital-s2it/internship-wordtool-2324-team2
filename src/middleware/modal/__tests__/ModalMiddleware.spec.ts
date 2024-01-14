@@ -8,6 +8,7 @@ import {
 } from "../ModalMiddleware";
 import SubCategory from "../../../types/SubCategory";
 import Category from "../../../types/Category";
+import { setColour } from "../../../redux/category/category.slice";
 
 describe("ModalMiddleware Test Suite", () => {
 
@@ -139,7 +140,7 @@ describe("ModalMiddleware Test Suite", () => {
       id: "Some id"
     };
 
-    const _callAndCheckDispatchCalls = async (dispatchCalls) => await callAndCheckDispatchCalls(saveSubCategory(subCategory), dispatchCalls);
+    const _callAndCheckDispatchCalls = async (dispatchCalls: (string | undefined)[]) => await callAndCheckDispatchCalls(saveSubCategory(subCategory), dispatchCalls);
 
 
     test("happy path", async () => {
@@ -148,7 +149,8 @@ describe("ModalMiddleware Test Suite", () => {
         setOpen.type,
         setSubCategory.type,
         setTitle.type,
-        setCategory.type
+        setCategory.type,
+        setColour.type
       ];
 
       axiosMock.onPost(URL, subCategory).reply(200);
@@ -186,7 +188,8 @@ describe("ModalMiddleware Test Suite", () => {
         setOpen.type,
         setSubCategory.type,
         setTitle.type,
-        setCategory.type
+        setCategory.type,
+        setColour.type
       ];
 
       axiosMock.onPut(URL, subCategory).reply(200);

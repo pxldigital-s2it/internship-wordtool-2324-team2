@@ -1,41 +1,30 @@
-import * as React from 'react';
-import { useState } from 'react';
-import { IconButton } from '@fluentui/react/lib/Button';
+import * as React from "react";
+import { useState } from "react";
 import SubCategoryComponent from "../subcategory/SubCategoryComponent";
-import Category from '../../../types/Category';
-import { categoryClassNames } from './CategoryComponent.styles';
+import Category from "../../../types/Category";
+import { categoryClassNames } from "./CategoryComponent.styles";
 import { ContextMenu } from "../../index";
+import CategoryHeader from "./CategoryHeader";
+import { openCreateSubCategoryModal, openUpdateCategoryModal } from "../../../middleware/modal/ModalMiddleware";
+import { categoryContextMenu } from "../../../patterns/observer";
+import { useAppDispatch } from "../../../redux/hooks";
 
 const CategoryComponent: React.FC<Category> = ({ id, title, colour, subCategories }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const dispatch = useAppDispatch();
 
   return (
     <div>
-      <ContextMenu trigger={
-        <div
-          id={`${id}`}
-          className={categoryClassNames.categoryHeader}
-          onClick={() => setIsOpen(!isOpen)}
-        >
-          <IconButton
-            iconProps={{ iconName: isOpen ? 'ChevronDown' : 'ChevronRight' }}
-            className={categoryClassNames.arrowIcon}
-            onClick={() => setIsOpen(!isOpen)}
-          />
-          {title} {subCategories && subCategories.length > 0 && `(${subCategories.length})`}
-          <div
-            className={categoryClassNames.colorSquare}
-            style={{ backgroundColor: colour }}
-          />
-        </div>
-      }
+      <ContextMenu trigger={<CategoryHeader colour={colour} id={id} isOpen={isOpen} setIsOpen={setIsOpen} sections={subCategories.length} name={title} />}
        menuItems={
          [
            {
-             handler: () => {
-               console.log(`Edit category ${id}`);
-             },
-             label: "Bewerken"
+             handler: () => dispatch(openCreateSubCategoryModal(id)),
+             label: categoryContextMenu.getSubCategoryLabel()
+           },
+           {
+             handler: () => dispatch(openUpdateCategoryModal(id)),
+             label: categoryContextMenu.getEditLabel()
            },
            {
              handler: () => {

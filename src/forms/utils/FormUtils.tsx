@@ -2,10 +2,11 @@ import { Input, Label, TableCell, TableRow, Text, Textarea } from "@fluentui/rea
 import * as React from "react";
 import { MutableRefObject } from "react";
 import Category from "../../types/Category";
-import SubCategory, { DisplayableSubCategory } from "../../types/SubCategory";
+import SubCategory from "../../types/SubCategory";
 import { isCategory } from "../../types/IsType";
 import FieldType from "../../types/FieldType";
-import { categoryClassNames } from "../../components/category/maincategory/CategoryComponent.styles";
+import { ColourPickerComponent } from "../../components";
+import { DisplayableCategory } from "./FormUtils.types";
 
 export const formatData = (data: Category | SubCategory, categoryTitle?: string) => {
   if (isCategory(data)) {
@@ -62,16 +63,13 @@ const renderCell = (type: FieldType, id: string, content: string) => {
       cell = <Textarea appearance="outline" required id={`${id}-input`} defaultValue={content} />;
       break;
     case FieldType.COLOUR_INPUT:
-      cell = <div
-        className={categoryClassNames.colorSquare}
-        style={{ backgroundColor: "#fff" }}
-      />;
+      cell = <ColourPickerComponent />;
   }
 
   return <TableCell>{cell}</TableCell>;
 };
 
-export const renderRow = (data: DisplayableSubCategory) =>
+export const renderRow = (data: DisplayableCategory) =>
   (<TableRow appearance="brand" key={data.id}>
     {renderCell(FieldType.LABEL, data.id, data.label)}
     {renderCell(data.type, data.id, data.content)}

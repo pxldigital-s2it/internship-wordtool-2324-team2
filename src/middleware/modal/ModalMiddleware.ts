@@ -11,6 +11,8 @@ import Category from "../../types/Category";
 import axios from "axios";
 import SubCategory from "../../types/SubCategory";
 import STRING_RESOURCES from "../../components/buttons/Strings";
+import { setColour } from "../../redux/category/category.slice";
+import { loadData } from "../category/CategoryMiddleware";
 
 
 export const openCreateCategoryModal = () => {
@@ -51,6 +53,30 @@ export const openCreateSubCategoryModal = (categoryId: string) => {
   };
 };
 
+
+export const openUpdateCategoryModal = (categoryId: string) => {
+    return async (dispatch: AppDispatch) => {
+      try {
+        const response = await axios.get<Category[]>(`http://localhost:3001/categories?id=${categoryId}`);
+        if (response.data.length) {
+          const category = response.data[0];
+          dispatch(setTitle(categoryContextMenu.getEditLabel()));
+          dispatch(setCreate(false));
+          dispatch(setCategory(category));
+          dispatch(setColour(category.colour));
+          dispatch(setSubCategory(undefined));
+          dispatch(setOpen(true));
+
+        } else {
+          throw new Error("Geen unieke categorie kunnen vinden.");
+        }
+      } catch (e) {
+        // TODO: Toast to notify user smth went wrong.
+        console.error(e.message);
+      }
+    };
+  };
+
 export const openUpdateSubCategoryModal = (subCategoryId: string) => {
   return async (dispatch: AppDispatch) => {
     try {
@@ -78,12 +104,39 @@ export const openUpdateSubCategoryModal = (subCategoryId: string) => {
   };
 };
 
-const closeModal = () => {
+export const closeModal = () => {
   return (dispatch: AppDispatch) => {
     dispatch(setOpen(false));
     dispatch(setSubCategory(undefined));
     dispatch(setTitle(""));
     dispatch(setCategory(undefined));
+    dispatch(setColour(undefined));
+  };
+};
+
+export const saveCategory = (category: Category) => {
+  return async (dispatch: AppDispatch) => {
+    try {
+      await axios.post<Category>("http://localhost:3001/categories", category);
+      await dispatch(loadData());
+      dispatch(closeModal());
+    } catch (e) {
+      // TODO: Toast to notify user smth went wrong.
+      console.error(e.message);
+    }
+  };
+};
+
+export const updateCategory = (id: string, category: Category) => {
+  return async (dispatch: AppDispatch) => {
+    try {
+      await axios.put<Category>(`http://localhost:3001/categories/${id}`, category);
+      await dispatch(loadData());
+      dispatch(closeModal());
+    } catch (e) {
+      // TODO: Toast to notify user smth went wrong.
+      console.error(e.message);
+    }
   };
 };
 
@@ -91,6 +144,7 @@ export const saveSubCategory = (subCategory: SubCategory) => {
   return async (dispatch: AppDispatch) => {
     try {
       await axios.post<SubCategory>("http://localhost:3001/subCategories", subCategory);
+      await dispatch(loadData());
       dispatch(closeModal());
     } catch (e) {
       // TODO: Toast to notify user smth went wrong.
@@ -103,6 +157,7 @@ export const updateSubCategory = (id: string, subCategory: SubCategory) => {
   return async (dispatch: AppDispatch) => {
     try {
       await axios.put<SubCategory>(`http://localhost:3001/subCategories/${id}`, subCategory);
+      await dispatch(loadData());
       dispatch(closeModal());
     } catch (e) {
       // TODO: Toast to notify user smth went wrong.

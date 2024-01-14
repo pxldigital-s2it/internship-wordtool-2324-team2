@@ -1,11 +1,11 @@
 import SubCategory from "./SubCategory";
 
 interface Category {
-  id: string
-  title: string
-  code?: Nullable<string>
-  colour?: string,
+  code: Nullable<string>
+  colour?: string
+  id?: string
   subCategories?: SubCategory[]
+  title?: string
 }
 
 export default Category;

@@ -8,7 +8,7 @@ export const loadData = () => {
     return async (dispatch: AppDispatch) => {
         try {
             dispatch(loadDataStart());
-            const categoryResponse = await  axios.get<Category[]>('http://localhost:3001/categories');
+            const categoryResponse = await axios.get<Category[]>('http://localhost:3001/categories');
             const categories = categoryResponse.data;
             const subCategoriesResponse = await axios.get<SubCategory[]>('http://localhost:3001/subCategories');
             const subCategories = subCategoriesResponse.data;

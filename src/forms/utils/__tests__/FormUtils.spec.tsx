@@ -1,10 +1,11 @@
 import { render } from "@testing-library/react";
 import Category from "../../../types/Category";
-import SubCategory, { DisplayableSubCategory } from "../../../types/SubCategory";
+import SubCategory from "../../../types/SubCategory";
 import { formatData, renderRow } from "../FormUtils";
 import React from "react";
 import { Table, TableBody } from "@fluentui/react-components";
 import FieldType from "../../../types/FieldType";
+import { DisplayableCategory } from "../FormUtils.types";
 
 describe("FormUtils Test Suite", () => {
 
@@ -84,7 +85,7 @@ describe("FormUtils Test Suite", () => {
     const _renderRow = (data: SubCategory, categoryTitle?: string) => (
       <Table>
         <TableBody>
-          {formatData(data, categoryTitle).map((data: DisplayableSubCategory) => renderRow(data))}
+          {formatData(data, categoryTitle).map((data: DisplayableCategory) => renderRow(data))}
         </TableBody>
       </Table>
     );
