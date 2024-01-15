@@ -1,5 +1,5 @@
 import React from "react";
-import { fireEvent, render } from "@testing-library/react";
+import { fireEvent } from "@testing-library/react";
 import CategoryComponent from "../../maincategory/CategoryComponent";
 import Category from "../../../../types/Category";
 import SubCategory from "../../../../types/SubCategory";

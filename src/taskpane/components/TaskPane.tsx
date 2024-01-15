@@ -1,11 +1,10 @@
-import * as React from 'react';
-import { mergeStyleSets } from '@fluentui/react/lib/Styling';
-import { AddButton, CategoryComponent, Modal } from "../../components";
-import { useSelector } from "react-redux";
-import { State } from "../../redux/store.types";
+import * as React from "react";
 import { useEffect } from "react";
-import { loadCategories } from "../../redux/categoryData/categoryData.slice";
-import { useAppDispatch } from "../../redux/hooks"; // Import the action creator
+import { mergeStyleSets } from "@fluentui/react/lib/Styling";
+import { AddButton, CategoryComponent, Modal } from "../../components";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { selectData, selectIsLoading } from "../../redux/category/category.slice";
+import { loadData } from "../../middleware/category/CategoryMiddleware";
 
 // Styles for the taskpane and the title bar
 const taskPaneClassNames = mergeStyleSets({
@@ -26,12 +25,12 @@ const taskPaneClassNames = mergeStyleSets({
 // main task pane component with a title and categories
 const TaskPane: React.FC = () => {
   const dispatch = useAppDispatch();
-  const categories = useSelector((state: State) => state.categoryData.categories);
-  const isLoading = useSelector((state: State) => state.categoryData.isLoading);
+  const categories = useAppSelector(selectData);
+  const isLoading = useAppSelector(selectIsLoading);
 
   // Fetch categories when the component mounts
   useEffect(() => {
-    dispatch(loadCategories());
+    dispatch(loadData());
   }, []);
 
   return (

@@ -1,7 +1,7 @@
 import { ModalState } from "./modal/modal.types";
-import { CategoryDataState } from './categoryData/categoryData.types';
+import { CategoryState } from "./category/category.types";
 
 export interface State {
-  modal: ModalState;
-  categoryData: CategoryDataState;
+  category: CategoryState
+  modal: ModalState
 }

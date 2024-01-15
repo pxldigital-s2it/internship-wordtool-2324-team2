@@ -1,5 +1,3 @@
-'use client';
-
 import * as React from 'react';
 import { sectionClassNames } from './SubCategoryComponent.styles';
 import SubCategory from "../../../types/SubCategory";

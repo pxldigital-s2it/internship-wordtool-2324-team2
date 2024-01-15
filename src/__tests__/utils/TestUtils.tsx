@@ -5,12 +5,12 @@ import { configureStore } from "@reduxjs/toolkit";
 import React, { PropsWithChildren } from "react";
 import { Provider } from "react-redux";
 import modalReducer from "../../redux/modal/modal.slice";
-import categoryDataReducer from '../../redux/categoryData/categoryData.slice'; // Import category data reducer
+import categoryReducer from '../../redux/category/category.slice';
 import { render, renderHook, RenderOptions } from "@testing-library/react";
 
 
 export const callAndCheckDispatchCalls = async (callback: (dispatch: AppDispatch, getState: () => RootState) => Promise<void>, dispatchCalls: string [], state = {
-  categoryData: {
+  category: {
     categories: [],
     error: null,
     isLoading: false
@@ -49,7 +49,7 @@ export const addMockAdapterSupport = () => {
 const configureTestStore = (initialState?: Partial<RootState>) => configureStore({
   preloadedState: initialState,
   reducer: {
-    categoryData: categoryDataReducer,
+    category: categoryReducer,
     modal: modalReducer
   }
 });
