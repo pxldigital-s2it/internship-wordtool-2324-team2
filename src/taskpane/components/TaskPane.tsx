@@ -1,10 +1,13 @@
 import * as React from 'react';
 import { mergeStyleSets } from '@fluentui/react/lib/Styling';
 import { AddButton, CategoryComponent, Modal } from "../../components";
-import { useEffect, useState } from "react";
-import Category from '../../types/Category';
+import { useSelector } from "react-redux";
+import { State } from "../../redux/store.types";
+import { useEffect } from "react";
+import { loadCategories } from "../../redux/categoryData/categoryData.slice";
+import { useAppDispatch } from "../../redux/hooks"; // Import the action creator
 
-// styles for the taskpane and the title bar
+// Styles for the taskpane and the title bar
 const taskPaneClassNames = mergeStyleSets({
   taskPane: {
     padding: "10px 0" // padding above and below the task pane content
@@ -22,24 +25,13 @@ const taskPaneClassNames = mergeStyleSets({
 
 // main task pane component with a title and categories
 const TaskPane: React.FC = () => {
-  const [categories, setCategories] = useState<Category[]>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const dispatch = useAppDispatch();
+  const categories = useSelector((state: State) => state.categoryData.categories);
+  const isLoading = useSelector((state: State) => state.categoryData.isLoading);
 
+  // Fetch categories when the component mounts
   useEffect(() => {
-    // Fetch categories and subCategories in parallel
-    Promise.all([
-      fetch('http://localhost:3001/categories').then(response => response.json()),
-      fetch('http://localhost:3001/subCategories').then(response => response.json())
-    ]).then(([categoriesData, subCategoriesData]) => {
-      // Combine categories with their subCategories
-      const combinedData = categoriesData.map((category) => ({
-        ...category,
-        subCategories: subCategoriesData.filter(subCategory => subCategory.categoryId === category.id)
-      }));
-
-      setCategories(combinedData);
-      setIsLoading(false);
-    });
+    dispatch(loadCategories());
   }, []);
 
   return (
@@ -49,7 +41,6 @@ const TaskPane: React.FC = () => {
       <div className={taskPaneClassNames.taskPane}>
         {isLoading && <div>Aan het laden...</div>}
         {categories && categories.map((category) => (
-          // Display category using CategoryComponent and fill in data
           <CategoryComponent key={category.id} {...category} />
         ))}
         <AddButton />
