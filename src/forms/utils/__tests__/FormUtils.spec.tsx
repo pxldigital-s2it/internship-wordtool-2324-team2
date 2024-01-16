@@ -12,8 +12,10 @@ describe("FormUtils Test Suite", () => {
     code: "123",
     colour: "#000000",
     id: "1",
-    title: "Category 1"
+    subCategories: [],
+    title: "CategoryComponent 1"
   };
+
   const partialSubCategory: SubCategory = {
     categoryId: "1"
   };
@@ -28,7 +30,7 @@ describe("FormUtils Test Suite", () => {
     // TODO: isCategory
     test("isCategory", () => {
       expect(formatData(category)).toEqual([{
-        content: "Category 1",
+        content: "CategoryComponent 1",
         id: "title",
         label: "Titel:",
         type: "input"
@@ -49,7 +51,7 @@ describe("FormUtils Test Suite", () => {
 
     test("isSubCategory partial with categoryTitle", () => {
       expect(formatData(partialSubCategory, category.title)).toEqual([
-        { content: "[Category 1]", id: "category", label: "Categorie:", type: "text" },
+        { content: "[CategoryComponent 1]", id: "category", label: "Categorie:", type: "text" },
         { content: "", id: "description", label: "Beschrijving:", type: "textarea" }
       ]);
     });
@@ -63,7 +65,7 @@ describe("FormUtils Test Suite", () => {
 
     test("isSubCategory with categoryTitle", () => {
       expect(formatData(subCategory, category.title)).toEqual([
-        { content: "[Category 1]", id: "category", label: "Categorie:", type: "text" },
+        { content: "[CategoryComponent 1]", id: "category", label: "Categorie:", type: "text" },
         { content: "SubCategory 1", id: "description", label: "Beschrijving:", type: "textarea" }
       ]);
     });
@@ -134,7 +136,7 @@ describe("FormUtils Test Suite", () => {
       checkRows(container,
         ["Categorie:", "Beschrijving:"],
         [
-          { fieldType: FieldType.SPAN, value: "[Category 1]" },
+          { fieldType: FieldType.SPAN, value: "[CategoryComponent 1]" },
           { fieldType: FieldType.TEXTAREA, value: "SubCategory 1" }]
       );
     });

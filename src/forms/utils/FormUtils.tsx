@@ -5,7 +5,7 @@ import Category from "../../types/Category";
 import SubCategory, { DisplayableSubCategory } from "../../types/SubCategory";
 import { isCategory } from "../../types/IsType";
 import FieldType from "../../types/FieldType";
-import { categoryClassNames } from "../../components/category/maincategory/Category.styles";
+import { categoryClassNames } from "../../components/category/maincategory/CategoryComponent.styles";
 
 export const formatData = (data: Category | SubCategory, categoryTitle?: string) => {
   if (isCategory(data)) {

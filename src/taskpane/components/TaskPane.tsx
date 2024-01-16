@@ -1,8 +1,12 @@
-import * as React from 'react';
-import { mergeStyleSets } from '@fluentui/react/lib/Styling';
-import { AddButton, Category, Modal } from "../../components";
+import * as React from "react";
+import { useEffect } from "react";
+import { mergeStyleSets } from "@fluentui/react/lib/Styling";
+import { AddButton, CategoryComponent, Modal } from "../../components";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { selectData, selectIsLoading } from "../../redux/category/category.slice";
+import { loadData } from "../../middleware/category/CategoryMiddleware";
 
-// styles for the taskpane and the title bar
+// Styles for the taskpane and the title bar
 const taskPaneClassNames = mergeStyleSets({
   taskPane: {
     padding: "10px 0" // padding above and below the task pane content
@@ -19,15 +23,25 @@ const taskPaneClassNames = mergeStyleSets({
 });
 
 // main task pane component with a title and categories
-const TaskPane = () => {
+const TaskPane: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const categories = useAppSelector(selectData);
+  const isLoading = useAppSelector(selectIsLoading);
+
+  // Fetch categories when the component mounts
+  useEffect(() => {
+    dispatch(loadData());
+  }, []);
+
   return (
     <div>
       <div className={taskPaneClassNames.titleBar}>MayDay</div>
       <Modal />
       <div className={taskPaneClassNames.taskPane}>
-        <Category id={0} name="Categorie 1" sections={7} />
-        <Category id={1} name="Categorie 2" sections={1} />
-        <Category id={2} name="Categorie 3" sections={1} />
+        {isLoading && <div>Aan het laden...</div>}
+        {categories && categories.map((category) => (
+          <CategoryComponent key={category.id} {...category} />
+        ))}
         <AddButton />
       </div>
     </div>
