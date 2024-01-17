@@ -11,8 +11,8 @@ describe("CategoryMiddleware Test Suite", () => {
   const _callAndCheckDispatchCalls = async (dispatchCalls) => callAndCheckDispatchCalls(loadData(), dispatchCalls);
 
   test("happy path", async () => {
-    axiosMock.onGet("http://localhost:3001/categories").reply(200, []);
-    axiosMock.onGet("http://localhost:3001/subCategories").reply(200, []);
+    axiosMock.onGet("http://localhost:3001/categories").reply(200, [{ id: "1", title: "test" }]);
+    axiosMock.onGet("http://localhost:3001/subCategories").reply(200, [{ categoryId: "1", description: "test", id: "1" }]);
 
     await _callAndCheckDispatchCalls(CALLS_SUCCESS);
   });

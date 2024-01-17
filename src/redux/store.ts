@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import modalReducer, { initialState as DEFAULT_MODAL_STATE } from "./modal/modal.slice";
-import categoryReducer, { initialState as DEFAULT_CATEGORY_STATE } from './category/category.slice';
+import categoryReducer, { initialState as DEFAULT_CATEGORY_STATE } from "./category/category.slice";
 import { State } from "./store.types";
 
 const store = configureStore({

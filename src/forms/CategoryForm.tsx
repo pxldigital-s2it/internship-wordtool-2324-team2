@@ -8,13 +8,15 @@ import {
   DialogTitle,
   DialogTrigger,
   makeStyles,
-  Table, TableBody
+  Table,
+  TableBody
 } from "@fluentui/react-components";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
-import { selectTitle, setOpen } from "../redux/modal/modal.slice";
+import { selectTitle } from "../redux/modal/modal.slice";
 import { formatData, getFormField, readFormField, renderRow } from "./utils/FormUtils";
-import { DisplayableSubCategory } from "../types/SubCategory";
 import useCategory from "../hooks/useCategory";
+import { DisplayableCategory } from "./utils/FormUtils.types";
+import { closeModal } from "../middleware/modal/ModalMiddleware";
 
 const useStyles = makeStyles({
   content: {
@@ -38,15 +40,23 @@ const CategoryForm = (): Nullable<ReactElement> => {
 
   const validate = () => {
     let disabled = false;
-    Object.keys(data).forEach(key => {
-      if (getFormField(formRef, key) && !readFormField(formRef, key)) {
-        disabled = true;
-      }
-    });
+    if (data) {
+      Object.keys(data).forEach(key => {
+        if (getFormField(formRef, key) && !readFormField(formRef, key)) {
+          disabled = true;
+        }
+      });
+    }
 
     setDisabled(disabled);
   };
-  const handleClose = () => dispatch(setOpen(false));
+
+  // useEffect(() => {
+  //   validate();
+  // }, []);
+
+  // TODO: Close should reset form
+  const handleClose = () => dispatch(closeModal());
 
   if (!data) {
     return null;
@@ -60,7 +70,7 @@ const CategoryForm = (): Nullable<ReactElement> => {
         <DialogContent className={styles.content}>
           <Table>
             <TableBody>
-              {formatData(data, categoryTitle).map((data: DisplayableSubCategory) => renderRow(data))}
+              {formatData(data, categoryTitle).map((data: DisplayableCategory) => renderRow(data))}
             </TableBody>
           </Table>
         </DialogContent>

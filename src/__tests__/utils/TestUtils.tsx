@@ -26,7 +26,7 @@ export const callAndCheckDispatchCalls = async (callback: (dispatch: AppDispatch
 }) => {
   const getState = () => state;
   const dispatch = jest.fn().mockImplementation((action) => {
-    if (!action.type) {
+    if (!action.type && typeof action === "function") {
       action(dispatch, getState);
     }
   });
