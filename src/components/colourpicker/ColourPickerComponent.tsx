@@ -18,7 +18,7 @@ const ColourPickerComponent = () => {
     ? <>
       <ColourPicker selectedColor={colour} setSelectedColor={handleSelectColour} />
       <Button onClick={() => setOpen(false)}>Deze kleur</Button>
-      </>
+    </>
     : <div onClick={() => setOpen(true)}>
       <ColourSquare colour={colour} />
     </div>);

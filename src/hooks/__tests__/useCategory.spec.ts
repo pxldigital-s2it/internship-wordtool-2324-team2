@@ -78,6 +78,9 @@ describe("useCategory Test Suite", () => {
 
   describe("handleSubmit", () => {
     let axiosMock = addMockAdapterSupport();
+    afterEach(() => {
+      axiosMock.reset();
+    });
 
     test("create subCategory", async () => {
       await act(() => {
@@ -131,6 +134,59 @@ describe("useCategory Test Suite", () => {
                 ...stateWithCategoryAndSubCategory.modal.subCategory,
                 id: "123"
               }
+            }
+          }
+        });
+        _unmount = unmount;
+      });
+    });
+
+    test("create category", async () => {
+      await act(() => {
+        const { unmount } = renderHookWithProviders(async () => {
+          const result = useCategory();
+          const form = addFormSupport(new Map([
+            ["code-input", "testCode"]
+          ]));
+          const ref = useRef<HTMLFormElement>(form);
+
+          axiosMock.onPost("http://localhost:3001/categories").reply(200, {});
+
+          await result.handleSubmit(ref);
+
+          expect(axiosMock.history.post.length).toBe(1);
+          expect(axiosMock.history.post[0].data).toBe(JSON.stringify({
+            code: "testCode"
+          }));
+        }, { preloadedState: stateWithOnlyCategory });
+        _unmount = unmount;
+      });
+    });
+
+    test("update category", async () => {
+      await act(() => {
+        const { unmount } = renderHookWithProviders(async () => {
+          const result = useCategory();
+
+          const form = addFormSupport(new Map([
+            ["code-input", "testCode"]
+          ]));
+          const ref = useRef<HTMLFormElement>(form);
+
+          axiosMock.onPut("http://localhost:3001/categories/123").reply(200, {});
+
+          await result.handleSubmit(ref);
+
+          expect(axiosMock.history.put.length).toBe(1);
+          expect(axiosMock.history.put[0].data).toBe(JSON.stringify({
+            code: "testCode"
+          }));
+        }, {
+          preloadedState: {
+            ...stateWithOnlyCategory,
+            modal: {
+              ...stateWithOnlyCategory.modal,
+              create: false
             }
           }
         });

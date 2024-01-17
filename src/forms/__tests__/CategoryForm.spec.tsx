@@ -6,7 +6,6 @@ import CategoryForm from "../CategoryForm";
 import { renderWithProviders } from "../../__tests__/utils/TestUtils";
 import { initialState } from "../../redux/store";
 import Category from "../../types/Category";
-import { setOpen } from "../../redux/modal/modal.slice";
 
 jest.mock("../../hooks/useCategory");
 
@@ -46,7 +45,7 @@ describe("CategoryForm Test Suite", () => {
   });
 
   test("handleSubmit", () => {
-    setupUseCategoryMock({ categoryId: "testCategoryId", code: null });
+    setupUseCategoryMock({ categoryId: "testCategoryId" });
     const { container, getByText } = renderWithProviders(<CategoryForm />, { preloadedState: initialState });
 
     expect(getByText("Bevestigen")).toBeDisabled();
@@ -61,11 +60,13 @@ describe("CategoryForm Test Suite", () => {
   test("handleClose", () => {
     const mockDispatch = jest.fn();
     jest.spyOn(require("../../redux/hooks"), "useAppDispatch").mockImplementation(() => mockDispatch);
+    jest.spyOn(require("../../middleware/modal/ModalMiddleware"), "closeModal").mockImplementation(() => ({ type: "closeModal" }));
     setupUseCategoryMock(subCategory);
     const { getByText } = renderWithProviders(<CategoryForm />, { preloadedState: initialState });
 
     fireEvent.click(getByText("Sluiten"));
-    expect(mockDispatch).toHaveBeenCalledWith({ payload: false, type: setOpen.type });
+    expect(mockDispatch).toHaveBeenCalledTimes(1);
+    expect(mockDispatch.mock.calls[0][0].type).toEqual( "closeModal");
   });
 
 });

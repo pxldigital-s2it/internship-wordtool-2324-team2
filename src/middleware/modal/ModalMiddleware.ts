@@ -17,15 +17,10 @@ import { loadData } from "../category/CategoryMiddleware";
 
 export const openCreateCategoryModal = () => {
   return async (dispatch: AppDispatch) => {
-    try {
-      dispatch(setTitle(STRING_RESOURCES.buttons.add.label));
-      dispatch(setCreate(true));
-      dispatch(setCategory({ code: "", colour: "", id: "", title: "" }));
-      dispatch(setOpen(true));
-    } catch (e) {
-      // TODO: Toast to notify user smth went wrong.
-      console.error(e.message);
-    }
+    dispatch(setTitle(STRING_RESOURCES.buttons.add.label));
+    dispatch(setCreate(true));
+    dispatch(setCategory({ code: "", colour: "", id: "", title: "" }));
+    dispatch(setOpen(true));
   };
 };
 
@@ -55,27 +50,26 @@ export const openCreateSubCategoryModal = (categoryId: string) => {
 
 
 export const openUpdateCategoryModal = (categoryId: string) => {
-    return async (dispatch: AppDispatch) => {
-      try {
-        const response = await axios.get<Category[]>(`http://localhost:3001/categories?id=${categoryId}`);
-        if (response.data.length) {
-          const category = response.data[0];
-          dispatch(setTitle(categoryContextMenu.getEditLabel()));
-          dispatch(setCreate(false));
-          dispatch(setCategory(category));
-          dispatch(setColour(category.colour));
-          dispatch(setSubCategory(undefined));
-          dispatch(setOpen(true));
-
-        } else {
-          throw new Error("Geen unieke categorie kunnen vinden.");
-        }
-      } catch (e) {
-        // TODO: Toast to notify user smth went wrong.
-        console.error(e.message);
+  return async (dispatch: AppDispatch) => {
+    try {
+      const response = await axios.get<Category[]>(`http://localhost:3001/categories?id=${categoryId}`);
+      if (response.data.length) {
+        const category = response.data[0];
+        dispatch(setTitle(categoryContextMenu.getEditLabel()));
+        dispatch(setCreate(false));
+        dispatch(setCategory(category));
+        dispatch(setColour(category.colour));
+        dispatch(setSubCategory(undefined));
+        dispatch(setOpen(true));
+      } else {
+        throw new Error("Geen unieke categorie kunnen vinden.");
       }
-    };
+    } catch (e) {
+      // TODO: Toast to notify user smth went wrong.
+      console.error(e.message);
+    }
   };
+};
 
 export const openUpdateSubCategoryModal = (subCategoryId: string) => {
   return async (dispatch: AppDispatch) => {
@@ -144,7 +138,7 @@ export const saveSubCategory = (subCategory: SubCategory) => {
   return async (dispatch: AppDispatch) => {
     try {
       await axios.post<SubCategory>("http://localhost:3001/subCategories", subCategory);
-      await dispatch(loadData());
+      dispatch(loadData());
       dispatch(closeModal());
     } catch (e) {
       // TODO: Toast to notify user smth went wrong.

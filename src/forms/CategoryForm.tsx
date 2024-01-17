@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ReactElement, useEffect, useRef, useState } from "react";
+import { ReactElement, useRef, useState } from "react";
 import {
   Button,
   DialogActions,
@@ -51,9 +51,9 @@ const CategoryForm = (): Nullable<ReactElement> => {
     setDisabled(disabled);
   };
 
-  useEffect(() => {
-    validate();
-  }, []);
+  // useEffect(() => {
+  //   validate();
+  // }, []);
 
   // TODO: Close should reset form
   const handleClose = () => dispatch(closeModal());

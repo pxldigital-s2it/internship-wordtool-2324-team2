@@ -6,6 +6,8 @@ import React from "react";
 import { Table, TableBody } from "@fluentui/react-components";
 import FieldType from "../../../types/FieldType";
 import { DisplayableCategory } from "../FormUtils.types";
+import { renderWithProviders } from "../../../__tests__/utils/TestUtils";
+import { initialState } from "../../../redux/store";
 
 describe("FormUtils Test Suite", () => {
 
@@ -26,9 +28,13 @@ describe("FormUtils Test Suite", () => {
     id: "1"
   };
 
+  const partialCategory: Category = {
+    code: null,
+    id: "1"
+  };
+
   describe("formatData", () => {
 
-    // TODO: isCategory
     test("isCategory", () => {
       expect(formatData(category)).toEqual([{
         content: "CategoryComponent 1",
@@ -82,7 +88,7 @@ describe("FormUtils Test Suite", () => {
 
   describe("renderRow", () => {
 
-    const _renderRow = (data: SubCategory, categoryTitle?: string) => (
+    const _renderRow = (data: Category | SubCategory, categoryTitle?: string) => (
       <Table>
         <TableBody>
           {formatData(data, categoryTitle).map((data: DisplayableCategory) => renderRow(data))}
@@ -99,14 +105,14 @@ describe("FormUtils Test Suite", () => {
       });
     };
 
-    const _checkValues = (container: HTMLElement, expectedValues: { fieldType: FieldType, value: string }[]) => {
+    const _checkValues = (container: HTMLElement, expectedValues: { fieldType: FieldType, value?: string }[]) => {
       const rows = container.querySelectorAll("tr");
       expect(rows).toHaveLength(expectedValues.length);
 
       expectedValues.forEach(({ fieldType, value }, index) => {
         if (fieldType === FieldType.INPUT) {
           expect(rows.item(index).querySelector(fieldType)).toHaveValue(value);
-        } else {
+        } else if (fieldType !== FieldType.COLOUR_INPUT) {
           expect(rows.item(index).querySelector(fieldType)).toHaveTextContent(value);
         }
       });
@@ -114,7 +120,7 @@ describe("FormUtils Test Suite", () => {
 
     const checkRows = (container: HTMLElement, expectedLabels: string[], expectedValues: {
       fieldType: FieldType,
-      value: string
+      value?: string
     }[]) => {
       _checkLabels(container, expectedLabels);
       _checkValues(container, expectedValues);
@@ -139,6 +145,30 @@ describe("FormUtils Test Suite", () => {
         [
           { fieldType: FieldType.SPAN, value: "[CategoryComponent 1]" },
           { fieldType: FieldType.TEXTAREA, value: "SubCategory 1" }]
+      );
+    });
+
+    test("renderRow partial Category", () => {
+      const { container } = renderWithProviders(_renderRow(partialCategory), { preloadedState: initialState });
+
+      checkRows(container,
+        ["Titel:", "Code:", "Kleur:"],
+        [
+          { fieldType: FieldType.INPUT, value: "" },
+          { fieldType: FieldType.INPUT, value: "" },
+          { fieldType: FieldType.COLOUR_INPUT }]
+      );
+    });
+
+    test("renderRow Category", () => {
+      const { container } = renderWithProviders(_renderRow(category), { preloadedState: initialState });
+
+      checkRows(container,
+        ["Titel:", "Code:", "Kleur:"],
+        [
+          { fieldType: FieldType.INPUT, value: "CategoryComponent 1" },
+          { fieldType: FieldType.INPUT, value: "123" },
+          { fieldType: FieldType.COLOUR_INPUT }]
       );
     });
 
