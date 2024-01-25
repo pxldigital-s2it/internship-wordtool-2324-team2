@@ -30,7 +30,7 @@ describe("FormUtils Test Suite", () => {
   };
 
   const partialCategory: Category = {
-    code: null,
+    code: "",
     id: "1"
   };
 
@@ -60,14 +60,14 @@ describe("FormUtils Test Suite", () => {
     test("isSubCategory partial with categoryTitle", () => {
       expect(formatData(partialSubCategory, category.title)).toEqual([
         { content: "[CategoryComponent 1]", id: "category", label: "Categorie:", type: "text" },
-        { content: "", id: "description", label: "Beschrijving:", type: "textarea" }
+        { content: "testDescription", id: "description", label: "Beschrijving:", type: "textarea" }
       ]);
     });
 
     test("isSubCategory partial without categoryTitle", () => {
       expect(formatData(partialSubCategory)).toEqual([
         { content: "[Categorie onbekend]", id: "category", label: "Categorie:", type: "text" },
-        { content: "", id: "description", label: "Beschrijving:", type: "textarea" }
+        { content: "testDescription", id: "description", label: "Beschrijving:", type: "textarea" }
       ]);
     });
 
@@ -134,7 +134,7 @@ describe("FormUtils Test Suite", () => {
         ["Categorie:", "Beschrijving:"],
         [
           { fieldType: FieldType.SPAN, value: "[Categorie onbekend]" },
-          { fieldType: FieldType.TEXTAREA, value: "" }]
+          { fieldType: FieldType.TEXTAREA, value: "testDescription" }]
       );
     });
 
