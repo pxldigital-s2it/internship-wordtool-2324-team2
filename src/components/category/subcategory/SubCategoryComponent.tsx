@@ -30,10 +30,10 @@ const SubCategoryComponent: FC<SubCategory> = ({ id, categoryId, description }) 
   };
 
   return (
-    <div id={`cat_${categoryId}_sub_${id}`} className={sectionClassNames.section}>
+    <div id={`cat_${categoryId}_sub_${id}`} className={sectionClassNames.section}
+         onClick={() => handleTextInsertion(categoryId, description)}>
       <ContextMenu trigger={
-        <span className={sectionClassNames.sectionText}
-              onClick={() => handleTextInsertion(categoryId, description)}>
+        <span className={sectionClassNames.sectionText}>
           {description}
         </span>} menuItems={menuItems} />
     </div>
