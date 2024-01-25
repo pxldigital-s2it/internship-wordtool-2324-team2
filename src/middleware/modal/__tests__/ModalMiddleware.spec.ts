@@ -56,7 +56,7 @@ describe("ModalMiddleware Test Suite", () => {
     };
     const CATEGORY_URL = `http://localhost:3001/categories?id=${categoryId}`;
 
-    const _callAndCheckDispatchCalls = async (dispatchCalls) => await callAndCheckDispatchCalls(openUpdateCategoryModal(categoryId), dispatchCalls);
+    const _callAndCheckDispatchCalls = async (dispatchCalls) => await callAndCheckDispatchCalls(openUpdateCategoryModal(category), dispatchCalls);
 
     test("happy path", async () => {
       const dispatchCalls = [
@@ -98,8 +98,9 @@ describe("ModalMiddleware Test Suite", () => {
 
     const categoryId = "123";
     const URL = `http://localhost:3001/categories?id=${categoryId}`;
+    const category = { code: "Some code", colour: "#000000", id: categoryId, title: "testTitle" };
 
-    const _callAndCheckDispatchCalls = async (dispatchCalls: string[]) => await callAndCheckDispatchCalls(openCreateSubCategoryModal(categoryId), dispatchCalls);
+    const _callAndCheckDispatchCalls = async (dispatchCalls: string[])  => await callAndCheckDispatchCalls(openCreateSubCategoryModal(category), dispatchCalls);
 
     test("happy path", async () => {
       const dispatchCalls = [
@@ -157,7 +158,7 @@ describe("ModalMiddleware Test Suite", () => {
     const SUBCATEGORY_URL = `http://localhost:3001/subCategories?id=${subCategoryId}`
     const CATEGORY_URL = `http://localhost:3001/categories?id=${subCategory.categoryId}`;
 
-    const _callAndCheckDispatchCalls = async (dispatchCalls) => await callAndCheckDispatchCalls(openUpdateSubCategoryModal(subCategoryId), dispatchCalls);
+    const _callAndCheckDispatchCalls = async (dispatchCalls) => await callAndCheckDispatchCalls(openUpdateSubCategoryModal(subCategory), dispatchCalls);
 
     test("happy path", async () => {
       const dispatchCalls = [

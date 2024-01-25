@@ -10,7 +10,7 @@ import { useAppDispatch } from "../../../redux/hooks";
 import Category from "../../../types/Category";
 import { deleteCategory } from "../../../middleware/category/CategoryMiddleware";
 
-const CategoryComponent: React.FC<Category> = ({ id, title, colour, subCategories }) => {
+const CategoryComponent: React.FC<Category> = ({ id, title, colour, subCategories, code }) => {
     const [isOpen, setIsOpen] = useState(false);
     const dispatch = useAppDispatch();
 
@@ -18,22 +18,22 @@ const CategoryComponent: React.FC<Category> = ({ id, title, colour, subCategorie
         <div>
             <ContextMenu trigger={<CategoryHeader colour={colour} id={id} isOpen={isOpen} setIsOpen={setIsOpen}
                                                   sections={subCategories.length} name={title}/>}
-                         menuItems={
-                             [
-                                 {
-                                     handler: () => dispatch(openCreateSubCategoryModal(id)),
-                                     label: categoryContextMenu.getSubCategoryLabel()
-                                 },
-                                 {
-                                     handler: () => dispatch(openUpdateCategoryModal(id)),
-                                     label: categoryContextMenu.getEditLabel()
-                                 },
-                                 {
-                                     handler: () => dispatch(deleteCategory(id)),
-                                     label: categoryContextMenu.getDeleteLabel()
-                                 }
-                             ]
-                         }
+               menuItems={
+                   [
+                     {
+                       handler: () => dispatch(openCreateSubCategoryModal({ code, colour, id, subCategories, title })),
+                       label: categoryContextMenu.getSubCategoryLabel()
+                     },
+                     {
+                       handler: () => dispatch(openUpdateCategoryModal({ code, colour, id, subCategories, title })),
+                       label: categoryContextMenu.getEditLabel()
+                     },
+                       {
+                           handler: () => dispatch(deleteCategory(id)),
+                           label: categoryContextMenu.getDeleteLabel()
+                       }
+                   ]
+               }
             />
             {isOpen && (
                 <div className={categoryClassNames.categoryContent}>
