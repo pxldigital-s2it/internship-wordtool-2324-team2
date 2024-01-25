@@ -4,6 +4,7 @@ import { openUpdateSubCategoryModal } from "../../../middleware/modal/ModalMiddl
 import { useAppDispatch } from "../../../redux/hooks";
 import { categoryContextMenu } from "../../../patterns/observer";
 import { ContextMenu } from "../../index";
+import insertText from "../../../taskpane/office-document";
 import { FC } from "react";
 import { deleteSubCategory } from "../../../middleware/category/CategoryMiddleware";
 import SubCategory from "../../../types/SubCategory";
@@ -24,10 +25,14 @@ const SubCategoryComponent: FC<SubCategory> = ({ id, categoryId, description }) 
         }
     ];
 
-    return (
-        <div id={`cat_${categoryId}_sub_${id}`} className={sectionClassNames.section}>
-            <ContextMenu trigger={
-                <span className={sectionClassNames.sectionText}>
+  const handleTextInsertion = async (categoryId: string, description: string) => {
+    await insertText(categoryId, description);
+  }
+
+  return (
+    <div id={`cat_${categoryId}_sub_${id}`} className={sectionClassNames.section}>
+      <ContextMenu trigger={
+        <span className={sectionClassNames.sectionText} onClick={() => handleTextInsertion(categoryId, description)}>
           {description}
         </span>
             }

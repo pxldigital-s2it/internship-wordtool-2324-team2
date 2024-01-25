@@ -109,6 +109,21 @@ export const closeModal = () => {
   };
 };
 
+export const getCategory = async (categoryId: string): Promise<Category> => {
+  let category;
+  try {
+    const categoryResponse = await axios.get<Category[]>(`http://localhost:3001/categories?id=${categoryId}`);
+    if (categoryResponse.data.length) {
+      category = categoryResponse.data[0];
+    }
+  } catch (e) {
+    // TODO: Toast to notify user smth went wrong.
+    console.error(e.message);
+  }
+
+  return category
+};
+
 export const saveCategory = (category: Category) => {
   return async (dispatch: AppDispatch) => {
     try {
