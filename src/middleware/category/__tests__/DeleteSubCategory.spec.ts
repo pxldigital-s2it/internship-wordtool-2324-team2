@@ -4,7 +4,7 @@ import { deleteSubCategory } from "../CategoryMiddleware";
 const axiosMock = addMockAdapterSupport();
 describe("deleteSubCategory", () => {
     jest.spyOn(require("../CategoryMiddleware"), "loadData").mockReturnValue({ type: "loadData" })
-    let consoleSpy = jest.spyOn(console, "error");
+    let consoleSpy = jest.spyOn(console, "error").mockImplementation(() => {});
     const _callAndCheckDispatchCalls = async (dispatchCalls) => callAndCheckDispatchCalls(deleteSubCategory("1"), dispatchCalls);
 
     test("happy path", async () => {
