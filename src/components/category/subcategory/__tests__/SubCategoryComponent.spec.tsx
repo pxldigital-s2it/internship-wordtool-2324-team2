@@ -8,6 +8,9 @@ import SubCategoryComponent from "../SubCategoryComponent";
 import { renderWithProviders } from "../../../../__tests__/utils/TestUtils";
 import { initialState } from "../../../../redux/store";
 import { categoryContextMenu } from "../../../../patterns/observer";
+import insertText from "../../../../taskpane/office-document";
+
+jest.mock("../../../../taskpane/office-document");
 
 describe('SubCategoryComponent Integration Test Suite', () => {
   const mockSubCategories: SubCategory[] = [
@@ -33,7 +36,7 @@ describe('SubCategoryComponent Integration Test Suite', () => {
     const { getByText } = renderWithProviders(<SubCategoryComponent key={mockSubCategories[0].id} {...mockSubCategories[0]} />, { preloadedState: initialState });
     expect(getByText(mockSubCategories[0].description)).toBeInTheDocument();
   });
-  
+
   test('SubCategoryComponent renders within CategoryComponent', () => {
     const { getByText, queryByText, container } = renderWithProviders(<CategoryComponent {...mockCategory} />, { preloadedState: initialState });
     const categoryTitleWithCount = `${mockCategory.title} (${mockSubCategories.length})`;
@@ -101,4 +104,17 @@ describe('SubCategoryComponent Integration Test Suite', () => {
 
   });
 
+
+  describe('Subcategory onClick to insert text', () => {
+    test('should call insertText when span is clicked', async () => {
+      const { getByText } = renderWithProviders(<SubCategoryComponent categoryId={mockCategory.id} {...mockSubCategories[0]} />, { preloadedState: initialState });
+
+      fireEvent.click(getByText(mockSubCategories[0].description));
+
+      expect(insertText).toHaveBeenCalledWith(
+          mockCategory.id,
+          mockSubCategories[0].description
+      );
+    });
+  });
 });
