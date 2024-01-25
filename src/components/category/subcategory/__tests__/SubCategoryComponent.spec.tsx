@@ -88,7 +88,7 @@ describe('SubCategoryComponent Integration Test Suite', () => {
       fireEvent.contextMenu(subCategoryComponentContent);
 
       fireEvent.click(getByText(categoryContextMenu.getEditLabel()));
-      expect(dispatchMock).toHaveBeenCalledWith({ payload: mockSubCategories[0].id, type: "OPEN_CREATE_SUB_CATEGORY_MODAL" });
+      expect(dispatchMock).toHaveBeenCalledWith({ payload: mockSubCategories[0], type: "OPEN_CREATE_SUB_CATEGORY_MODAL" });
     });
 
     test('Clicking on the Verwijderen option calls deleteSubCategory', () => {

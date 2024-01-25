@@ -17,7 +17,7 @@ import { setColour } from "../../../redux/category/category.slice";
 describe("ModalMiddleware Test Suite", () => {
 
   const axiosMock = addMockAdapterSupport();
-  const consoleSpy = jest.spyOn(console, "error");
+  const consoleSpy = jest.spyOn(console, "error").mockImplementation(() => {});
 
   beforeEach(() => {
     jest.spyOn(require("../../category/CategoryMiddleware"), "loadData").mockImplementation(() => ({ type: "loadData" }));

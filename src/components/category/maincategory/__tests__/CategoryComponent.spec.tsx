@@ -94,7 +94,7 @@ describe("CategoryComponent Test Suite", () => {
 
       fireEvent.click(getByText(categoryContextMenu.getSubCategoryLabel()));
 
-      expect(dispatchMock).toHaveBeenCalledWith({ payload: DEFAULT_PROPS.id, type: "OPEN_CREATE_SUB_CATEGORY_MODAL" })
+      expect(dispatchMock).toHaveBeenCalledWith({ payload: DEFAULT_PROPS, type: "OPEN_CREATE_SUB_CATEGORY_MODAL" })
     });
 
     test("openUpdateCategoryModal is called when clicking on the 'Bewerken' option", () => {
@@ -107,7 +107,7 @@ describe("CategoryComponent Test Suite", () => {
 
       fireEvent.click(getByText(categoryContextMenu.getEditLabel()));
 
-      expect(dispatchMock).toHaveBeenCalledWith({ payload: DEFAULT_PROPS.id, type: "OPEN_UPDATE_CATEGORY_MODAL" })
+      expect(dispatchMock).toHaveBeenCalledWith({ payload: DEFAULT_PROPS, type: "OPEN_UPDATE_CATEGORY_MODAL" })
     });
 
     
