@@ -1,6 +1,6 @@
 interface SubCategory {
   categoryId: string;
-  description?: string;
+  description: Nullable<string>;
   id?: string;
 }
 

@@ -20,7 +20,8 @@ describe("FormUtils Test Suite", () => {
   };
 
   const partialSubCategory: SubCategory = {
-    categoryId: "1"
+    categoryId: "1",
+    description: "testDescription"
   };
   const subCategory: SubCategory = {
     ...partialSubCategory,
