@@ -65,7 +65,7 @@ describe("CategoryComponent Test Suite", () => {
     jest.spyOn(require("../../../../redux/hooks"), "useAppDispatch").mockImplementation(() => dispatchMock);
     jest.spyOn(require("../../../../middleware/modal/ModalMiddleware"), "openCreateSubCategoryModal").mockImplementation((id) => ({ payload: id, type: "OPEN_CREATE_SUB_CATEGORY_MODAL" }));
     jest.spyOn(require("../../../../middleware/modal/ModalMiddleware"), "openUpdateCategoryModal").mockImplementation((id) => ({ payload: id, type: "OPEN_UPDATE_CATEGORY_MODAL" }));
-    const consoleSpy = jest.spyOn(console, "log");
+    jest.spyOn(require("../../../../middleware/category/CategoryMiddleware"), "deleteCategory").mockImplementation((id) => ({ payload: id, type: "DELETE_CATEGORY" }))
     const openContextMenu = (getByText: { (id: Matcher, options?: SelectorMatcherOptions): HTMLElement; (arg0: string): Element | Node | Document | Window; }) => {
       fireEvent.contextMenu(getByText(`${DEFAULT_PROPS.title}${DEFAULT_PROPS.subCategories.length > 0 ? ` (${DEFAULT_PROPS.subCategories.length})` : ""}`));
     }
@@ -110,9 +110,8 @@ describe("CategoryComponent Test Suite", () => {
       expect(dispatchMock).toHaveBeenCalledWith({ payload: DEFAULT_PROPS.id, type: "OPEN_UPDATE_CATEGORY_MODAL" })
     });
 
-
-    // TODO: should be replaced by middleware action to delete category
-    test("console.log is called when clicking on the 'Verwijderen' option", () => {
+    
+    test("deleteCategory is called when clicking on the 'Verwijderen' option", () => {
       const {
         getByText
       } = renderWithProviders(createComponent(DEFAULT_PROPS), { preloadedState: initialState });
@@ -122,7 +121,7 @@ describe("CategoryComponent Test Suite", () => {
 
       fireEvent.click(getByText(categoryContextMenu.getDeleteLabel()));
 
-      expect(consoleSpy).toHaveBeenCalledWith(`Delete category ${DEFAULT_PROPS.id}`);
+      expect(dispatchMock).toHaveBeenCalledWith( { payload: DEFAULT_PROPS.id, type: "DELETE_CATEGORY" });
     });
 
   });

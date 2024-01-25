@@ -19,9 +19,30 @@ export const loadData = () => {
                 subCategories: subCategories.filter((subCategory: SubCategory) => subCategory.categoryId === category.id)
             }));
             dispatch(loadDataSuccess(combinedData));
-        }
-        catch (error) {
+        } catch (error) {
             dispatch(loadDataFailure(error.message));
+        }
+    };
+}
+
+export const deleteSubCategory = (subCategoryId: string) => {
+    return async (dispatch: AppDispatch) => {
+        try {
+            await axios.delete<SubCategory>(`http://localhost:3001/subCategories/${subCategoryId}`)
+            await dispatch(loadData())
+        } catch (error) {
+            console.error(error.message);
+        }
+    };
+}
+
+export const deleteCategory = (categoryId: string) => {
+    return async (dispatch: AppDispatch) => {
+        try {
+            await axios.delete<Category>(`http://localhost:3001/Categories/${categoryId}`)
+            await dispatch(loadData())
+        } catch (error) {
+            console.error(error.message);
         }
     };
 }
