@@ -62,7 +62,7 @@ describe('SubCategoryComponent Integration Test Suite', () => {
     const dispatchMock= jest.fn();
     jest.spyOn(require("../../../../redux/hooks"), "useAppDispatch").mockImplementation(() => dispatchMock);
     jest.spyOn(require("../../../../middleware/modal/ModalMiddleware"), "openUpdateSubCategoryModal").mockImplementation((id) => ({ payload: id, type: "OPEN_CREATE_SUB_CATEGORY_MODAL" }));
-    const consoleSpy = jest.spyOn(console, "log");
+    jest.spyOn(require("../../../../middleware/category/CategoryMiddleware"), "deleteSubCategory").mockImplementation((id) => ({ payload: id, type: "DELETE_SUB_CATEGORY" }))
 
     test('Context menu opens on right click', () => {
       const { getByText } = renderWithProviders(<SubCategoryComponent categoryId={mockCategory.id} {...mockSubCategories[0]} />, { preloadedState: initialState });
@@ -88,7 +88,7 @@ describe('SubCategoryComponent Integration Test Suite', () => {
       expect(dispatchMock).toHaveBeenCalledWith({ payload: mockSubCategories[0].id, type: "OPEN_CREATE_SUB_CATEGORY_MODAL" });
     });
 
-    test('Clicking on the Verwijderen option logs a message to the console', () => {
+    test('Clicking on the Verwijderen option calls deleteSubCategory', () => {
       const { getByText } = renderWithProviders(<SubCategoryComponent categoryId={mockCategory.id} {...mockSubCategories[0]} />, { preloadedState: initialState });
 
       const subCategoryComponentContent = getByText(mockSubCategories[0].description);
@@ -96,7 +96,7 @@ describe('SubCategoryComponent Integration Test Suite', () => {
       fireEvent.contextMenu(subCategoryComponentContent);
 
       fireEvent.click(getByText(categoryContextMenu.getDeleteLabel()));
-      expect(consoleSpy).toHaveBeenCalledWith("Verwijderen");
+      expect(dispatchMock).toHaveBeenCalledWith( { payload: mockSubCategories[0].id, type: "DELETE_SUB_CATEGORY" });
     });
 
   });
