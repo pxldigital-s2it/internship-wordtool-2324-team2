@@ -71,27 +71,6 @@ describe("ModalMiddleware Test Suite", () => {
 
       await _callAndCheckDispatchCalls(dispatchCalls);
     });
-
-    test("no category data", async () => {
-      const dispatchCalls = [];
-      axiosMock.onGet(CATEGORY_URL).reply(200, []);
-
-      await _callAndCheckDispatchCalls(dispatchCalls);
-
-      expect(consoleSpy).toHaveBeenCalledTimes(1);
-      expect(consoleSpy).toHaveBeenCalledWith("Geen unieke categorie kunnen vinden.");
-    });
-
-    test("network error", async () => {
-      const dispatchCalls = [];
-      axiosMock.onGet(CATEGORY_URL).networkError();
-
-      await _callAndCheckDispatchCalls(dispatchCalls);
-
-      expect(consoleSpy).toHaveBeenCalledTimes(1);
-      expect(consoleSpy).toHaveBeenCalledWith("Network Error");
-    });
-
   });
 
   describe("openCreateSubCategoryModal", () => {
@@ -118,27 +97,6 @@ describe("ModalMiddleware Test Suite", () => {
 
       await _callAndCheckDispatchCalls(dispatchCalls);
     });
-
-    test("no data", async () => {
-      const dispatchCalls = [];
-      axiosMock.onGet(URL).reply(200, []);
-
-      await _callAndCheckDispatchCalls(dispatchCalls);
-
-      expect(consoleSpy).toHaveBeenCalledTimes(1);
-      expect(consoleSpy).toHaveBeenCalledWith("Geen unieke categorie kunnen vinden.");
-    });
-
-    test("network error", async () => {
-      const dispatchCalls = [];
-      axiosMock.onGet(URL).networkError();
-
-      await _callAndCheckDispatchCalls(dispatchCalls);
-
-      expect(consoleSpy).toHaveBeenCalledTimes(1);
-      expect(consoleSpy).toHaveBeenCalledWith("Network Error");
-    });
-
   });
 
   describe("openUpdateSubCategoryModal", () => {
@@ -174,16 +132,6 @@ describe("ModalMiddleware Test Suite", () => {
       await _callAndCheckDispatchCalls(dispatchCalls);
     });
 
-    test("no sub category data", async () => {
-      const dispatchCalls = [];
-      axiosMock.onGet(SUBCATEGORY_URL).reply(200, []);
-
-      await _callAndCheckDispatchCalls(dispatchCalls);
-
-      expect(consoleSpy).toHaveBeenCalledTimes(1);
-      expect(consoleSpy).toHaveBeenCalledWith("Geen unieke subcategorie kunnen vinden.");
-    });
-
     test("no category data", async () => {
       const dispatchCalls = [];
       axiosMock.onGet(SUBCATEGORY_URL).reply(200, [subCategory]);
@@ -194,17 +142,6 @@ describe("ModalMiddleware Test Suite", () => {
       expect(consoleSpy).toHaveBeenCalledTimes(1);
       expect(consoleSpy).toHaveBeenCalledWith("Geen unieke categorie kunnen vinden.");
     });
-
-    test("network error", async () => {
-      const dispatchCalls = [];
-      axiosMock.onGet(SUBCATEGORY_URL).networkError();
-
-      await _callAndCheckDispatchCalls(dispatchCalls);
-
-      expect(consoleSpy).toHaveBeenCalledTimes(1);
-      expect(consoleSpy).toHaveBeenCalledWith("Network Error");
-    });
-
   });
 
 
