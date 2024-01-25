@@ -45,7 +45,7 @@ describe("CategoryForm Test Suite", () => {
   });
 
   test("handleSubmit", () => {
-    setupUseCategoryMock({ categoryId: "testCategoryId" });
+    setupUseCategoryMock({ categoryId: "testCategoryId", description: null });
     const { container, getByText } = renderWithProviders(<CategoryForm />, { preloadedState: initialState });
 
     expect(getByText("Bevestigen")).toBeDisabled();

@@ -34,7 +34,8 @@ export const openCreateSubCategoryModal = (categoryId: string) => {
         dispatch(setCreate(true));
         dispatch(setCategory(category));
         const subCategory: SubCategory = {
-          categoryId: category.id
+          categoryId: category.id,
+          description: null
         };
         dispatch(setSubCategory(subCategory));
         dispatch(setOpen(true));

@@ -75,5 +75,17 @@ export const renderRow = (data: DisplayableCategory) =>
     {renderCell(data.type, data.id, data.content)}
   </TableRow>);
 
-export const getFormField = (formRef: MutableRefObject<HTMLFormElement>, inputId: string): RadioNodeList | Element | null => formRef?.current?.elements.namedItem(`${inputId}-input`);
-export const readFormField = (formRef: MutableRefObject<HTMLFormElement>, inputId: string): string => (getFormField(formRef, inputId) as HTMLInputElement).value;
+export const getFormField = (
+  formRef: MutableRefObject<HTMLFormElement>,
+  inputId: string
+): RadioNodeList | Element | null => {
+  return formRef?.current?.elements.namedItem(`${inputId}-input`);
+};
+
+export const readFormField = (
+  formRef: MutableRefObject<HTMLFormElement>,
+  inputId: string
+): string => {
+  const inputElement = getFormField(formRef, inputId) as HTMLInputElement;
+  return inputElement.value;
+};
