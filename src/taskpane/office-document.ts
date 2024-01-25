@@ -7,7 +7,6 @@ const insertText = async (categoryId: string, description: string) => {
   // Write text to the document.
   try {
       await Word.run(async (context) => {
-          //let body = context.document.body;
           const range = context.document.getSelection();
 
           range.load("text");
