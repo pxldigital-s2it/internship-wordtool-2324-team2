@@ -39,7 +39,7 @@ describe('SubCategoryComponent Integration Test Suite', () => {
 
   test('SubCategoryComponent renders within CategoryComponent', () => {
     const { getByText, queryByText, container } = renderWithProviders(<CategoryComponent {...mockCategory} />, { preloadedState: initialState });
-    const categoryTitleWithCount = `${mockCategory.title} (${mockSubCategories.length})`;
+    const categoryTitleWithCount = `[${mockCategory.code}] ${mockCategory.title} (${mockSubCategories.length})`;
 
     // check if CategoryComponent renders correctly with title and subcategory count
     expect(getByText(categoryTitleWithCount)).toBeInTheDocument();
