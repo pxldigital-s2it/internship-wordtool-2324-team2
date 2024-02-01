@@ -1,8 +1,4 @@
-import {
-  addFormSupport,
-  addMockAdapterSupport,
-  renderHookWithProviders
-} from "../../__tests__/utils/TestUtils";
+import { addFormSupport, addStorageMockSupport, renderHookWithProviders } from "../../__tests__/utils/TestUtils";
 import useCategory from "../useCategory";
 import { initialState as STATE } from "../../redux/store";
 import { useRef } from "react";
@@ -77,10 +73,9 @@ describe("useCategory Test Suite", () => {
   });
 
   describe("handleSubmit", () => {
-    let axiosMock = addMockAdapterSupport();
-    afterEach(() => {
-      axiosMock.reset();
-    });
+    const storageMock = addStorageMockSupport();
+
+    afterEach(jest.resetAllMocks)
 
     test("create subCategory", async () => {
       await act(() => {
@@ -91,15 +86,15 @@ describe("useCategory Test Suite", () => {
           ]));
           const ref = useRef<HTMLFormElement>(form);
 
-          axiosMock.onPost("http://localhost:3001/subCategories").reply(200, {});
+          const spyInstance = storageMock("save", () => {});
 
           await result.handleSubmit(ref);
 
-          expect(axiosMock.history.post.length).toBe(1);
-          expect(axiosMock.history.post[0].data).toBe(JSON.stringify({
+          expect(spyInstance).toHaveBeenCalledTimes(1);
+          expect(spyInstance).toHaveBeenCalledWith("subCategories", {
             categoryId: "123",
             description: "testDescription"
-          }));
+          });
         }, { preloadedState: stateWithCategoryAndSubCategory });
         _unmount = unmount;
       });
@@ -115,15 +110,12 @@ describe("useCategory Test Suite", () => {
           ]));
           const ref = useRef<HTMLFormElement>(form);
 
-          axiosMock.onPut("http://localhost:3001/subCategories/123").reply(200, {});
+          const spyInstance = storageMock("update", () => {});
 
           await result.handleSubmit(ref);
 
-          expect(axiosMock.history.put.length).toBe(1);
-          expect(axiosMock.history.put[0].data).toBe(JSON.stringify({
-            categoryId: "123",
-            description: "testDescription"
-          }));
+          expect(spyInstance).toHaveBeenCalledTimes(1);
+          expect(spyInstance).toHaveBeenCalledWith("subCategories", "123", {  categoryId: "123", description: "testDescription" });
         }, {
           preloadedState: {
             ...stateWithCategoryAndSubCategory,
@@ -150,14 +142,14 @@ describe("useCategory Test Suite", () => {
           ]));
           const ref = useRef<HTMLFormElement>(form);
 
-          axiosMock.onPost("http://localhost:3001/categories").reply(200, {});
+          const spyInstance = storageMock("save", () => {});
 
           await result.handleSubmit(ref);
 
-          expect(axiosMock.history.post.length).toBe(1);
-          expect(axiosMock.history.post[0].data).toBe(JSON.stringify({
+          expect(spyInstance).toHaveBeenCalledTimes(1);
+          expect(spyInstance).toHaveBeenCalledWith("categories", {
             code: "testCode"
-          }));
+          });
         }, { preloadedState: stateWithOnlyCategory });
         _unmount = unmount;
       });
@@ -173,14 +165,12 @@ describe("useCategory Test Suite", () => {
           ]));
           const ref = useRef<HTMLFormElement>(form);
 
-          axiosMock.onPut("http://localhost:3001/categories/123").reply(200, {});
+          const spyInstance = storageMock("update", () => {});
 
           await result.handleSubmit(ref);
 
-          expect(axiosMock.history.put.length).toBe(1);
-          expect(axiosMock.history.put[0].data).toBe(JSON.stringify({
-            code: "testCode"
-          }));
+          expect(spyInstance).toHaveBeenCalledTimes(1);
+          expect(spyInstance).toHaveBeenCalledWith("categories", "123", {  code: "testCode" });
         }, {
           preloadedState: {
             ...stateWithOnlyCategory,

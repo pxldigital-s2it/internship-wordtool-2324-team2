@@ -1,5 +1,8 @@
 import { setCategory, setCreate, setOpen, setSubCategory, setTitle } from "../../../redux/modal/modal.slice";
-import { addMockAdapterSupport, callAndCheckDispatchCalls } from "../../../__tests__/utils/TestUtils";
+import {
+  addStorageMockSupport,
+  callAndCheckDispatchCalls
+} from "../../../__tests__/utils/TestUtils";
 import {
   openCreateCategoryModal,
   openCreateSubCategoryModal,
@@ -16,7 +19,7 @@ import { setColour } from "../../../redux/category/category.slice";
 
 describe("ModalMiddleware Test Suite", () => {
 
-  const axiosMock = addMockAdapterSupport();
+  const storageMock = addStorageMockSupport();
   const consoleSpy = jest.spyOn(console, "error").mockImplementation(() => {});
 
   beforeEach(() => {
@@ -54,7 +57,6 @@ describe("ModalMiddleware Test Suite", () => {
       id: categoryId,
       title: "testTitle"
     };
-    const CATEGORY_URL = `http://localhost:3001/categories?id=${categoryId}`;
 
     const _callAndCheckDispatchCalls = async (dispatchCalls) => await callAndCheckDispatchCalls(openUpdateCategoryModal(category), dispatchCalls);
 
@@ -67,7 +69,6 @@ describe("ModalMiddleware Test Suite", () => {
         setSubCategory.type,
         setOpen.type
       ];
-      axiosMock.onGet(CATEGORY_URL).reply(200, [category]);
 
       await _callAndCheckDispatchCalls(dispatchCalls);
     });
@@ -76,7 +77,6 @@ describe("ModalMiddleware Test Suite", () => {
   describe("openCreateSubCategoryModal", () => {
 
     const categoryId = "123";
-    const URL = `http://localhost:3001/categories?id=${categoryId}`;
     const category = { code: "Some code", colour: "#000000", id: categoryId, title: "testTitle" };
 
     const _callAndCheckDispatchCalls = async (dispatchCalls: string[])  => await callAndCheckDispatchCalls(openCreateSubCategoryModal(category), dispatchCalls);
@@ -89,11 +89,6 @@ describe("ModalMiddleware Test Suite", () => {
         setSubCategory.type,
         setOpen.type
       ];
-      axiosMock.onGet(URL).reply(200, [{
-        colour: "#000000",
-        id: "1",
-        title: "testTitle"
-      }]);
 
       await _callAndCheckDispatchCalls(dispatchCalls);
     });
@@ -113,8 +108,7 @@ describe("ModalMiddleware Test Suite", () => {
       id: "1",
       title: "testTitle"
     };
-    const SUBCATEGORY_URL = `http://localhost:3001/subCategories?id=${subCategoryId}`
-    const CATEGORY_URL = `http://localhost:3001/categories?id=${subCategory.categoryId}`;
+
 
     const _callAndCheckDispatchCalls = async (dispatchCalls) => await callAndCheckDispatchCalls(openUpdateSubCategoryModal(subCategory), dispatchCalls);
 
@@ -126,16 +120,15 @@ describe("ModalMiddleware Test Suite", () => {
         setSubCategory.type,
         setOpen.type
       ];
-      axiosMock.onGet(SUBCATEGORY_URL).reply(200, [subCategory]);
-      axiosMock.onGet(CATEGORY_URL).reply(200, [category]);
+      storageMock("getById", () => category);
 
       await _callAndCheckDispatchCalls(dispatchCalls);
     });
 
     test("no category data", async () => {
       const dispatchCalls = [];
-      axiosMock.onGet(SUBCATEGORY_URL).reply(200, [subCategory]);
-      axiosMock.onGet(CATEGORY_URL).reply(200, []);
+
+      storageMock("getById", () => {});
 
       await _callAndCheckDispatchCalls(dispatchCalls);
 
@@ -147,7 +140,6 @@ describe("ModalMiddleware Test Suite", () => {
 
   describe("saveCategory", () => {
 
-    const URL = "http://localhost:3001/categories";
     const category: Category = {
       code: "Some code",
       id: "Some categoryId"
@@ -167,7 +159,7 @@ describe("ModalMiddleware Test Suite", () => {
         setColour.type
       ];
 
-      axiosMock.onPost(URL, category).reply(200);
+      storageMock("save", () => {});
 
       await _callAndCheckDispatchCalls(dispatchCalls);
     });
@@ -175,7 +167,7 @@ describe("ModalMiddleware Test Suite", () => {
     test("network error", async () => {
       const dispatchCalls = [];
 
-      axiosMock.onPost(URL, category).networkError();
+      storageMock("save", () => {throw new Error("Network Error")});
 
       await _callAndCheckDispatchCalls(dispatchCalls);
       expect(consoleSpy).toHaveBeenCalledTimes(1);
@@ -185,7 +177,6 @@ describe("ModalMiddleware Test Suite", () => {
 
   describe("updateCategory", () => {
 
-    const URL = "http://localhost:3001/categories/123";
     const category: Category = {
       code: "Some code",
       id: "123"
@@ -205,7 +196,7 @@ describe("ModalMiddleware Test Suite", () => {
         setColour.type
       ];
 
-      axiosMock.onPut(URL, category).reply(200);
+      storageMock("update", () => {});
 
       await _callAndCheckDispatchCalls(dispatchCalls);
     });
@@ -213,7 +204,7 @@ describe("ModalMiddleware Test Suite", () => {
     test("network error", async () => {
       const dispatchCalls = [];
 
-      axiosMock.onPut(URL, category).networkError();
+      storageMock("update", () => {throw new Error("Network Error")});
 
       await _callAndCheckDispatchCalls(dispatchCalls);
       expect(consoleSpy).toHaveBeenCalledTimes(1);
@@ -223,7 +214,6 @@ describe("ModalMiddleware Test Suite", () => {
 
   describe("saveSubCategory", () => {
 
-    const URL = "http://localhost:3001/subCategories";
     const subCategory = {
       categoryId: "Some categoryId",
       code: "Some code",
@@ -245,7 +235,7 @@ describe("ModalMiddleware Test Suite", () => {
         setColour.type
       ];
 
-      axiosMock.onPost(URL, subCategory).reply(200);
+      storageMock("save", () => {});
 
       await _callAndCheckDispatchCalls(dispatchCalls);
     });
@@ -253,7 +243,7 @@ describe("ModalMiddleware Test Suite", () => {
     test("network error", async () => {
       const dispatchCalls = [];
 
-      axiosMock.onPost(URL, subCategory).networkError();
+      storageMock("save", () => {throw new Error("Network Error")});
 
       await _callAndCheckDispatchCalls(dispatchCalls);
       expect(consoleSpy).toHaveBeenCalledTimes(1);
@@ -263,7 +253,6 @@ describe("ModalMiddleware Test Suite", () => {
 
   describe("updateSubCategory", () => {
 
-    const URL = "http://localhost:3001/subCategories/123";
     const subCategory = {
       categoryId: "Some categoryId",
       code: "Some code",
@@ -285,7 +274,7 @@ describe("ModalMiddleware Test Suite", () => {
         setColour.type
       ];
 
-      axiosMock.onPut(URL, subCategory).reply(200);
+      storageMock("update", () => {});
 
       await _callAndCheckDispatchCalls(dispatchCalls);
     });
@@ -293,7 +282,7 @@ describe("ModalMiddleware Test Suite", () => {
     test("network error", async () => {
       const dispatchCalls = [];
 
-      axiosMock.onPut(URL, subCategory).networkError();
+      storageMock("update", () => {throw new Error("Network Error")});
 
       await _callAndCheckDispatchCalls(dispatchCalls);
       expect(consoleSpy).toHaveBeenCalledTimes(1);

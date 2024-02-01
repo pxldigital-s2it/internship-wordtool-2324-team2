@@ -5,7 +5,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import React, { PropsWithChildren } from "react";
 import { Provider } from "react-redux";
 import modalReducer from "../../redux/modal/modal.slice";
-import categoryReducer from '../../redux/category/category.slice';
+import categoryReducer from "../../redux/category/category.slice";
 import { render, renderHook, RenderOptions } from "@testing-library/react";
 
 
@@ -46,6 +46,10 @@ export const addMockAdapterSupport = () => {
   return axiosMock;
 };
 
+export const addStorageMockSupport = () =>
+  (method: string, implementation: () => unknown) => jest.spyOn(require("../../utils/StorageUtils"), method).mockImplementation(implementation);
+
+
 const configureTestStore = (initialState?: Partial<RootState>) => configureStore({
   preloadedState: initialState,
   reducer: {
@@ -54,9 +58,9 @@ const configureTestStore = (initialState?: Partial<RootState>) => configureStore
   }
 });
 
-interface ExtendedRenderOptions extends Omit<RenderOptions, 'queries'> {
-  preloadedState?: Partial<RootState>
-  store?: AppStore
+interface ExtendedRenderOptions extends Omit<RenderOptions, "queries"> {
+  preloadedState?: Partial<RootState>;
+  store?: AppStore;
 }
 
 export function renderWithProviders(
@@ -69,11 +73,11 @@ export function renderWithProviders(
   }: ExtendedRenderOptions = {}
 ) {
   function Wrapper({ children }: PropsWithChildren<{}>): JSX.Element {
-    return <Provider store={store}>{children}</Provider>
+    return <Provider store={store}>{children}</Provider>;
   }
 
   // Return an object with the store and all of RTL's query functions
-  return { store, ...render(ui, { wrapper: Wrapper, ...renderOptions }) }
+  return { store, ...render(ui, { wrapper: Wrapper, ...renderOptions }) };
 }
 
 export function renderHookWithProviders<
@@ -88,9 +92,13 @@ export function renderHookWithProviders<
   }: ExtendedRenderOptions = {}
 ) {
   function Wrapper({ children }: PropsWithChildren<{}>): JSX.Element {
-    return <Provider store={store}>{children}</Provider>
+    return <Provider store={store}>{children}</Provider>;
   }
 
-  return { store, ...renderHook(render, { wrapper: Wrapper, ...renderOptions }) }
+  return { store, ...renderHook(render, { wrapper: Wrapper, ...renderOptions }) };
 }
-export const addFormSupport = (data: Map<string, string>) => ({ ...(document.createElement("form")), elements: { namedItem: jest.fn((key) => ({ value: data.get(key) })) } } as unknown as HTMLFormElement)
+
+export const addFormSupport = (data: Map<string, string>) => ({
+  ...(document.createElement("form")),
+  elements: { namedItem: jest.fn((key) => ({ value: data.get(key) })) }
+} as unknown as HTMLFormElement);

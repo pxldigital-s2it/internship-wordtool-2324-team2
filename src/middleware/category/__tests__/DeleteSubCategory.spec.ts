@@ -1,19 +1,20 @@
-﻿import { addMockAdapterSupport, callAndCheckDispatchCalls } from "../../../__tests__/utils/TestUtils";
+﻿import { addStorageMockSupport, callAndCheckDispatchCalls } from "../../../__tests__/utils/TestUtils";
 import { deleteSubCategory } from "../CategoryMiddleware";
 
-const axiosMock = addMockAdapterSupport();
 describe("deleteSubCategory", () => {
+    const storageMock = addStorageMockSupport();
+
     jest.spyOn(require("../CategoryMiddleware"), "loadData").mockReturnValue({ type: "loadData" })
     let consoleSpy = jest.spyOn(console, "error").mockImplementation(() => {});
     const _callAndCheckDispatchCalls = async (dispatchCalls) => callAndCheckDispatchCalls(deleteSubCategory("1"), dispatchCalls);
 
     test("happy path", async () => {
-        axiosMock.onDelete("http://localhost:3001/subCategories/1").reply(200);
+        storageMock("deleteById", () => {});
         await _callAndCheckDispatchCalls(["loadData"]);
     });
 
     test("network error", async () => {
-        axiosMock.onDelete("http://localhost:3001/subCategories/1").networkError();
+        storageMock("deleteById", () => {throw new Error("Network Error")});
         await _callAndCheckDispatchCalls([]);
         expect(consoleSpy).toHaveBeenCalledWith("Network Error")
     });

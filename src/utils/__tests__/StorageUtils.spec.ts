@@ -1,5 +1,4 @@
 import Category from "../../types/Category";
-import SubCategory from "../../types/SubCategory";
 import { deleteById, getAll, getById, save, update, write } from "../StorageUtils";
 
 describe("Storage Test Suite", () => {
@@ -27,17 +26,6 @@ describe("Storage Test Suite", () => {
     }
   ];
 
-  const initialSubCategories: SubCategory[] = [
-    {
-      categoryId: "1",
-      description: "SubCategory 1"
-    },
-    {
-      categoryId: "2",
-      description: "SubCategory 2"
-    }
-  ];
-
   test("should write to localStorage", () => {
     write("categories", initialCategories);
 
@@ -57,6 +45,7 @@ describe("Storage Test Suite", () => {
       id: "3",
       title: "Category 3"
     };
+    jest.spyOn(require("../UuidUtils"), "getRandomUuid").mockReturnValue("3");
     save("categories", newCategory);
 
     expect(localStorage.setItem).toHaveBeenCalledWith("categories", JSON.stringify([

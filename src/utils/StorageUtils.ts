@@ -1,6 +1,7 @@
 import SubCategory from "../types/SubCategory";
 import Category from "../types/Category";
 import { isCategory, isSubCategory } from "../types/IsType";
+import { getRandomUuid } from "./UuidUtils";
 
 
 const equals = (a: Category | SubCategory, b: Category | SubCategory) => {
@@ -41,8 +42,9 @@ export const write = (key: string, value: any) => {
 
 export const save = (key: string, value: any) => {
   const parsed = JSON.parse(localStorage.getItem(key));
-  if (!parsed.find((item: Category | SubCategory) => equals(item, value))) {
-    write(key, [...parsed, value]);
+  if (!parsed || (parsed && !parsed.find((item: Category | SubCategory) => equals(item, value)))) {
+    value.id = getRandomUuid();
+    write(key, [...(parsed ? parsed : []), value]);
   }
 }
 
