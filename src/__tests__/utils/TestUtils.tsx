@@ -1,5 +1,3 @@
-import axios from "axios";
-import MockAdapter from "axios-mock-adapter";
 import { AppDispatch, AppStore, RootState } from "../../redux/store";
 import { configureStore } from "@reduxjs/toolkit";
 import React, { PropsWithChildren } from "react";
@@ -35,15 +33,6 @@ export const callAndCheckDispatchCalls = async (callback: (dispatch: AppDispatch
   dispatch.mock.calls.forEach((call, index) => expect(call[0].type).toBe(dispatchCalls[index]));
 
   return result;
-};
-
-export const addMockAdapterSupport = () => {
-  const axiosMock = new MockAdapter(axios);
-
-  afterEach(axiosMock.reset);
-  afterAll(axiosMock.restore);
-
-  return axiosMock;
 };
 
 export const addStorageMockSupport = () =>

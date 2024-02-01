@@ -3,6 +3,7 @@ import useCategory from "../useCategory";
 import { initialState as STATE } from "../../redux/store";
 import { useRef } from "react";
 import { act } from "@testing-library/react";
+import { StorageKeys } from "../../utils/StorageUtils.types";
 
 
 describe("useCategory Test Suite", () => {
@@ -91,7 +92,7 @@ describe("useCategory Test Suite", () => {
           await result.handleSubmit(ref);
 
           expect(spyInstance).toHaveBeenCalledTimes(1);
-          expect(spyInstance).toHaveBeenCalledWith("subCategories", {
+          expect(spyInstance).toHaveBeenCalledWith(StorageKeys.SUBCATEGORY, {
             categoryId: "123",
             description: "testDescription"
           });
@@ -115,7 +116,7 @@ describe("useCategory Test Suite", () => {
           await result.handleSubmit(ref);
 
           expect(spyInstance).toHaveBeenCalledTimes(1);
-          expect(spyInstance).toHaveBeenCalledWith("subCategories", "123", {  categoryId: "123", description: "testDescription" });
+          expect(spyInstance).toHaveBeenCalledWith(StorageKeys.SUBCATEGORY, "123", {  categoryId: "123", description: "testDescription" });
         }, {
           preloadedState: {
             ...stateWithCategoryAndSubCategory,
@@ -147,7 +148,7 @@ describe("useCategory Test Suite", () => {
           await result.handleSubmit(ref);
 
           expect(spyInstance).toHaveBeenCalledTimes(1);
-          expect(spyInstance).toHaveBeenCalledWith("categories", {
+          expect(spyInstance).toHaveBeenCalledWith(StorageKeys.CATEGORY, {
             code: "testCode"
           });
         }, { preloadedState: stateWithOnlyCategory });
@@ -170,7 +171,7 @@ describe("useCategory Test Suite", () => {
           await result.handleSubmit(ref);
 
           expect(spyInstance).toHaveBeenCalledTimes(1);
-          expect(spyInstance).toHaveBeenCalledWith("categories", "123", {  code: "testCode" });
+          expect(spyInstance).toHaveBeenCalledWith(StorageKeys.CATEGORY, "123", {  code: "testCode" });
         }, {
           preloadedState: {
             ...stateWithOnlyCategory,

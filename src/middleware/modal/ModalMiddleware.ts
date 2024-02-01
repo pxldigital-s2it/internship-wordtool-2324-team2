@@ -13,6 +13,7 @@ import STRING_RESOURCES from "../../components/buttons/Strings";
 import { setColour } from "../../redux/category/category.slice";
 import { loadData } from "../category/CategoryMiddleware";
 import { getById, save, update } from "../../utils/StorageUtils";
+import { StorageKeys } from "../../utils/StorageUtils.types";
 
 
 export const openCreateCategoryModal = () => {
@@ -52,7 +53,7 @@ export const openUpdateCategoryModal = (category: Category) => {
 export const openUpdateSubCategoryModal = (subCategory: SubCategory) => {
   return async (dispatch: AppDispatch) => {
     try {
-        const categoryResponse = getById("categories", subCategory.categoryId);
+        const categoryResponse = getById(StorageKeys.CATEGORY, subCategory.categoryId);
         if (categoryResponse) {
           dispatch(setTitle(categoryContextMenu.getEditLabel()));
           dispatch(setCreate(false));
@@ -82,7 +83,7 @@ export const closeModal = () => {
 export const getCategory = async (categoryId: string): Promise<Category> => {
   let category;
   try {
-    const categoryResponse = getById("categories", categoryId);
+    const categoryResponse = getById(StorageKeys.CATEGORY, categoryId);
     if (categoryResponse) {
       category = categoryResponse;
     }
@@ -97,7 +98,7 @@ export const getCategory = async (categoryId: string): Promise<Category> => {
 export const saveCategory = (category: Category) => {
   return async (dispatch: AppDispatch) => {
     try {
-      save("categories", category);
+      save(StorageKeys.CATEGORY, category);
       await dispatch(loadData());
       dispatch(closeModal());
     } catch (e) {
@@ -110,7 +111,7 @@ export const saveCategory = (category: Category) => {
 export const updateCategory = (id: string, category: Category) => {
   return async (dispatch: AppDispatch) => {
     try {
-      update("categories", id, category);
+      update(StorageKeys.CATEGORY, id, category);
       await dispatch(loadData());
       dispatch(closeModal());
     } catch (e) {
@@ -123,7 +124,7 @@ export const updateCategory = (id: string, category: Category) => {
 export const saveSubCategory = (subCategory: SubCategory) => {
   return async (dispatch: AppDispatch) => {
     try {
-      save("subCategories", subCategory);
+      save(StorageKeys.SUBCATEGORY, subCategory);
       dispatch(loadData());
       dispatch(closeModal());
     } catch (e) {
@@ -136,7 +137,7 @@ export const saveSubCategory = (subCategory: SubCategory) => {
 export const updateSubCategory = (id: string, subCategory: SubCategory) => {
   return async (dispatch: AppDispatch) => {
     try {
-      update("subCategories", id, subCategory);
+      update(StorageKeys.SUBCATEGORY, id, subCategory);
       await dispatch(loadData());
       dispatch(closeModal());
     } catch (e) {

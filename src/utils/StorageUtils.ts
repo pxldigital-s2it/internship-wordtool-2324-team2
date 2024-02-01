@@ -2,6 +2,7 @@ import SubCategory from "../types/SubCategory";
 import Category from "../types/Category";
 import { isCategory, isSubCategory } from "../types/IsType";
 import { getRandomUuid } from "./UuidUtils";
+import { StorageKeys } from "./StorageUtils.types";
 
 
 const equals = (a: Category | SubCategory, b: Category | SubCategory) => {
@@ -43,7 +44,7 @@ export const write = (key: string, value: any) => {
 export const save = (key: string, value: any) => {
   const parsed = JSON.parse(localStorage.getItem(key));
   if (!parsed || (parsed && !parsed.find((item: Category | SubCategory) => equals(item, value)))) {
-    value.id = getRandomUuid();
+    value.id = !value.id ? getRandomUuid() : value.id;
     write(key, [...(parsed ? parsed : []), value]);
   }
 }
@@ -83,3 +84,18 @@ export const deleteById = (key: string, id: string) => {
     write(key, updated);
   }
 }
+export const loadInitialStorage = (data: { categories: Category[], subCategories: SubCategory[] }) => {
+  const initialCategories = getAll(StorageKeys.CATEGORY);
+  if (!initialCategories || initialCategories.length === 0) {
+    data.categories.forEach(category => {
+      save(StorageKeys.CATEGORY, category);
+    });
+  }
+
+  const initialSubCategories = getAll(StorageKeys.SUBCATEGORY);
+  if (!initialSubCategories || initialSubCategories.length === 0) {
+    data.subCategories.forEach(subCategory => {
+      save(StorageKeys.SUBCATEGORY, subCategory);
+    });
+  }
+};

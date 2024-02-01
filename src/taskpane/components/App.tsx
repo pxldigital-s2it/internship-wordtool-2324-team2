@@ -1,6 +1,7 @@
 import * as React from "react";
 import TaskPane from "./TaskPane";
-import { mergeStyleSets } from '@fluentui/react/lib/Styling';
+import { mergeStyleSets } from "@fluentui/react/lib/Styling";
+import { loadInitialStorage } from "../../utils/StorageUtils";
 
 // styles for the app container
 const useStyles = mergeStyleSets({
@@ -14,6 +15,8 @@ const useStyles = mergeStyleSets({
 
 
 const App: React.FC = () => {
+  loadInitialStorage(require('../../../assets/data.json'));
+
   return (
     <div className={useStyles.root}>
       <TaskPane />
