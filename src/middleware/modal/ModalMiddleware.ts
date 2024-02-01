@@ -8,11 +8,12 @@ import {
 import { AppDispatch } from "../../redux/store";
 import { categoryContextMenu } from "../../patterns/observer";
 import Category from "../../types/Category";
-import axios from "axios";
 import SubCategory from "../../types/SubCategory";
 import STRING_RESOURCES from "../../components/buttons/Strings";
 import { setColour } from "../../redux/category/category.slice";
 import { loadData } from "../category/CategoryMiddleware";
+import { getById, save, update } from "../../utils/StorageUtils";
+import { StorageKeys } from "../../utils/StorageUtils.types";
 
 
 export const openCreateCategoryModal = () => {
@@ -52,12 +53,11 @@ export const openUpdateCategoryModal = (category: Category) => {
 export const openUpdateSubCategoryModal = (subCategory: SubCategory) => {
   return async (dispatch: AppDispatch) => {
     try {
-        const categoryResponse = await axios.get<Category[]>(`http://localhost:3001/categories?id=${subCategory.categoryId}`);
-        if (categoryResponse.data.length) {
-          const category = categoryResponse.data[0];
+        const categoryResponse = getById(StorageKeys.CATEGORY, subCategory.categoryId);
+        if (categoryResponse) {
           dispatch(setTitle(categoryContextMenu.getEditLabel()));
           dispatch(setCreate(false));
-          dispatch(setCategory(category));
+          dispatch(setCategory(categoryResponse));
           dispatch(setSubCategory(subCategory));
           dispatch(setOpen(true));
         } else {
@@ -83,9 +83,9 @@ export const closeModal = () => {
 export const getCategory = async (categoryId: string): Promise<Category> => {
   let category;
   try {
-    const categoryResponse = await axios.get<Category[]>(`http://localhost:3001/categories?id=${categoryId}`);
-    if (categoryResponse.data.length) {
-      category = categoryResponse.data[0];
+    const categoryResponse = getById(StorageKeys.CATEGORY, categoryId);
+    if (categoryResponse) {
+      category = categoryResponse;
     }
   } catch (e) {
     // TODO: Toast to notify user smth went wrong.
@@ -98,7 +98,7 @@ export const getCategory = async (categoryId: string): Promise<Category> => {
 export const saveCategory = (category: Category) => {
   return async (dispatch: AppDispatch) => {
     try {
-      await axios.post<Category>("http://localhost:3001/categories", category);
+      save(StorageKeys.CATEGORY, category);
       await dispatch(loadData());
       dispatch(closeModal());
     } catch (e) {
@@ -111,7 +111,7 @@ export const saveCategory = (category: Category) => {
 export const updateCategory = (id: string, category: Category) => {
   return async (dispatch: AppDispatch) => {
     try {
-      await axios.put<Category>(`http://localhost:3001/categories/${id}`, category);
+      update(StorageKeys.CATEGORY, id, category);
       await dispatch(loadData());
       dispatch(closeModal());
     } catch (e) {
@@ -124,7 +124,7 @@ export const updateCategory = (id: string, category: Category) => {
 export const saveSubCategory = (subCategory: SubCategory) => {
   return async (dispatch: AppDispatch) => {
     try {
-      await axios.post<SubCategory>("http://localhost:3001/subCategories", subCategory);
+      save(StorageKeys.SUBCATEGORY, subCategory);
       dispatch(loadData());
       dispatch(closeModal());
     } catch (e) {
@@ -137,7 +137,7 @@ export const saveSubCategory = (subCategory: SubCategory) => {
 export const updateSubCategory = (id: string, subCategory: SubCategory) => {
   return async (dispatch: AppDispatch) => {
     try {
-      await axios.put<SubCategory>(`http://localhost:3001/subCategories/${id}`, subCategory);
+      update(StorageKeys.SUBCATEGORY, id, subCategory);
       await dispatch(loadData());
       dispatch(closeModal());
     } catch (e) {

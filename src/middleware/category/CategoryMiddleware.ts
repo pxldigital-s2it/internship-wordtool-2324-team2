@@ -1,17 +1,16 @@
-import axios from "axios";
 import { loadDataFailure, loadDataStart, loadDataSuccess } from "../../redux/category/category.slice";
 import { AppDispatch } from "../../redux/store";
 import Category from "../../types/Category";
 import SubCategory from "../../types/SubCategory";
+import { deleteById, getAll } from "../../utils/StorageUtils";
+import { StorageKeys } from "../../utils/StorageUtils.types";
 
 export const loadData = () => {
     return async (dispatch: AppDispatch) => {
         try {
             dispatch(loadDataStart());
-            const categoryResponse = await axios.get<Category[]>('http://localhost:3001/categories');
-            const categories = categoryResponse.data;
-            const subCategoriesResponse = await axios.get<SubCategory[]>('http://localhost:3001/subCategories');
-            const subCategories = subCategoriesResponse.data;
+            const categories = getAll(StorageKeys.CATEGORY);;
+            const subCategories = getAll(StorageKeys.SUBCATEGORY);
 
             // Combine categories with their subcategories
             const combinedData = categories.map((category: Category) => ({
@@ -28,7 +27,7 @@ export const loadData = () => {
 export const deleteSubCategory = (subCategoryId: string) => {
     return async (dispatch: AppDispatch) => {
         try {
-            await axios.delete<SubCategory>(`http://localhost:3001/subCategories/${subCategoryId}`)
+            deleteById(StorageKeys.SUBCATEGORY, subCategoryId)
             await dispatch(loadData())
         } catch (error) {
             console.error(error.message);
@@ -39,7 +38,7 @@ export const deleteSubCategory = (subCategoryId: string) => {
 export const deleteCategory = (categoryId: string) => {
     return async (dispatch: AppDispatch) => {
         try {
-            await axios.delete<Category>(`http://localhost:3001/Categories/${categoryId}`)
+            deleteById(StorageKeys.CATEGORY, categoryId)
             await dispatch(loadData())
         } catch (error) {
             console.error(error.message);
