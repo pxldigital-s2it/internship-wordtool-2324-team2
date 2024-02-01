@@ -5,6 +5,7 @@ import { AddButton, CategoryComponent, Modal } from "../../components";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { selectData, selectIsLoading } from "../../redux/category/category.slice";
 import { loadData } from "../../middleware/category/CategoryMiddleware";
+import FreeFeedbackInput from "../../components/freefeedbackinput/freefeedbackinput";
 import { Toggle } from "@fluentui/react";
 
 const taskPaneClassNames = mergeStyleSets({
@@ -71,6 +72,7 @@ const TaskPane: React.FC = () => {
   return (
     <div className={taskPaneClassNames.taskPane}>
       <div className={taskPaneClassNames.titleBar}>MayDay</div>
+      <FreeFeedbackInput />
       <div style={{ paddingLeft: '16px' }}>
         <Toggle
           label="Favorieten apart bovenaan tonen"
