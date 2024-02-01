@@ -23,38 +23,25 @@ const insertText = async (categoryId: string, description: string) => {
 
               await context.sync();
 
-              let categoryStyleName = categoryId + "Style";
+              const regex = /[^a-zA-Z0-9]/g; // regex to get special characters
+              const categoryStyleName = categoryId.replace(regex, "") + "Style";
               let categoryStyle = styles.getByNameOrNullObject(categoryStyleName);
               categoryStyle.load("isNullObject");
-              categoryStyle.load("nameLocal");
-              categoryStyle.load("shading");
-              categoryStyle.load("font");
-              categoryStyle.shading.load("backgroundPatternColor");
-              categoryStyle.font.load("color")
 
               await context.sync();
 
-              console.log("categoryStyleNull: " + categoryStyle.isNullObject);
-              console.log("categoryStyleName: " + categoryStyle.nameLocal);
-
               if (categoryStyle.isNullObject) {
-                  console.log("went into if statement with null object style");
-                  console.log("1");
-                  categoryStyle.font.color = "green";
-                  console.log("2");
-                  categoryStyle.shading.backgroundPatternColor = category.colour.toUpperCase();
-                  console.log("3");
-                  context.document.addStyle(categoryStyleName, "Character");
-                  console.log("4");
+                  console.log("went into if statement")
+                  categoryStyle = context.document.addStyle(categoryStyleName, "Character");
+                  categoryStyle.font.color = "black";
+                  categoryStyle.shading.backgroundPatternColor = category.colour;
 
+                  console.log("before sync in if")
                   await context.sync();
               }
 
-              console.log("5");
               const insertedRange = range.insertText(" (" + description + ") ", Word.InsertLocation.after);
               range.style = categoryStyleName;
-              await context.sync();
-              console.log("range.style: " + range.style);
 
               insertedRange.font.color = "red";
               insertedRange.font.highlightColor = "white";
