@@ -5,11 +5,10 @@ import { AddButton, CategoryComponent, Modal } from "../../components";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { selectData, selectIsLoading } from "../../redux/category/category.slice";
 import { loadData } from "../../middleware/category/CategoryMiddleware";
-import FreeFeedbackInput from "../../components/freefeedbackinput/FreeFeedbackInput";
+import FreeFeedbackInput from "../../components/freefeedbackinput/freefeedbackinput";
 import { Toggle } from "@fluentui/react";
 
 const taskPaneClassNames = mergeStyleSets({
-
   fixedInputBox: {
     backgroundColor: "white",
     bottom: "0",
@@ -37,6 +36,7 @@ const taskPaneClassNames = mergeStyleSets({
   }
 });
 
+
 const TaskPane: React.FC = () => {
   const dispatch = useAppDispatch();
   const [favoritesHoistingEnabled, setFavoritesHoistingEnabled] = useState(true);
@@ -59,8 +59,8 @@ const TaskPane: React.FC = () => {
 
   const processedCategories = categories.map(category => {
     const filteredSubCategories = favoritesHoistingEnabled
-        ? category.subCategories.filter(sub => !favoritesHidingEnabled || !sub.isFavorite)
-        : category.subCategories;
+      ? category.subCategories.filter(sub => !favoritesHidingEnabled || !sub.isFavorite)
+      : category.subCategories;
 
     return {
       ...category,
@@ -78,43 +78,43 @@ const TaskPane: React.FC = () => {
 
   // include the "Favorieten" category at the front of the categories list if it contains any favorites
   const modifiedCategories = favoritesCategory.subCategories.length > 0
-      ? [favoritesCategory, ...processedCategories]
-      : processedCategories;
+    ? [favoritesCategory, ...processedCategories]
+    : processedCategories;
 
   return (
-      <div className={taskPaneClassNames.taskPane}>
-        <div className={taskPaneClassNames.titleBar}>MayDay</div>
-        <div className={taskPaneClassNames.fixedInputBox}>
-          <FreeFeedbackInput />
-        </div>
-        <div style={{ paddingLeft: '16px' }}>
-          <Toggle
-              label="Favorieten apart bovenaan tonen"
-              checked={favoritesHoistingEnabled}
-              onChange={() => setFavoritesHoistingEnabled(!favoritesHoistingEnabled)}
-              style={{ margin: '10px'  }}
-          />
-        </div>
-        <div style={{ paddingLeft: '16px' }}>
-          <Toggle
-              label="Favorieten ook verbergen uit eigen categorie"
-              checked={favoritesHidingEnabled}
-              onChange={() => setFavoritesHidingEnabled(!favoritesHidingEnabled)}
-              style={{ margin: '10px' }}
-          />
-        </div>
-        <Modal />
-        {isLoading ? (
-            <div>Aan het laden...</div>
-        ) : (
-            <div style={{ borderCollapse: "collapse", width: "100%" }}>
-              {modifiedCategories.map(category => (
-                  <CategoryComponent key={category.id} {...category} />
-              ))}
-            </div>
-        )}
-        <AddButton />
+    <div className={taskPaneClassNames.taskPane}>
+      <div className={taskPaneClassNames.titleBar}>MayDay</div>
+      <div className={taskPaneClassNames.fixedInputBox}>
+        <FreeFeedbackInput />
       </div>
+      <div style={{ paddingLeft: '16px' }}>
+        <Toggle
+          label="Favorieten apart bovenaan tonen"
+          checked={favoritesHoistingEnabled}
+          onChange={() => setFavoritesHoistingEnabled(!favoritesHoistingEnabled)}
+          style={{ margin: '10px'  }}
+        />
+      </div>
+      <div style={{ paddingLeft: '16px' }}>
+        <Toggle
+          label="Favorieten ook verbergen uit eigen categorie"
+          checked={favoritesHidingEnabled}
+          onChange={() => setFavoritesHidingEnabled(!favoritesHidingEnabled)}
+          style={{ margin: '10px' }}
+        />
+      </div>
+      <Modal />
+      {isLoading ? (
+        <div>Aan het laden...</div>
+      ) : (
+        <div style={{ borderCollapse: "collapse", width: "100%" }}>
+          {modifiedCategories.map(category => (
+            <CategoryComponent key={category.id} {...category} />
+          ))}
+        </div>
+      )}
+      <AddButton />
+    </div>
   );
 };
 
