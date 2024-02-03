@@ -3,7 +3,7 @@
 
 import {getCategory} from "../middleware/modal/ModalMiddleware";
 
-const insertText = async (categoryId: string, description: string) => {
+const insertAndHighlightText = async (categoryId: string, description: string) => {
   // Write text to the document.
   try {
       await Word.run(async (context) => {
@@ -54,4 +54,4 @@ const insertText = async (categoryId: string, description: string) => {
   }
 };
 
-export default insertText;
+export default insertAndHighlightText;
