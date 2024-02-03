@@ -40,4 +40,4 @@ yarn-error.log
 npm-debug.log
 
 # coverage
-coverage
+#coverage
