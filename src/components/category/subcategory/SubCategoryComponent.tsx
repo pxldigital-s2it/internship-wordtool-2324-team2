@@ -4,7 +4,7 @@ import { openUpdateSubCategoryModal } from "../../../middleware/modal/ModalMiddl
 import { useAppDispatch } from "../../../redux/hooks";
 import { categoryContextMenu } from "../../../patterns/observer";
 import { ContextMenu } from "../../index";
-import insertText from "../../../taskpane/office-document";
+import insertAndHighlightText from "../../../taskpane/office-document";
 import { FC } from "react";
 import { deleteSubCategory } from "../../../middleware/category/CategoryMiddleware";
 import SubCategory from "../../../types/SubCategory";
@@ -26,7 +26,7 @@ const SubCategoryComponent: FC<SubCategory> = ({ id, categoryId, description }) 
   ];
 
   const handleTextInsertion = async (categoryId: string, description: string) => {
-    await insertText(categoryId, description);
+    await insertAndHighlightText(categoryId, description);
   };
 
   return (

@@ -8,7 +8,7 @@ import SubCategoryComponent from "../SubCategoryComponent";
 import { renderWithProviders } from "../../../../__tests__/utils/TestUtils";
 import { initialState } from "../../../../redux/store";
 import { categoryContextMenu } from "../../../../patterns/observer";
-import insertText from "../../../../taskpane/office-document";
+import insertAndHighlightText from "../../../../taskpane/office-document";
 
 jest.mock("../../../../taskpane/office-document");
 
@@ -111,7 +111,7 @@ describe('SubCategoryComponent Integration Test Suite', () => {
 
       fireEvent.click(getByText(mockSubCategories[0].description));
 
-      expect(insertText).toHaveBeenCalledWith(
+      expect(insertAndHighlightText).toHaveBeenCalledWith(
           mockCategory.id,
           mockSubCategories[0].description
       );
