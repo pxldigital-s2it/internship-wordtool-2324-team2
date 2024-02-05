@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useAppDispatch } from "../../../redux/hooks";
+import { insertAndHighlightText } from "../../../taskpane/office-document";
 import SubCategory from "../../../types/SubCategory";
 import {
   deleteSubCategory,
@@ -9,7 +10,6 @@ import {
 import {
   updateSubCategoryDescriptionById
 } from "../../../middleware/modal/ModalMiddleware";
-import insertAndHighlightText from "../../../taskpane/office-document";
 import { sectionClassNames } from "./SubCategoryComponent.styles";
 import { Icon } from "@fluentui/react";
 import * as React from "react";
