@@ -5,7 +5,7 @@ import { AddButton, CategoryComponent, Modal } from "../../components";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { selectData, selectIsLoading } from "../../redux/category/category.slice";
 import { loadData } from "../../middleware/category/CategoryMiddleware";
-import FreeFeedbackInput from "../../components/freefeedbackinput/freefeedbackinput";
+import FreeFeedbackInput from "../../components/freefeedbackinput/FreeFeedbackInput";
 import { Toggle } from "@fluentui/react";
 
 const taskPaneClassNames = mergeStyleSets({
