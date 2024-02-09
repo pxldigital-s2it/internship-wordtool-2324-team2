@@ -1,54 +1,78 @@
 /* eslint-disable */
 /* global Word console */
 
-import {getCategory} from "../middleware/modal/ModalMiddleware";
+import { getCategory } from "../middleware/modal/ModalMiddleware";
+import Category from "../types/Category";
+
+async function getCategoryStyleName(categoryId: string, styles: Word.StyleCollection, context: Word.RequestContext, category: Category) {
+  const regex = /[^a-zA-Z0-9]/g; // regex to get special characters
+  const categoryStyleName = categoryId.replace(regex, "") + "Style";
+  let categoryStyle = styles.getByNameOrNullObject(categoryStyleName);
+  categoryStyle.load("isNullObject");
+
+  await context.sync();
+
+  if (categoryStyle.isNullObject) {
+    categoryStyle = context.document.addStyle(categoryStyleName, "Character");
+    categoryStyle.font.color = "black";
+    categoryStyle.shading.backgroundPatternColor = category.colour;
+
+    await context.sync();
+  }
+
+  return categoryStyleName;
+}
+
+async function getInsertText(description: string, context: Word.RequestContext, category: Category) {
+  const descriptionInsert = " (" + description + ") ";
+  const searchResults = context.document.body.search(descriptionInsert);
+
+  searchResults.load("items");
+  await context.sync();
+
+  if (searchResults.items?.length) {
+    return " (" + category.code + ") ";
+  }
+
+  return descriptionInsert;
+}
+
+function insertAndHighlight(range: Word.Range, descriptionInsert: string, categoryStyleName: string) {
+  const insertedRange = range.insertText(descriptionInsert, Word.InsertLocation.after);
+  range.style = categoryStyleName;
+
+  insertedRange.font.color = "red";
+  insertedRange.font.highlightColor = "white";
+}
 
 const insertAndHighlightText = async (categoryId: string, description: string) => {
   // Write text to the document.
   try {
-      await Word.run(async (context) => {
-          const range = context.document.getSelection();
+    await Word.run(async (context) => {
+      const range = context.document.getSelection();
 
-          range.load("text");
-          range.load("isEmpty");
-          range.load("style");
+      range.load("text");
+      range.load("isEmpty");
+      range.load("style");
 
-          await context.sync();
+      await context.sync();
 
-          if (!(range.isEmpty)) {
-              let styles = context.document.getStyles();
-              const category = await getCategory(categoryId);
+      if (!(range.isEmpty)) {
+        const styles = context.document.getStyles();
+        const category = await getCategory(categoryId);
 
-              styles.load("getByNameOrNullObject");
+        styles.load("getByNameOrNullObject");
 
-              await context.sync();
+        await context.sync();
 
-              const regex = /[^a-zA-Z0-9]/g; // regex to get special characters
-              const categoryStyleName = categoryId.replace(regex, "") + "Style";
-              let categoryStyle = styles.getByNameOrNullObject(categoryStyleName);
-              categoryStyle.load("isNullObject");
+        const categoryStyleName = await getCategoryStyleName(categoryId, styles, context, category);
+        const descriptionInsert = await getInsertText(description, context, category);
 
-              await context.sync();
+        insertAndHighlight(range, descriptionInsert, categoryStyleName);
+      }
 
-              if (categoryStyle.isNullObject) {
-                  console.log("went into if statement")
-                  categoryStyle = context.document.addStyle(categoryStyleName, "Character");
-                  categoryStyle.font.color = "black";
-                  categoryStyle.shading.backgroundPatternColor = category.colour;
-
-                  console.log("before sync in if")
-                  await context.sync();
-              }
-
-              const insertedRange = range.insertText(" (" + description + ") ", Word.InsertLocation.after);
-              range.style = categoryStyleName;
-
-              insertedRange.font.color = "red";
-              insertedRange.font.highlightColor = "white";
-          }
-
-          await context.sync();
-      });
+      await context.sync();
+    });
   } catch (error) {
     console.log("Error: " + error);
   }
