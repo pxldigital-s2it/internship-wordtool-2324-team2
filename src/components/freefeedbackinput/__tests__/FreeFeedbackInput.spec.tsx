@@ -4,7 +4,6 @@ import { fireEvent } from "@testing-library/react";
 import React from "react";
 import FreeFeedbackInput from "../FreeFeedbackInput";
 import STRING_RESOURCES from "../Strings";
-import { insertFreeFeedback } from "../../../taskpane/office-document";
 
 describe('FreeFeedbackInput Integration Test Suite', () => {
     const officeDocument = require("../../../taskpane/office-document");
@@ -18,7 +17,7 @@ describe('FreeFeedbackInput Integration Test Suite', () => {
 
     describe('FreeFeedbackInput onClick to insert text', () => {
         test('should call insertFreeFeedback when button is clicked', async () => {
-            const spy = jest.spyOn(officeDocument, 'insertFreeFeedback');
+            const spy = jest.spyOn(officeDocument, "insertFreeFeedback");
             const { getByText, getByPlaceholderText } = renderWithProviders(<FreeFeedbackInput  />, { preloadedState: initialState });
 
             fireEvent.change(getByPlaceholderText(STRING_RESOURCES.freefeedbackinput.textarea.placeholder), { target: { value: "Test feedback" } });
