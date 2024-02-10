@@ -41,3 +41,9 @@ npm-debug.log
 
 # coverage
 coverage
+/package-lock.json
+/.idea/.idea.internship-wordtool-2324-team2.dir/.idea/.gitignore
+/.idea/.idea.internship-wordtool-2324-team2.dir/.idea/encodings.xml
+/.idea/.idea.internship-wordtool-2324-team2.dir/.idea/indexLayout.xml
+/.idea/.idea.internship-wordtool-2324-team2.dir/.idea/vcs.xml
+/Folder.DotSettings.user
