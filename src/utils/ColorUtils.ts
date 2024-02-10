@@ -1,4 +1,6 @@
-﻿export const hexToRgb = (hex) => {
+﻿import { RGBColour } from "../types/RGBColour";
+
+export const hexToRgb = (hex): RGBColour => {
     const validHex = /^#(?:[0-9a-fA-F]{3}){1,2}$/;
     if (!validHex.test(hex)) {
         throw new Error("Invalid hex color format");
@@ -17,5 +19,5 @@
         g = parseInt(hex[3] + hex[4], 16);
         b = parseInt(hex[5] + hex[6], 16);
     }
-    return {r, g, b};
+    return new RGBColour(r, g, b);
 };

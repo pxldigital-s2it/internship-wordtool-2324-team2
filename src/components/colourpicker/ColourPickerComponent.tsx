@@ -1,21 +1,22 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import ColourPicker from "./ColourPicker";
 import ColourSquare from "./ColourSquare";
-import {useAppDispatch, useAppSelector} from "../../redux/hooks";
-import {selectColour, setColour} from "../../redux/category/category.slice";
-import {Button} from "@fluentui/react-components";
-import {isLowContrast} from "../../utils/ContrastUtils";
-import {hexToRgb} from "../../utils/ColorUtils";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { selectColour, setColour } from "../../redux/category/category.slice";
+import { Button } from "@fluentui/react-components";
+import { isLowContrast } from "../../utils/ContrastUtils";
+import { hexToRgb } from "../../utils/ColorUtils";
+import { ColourObject } from "../../types/ColourObject";
+import { RGBColour } from "../../types/RGBColour";
 
 // Updated getColorObject function
-const getColorObject = (color) => {
-    const {r, g, b} = hexToRgb(color);
-    return {
-        b, g, h: 0,
-        hex: color, r, s: 0, // These values are not used in the contrast calculation
-        str: color,
-        v: 0
-    };
+const getColorObject = (color): ColourObject => {
+    if (!color) {
+        color = "#ffffff";
+    }
+    
+    const rgbColour: RGBColour = hexToRgb(color);
+    return new ColourObject(rgbColour, color);
 };
 
 const ColourPickerComponent = () => {
@@ -41,7 +42,7 @@ const ColourPickerComponent = () => {
             if (isLowContrast(currentBackgroundColor)) {
                 warning = "Low contrast!";
             }
-
+            
             setContrastWarning(warning);
         } catch (error) {
             console.error(error);
@@ -52,24 +53,24 @@ const ColourPickerComponent = () => {
         <div>
             {open ? (
                 <>
-                    <div style={{marginLeft: "-15px"}}>
+                    <div style={{ marginLeft: "-15px" }}>
                         <ColourPicker selectedColor={colour} setSelectedColor={handleSelectColour}/>
                     </div>
 
-                    <div style={{height: "20px", color: "red", marginTop: "-15px"}}>
+                    <div style={{ color: "red", height: "20px", marginTop: "-15px" }}>
                         <p>{contrastWarning}</p>
                     </div>
 
-                    <Button style={{margin: "15px 0px"}} onClick={handleClosePanel}>Choose this color</Button>
+                    <Button style={{ margin: "15px 0px" }} onClick={handleClosePanel}>Selecteer deze kleur</Button>
 
-                    <div style={{backgroundColor: colour, padding: "10px"}}>
-                        <p style={{color: "#000000"}}>Black text preview</p>
+                    <div style={{ backgroundColor: colour, padding: "10px" }}>
+                        <p style={{ color: "#000000" }}>Black text preview</p>
                     </div>
                 </>
             ) : (
                 <div onClick={() => setOpen(true)}>
                     <ColourSquare colour={colour}/>
-                    <div style={{color: "red"}}>
+                    <div style={{ color: "red" }}>
                         <p>{contrastWarning}</p>
                     </div>
                 </div>

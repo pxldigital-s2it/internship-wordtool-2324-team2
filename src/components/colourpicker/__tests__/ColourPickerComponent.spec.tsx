@@ -10,7 +10,7 @@ describe("ColourPickerComponent Test Suite", () => {
   test("Initial render", () => {
     const { container, queryByText } = renderWithProviders(<ColourPickerComponent />, { preloadedState: initialState });
     expect(container.querySelector(`div.${categoryClassNames.colorSquare}`)).toBeInTheDocument();
-    expect(queryByText("Deze kleur")).toBeNull();
+    expect(queryByText("Selecteer deze kleur")).toBeNull();
   });
 
   test("Open ColourPicker", () => {
@@ -19,7 +19,7 @@ describe("ColourPickerComponent Test Suite", () => {
     fireEvent.click(container.querySelector(`div.${categoryClassNames.colorSquare}`));
 
     expect(container.querySelector(`div.${categoryClassNames.colorSquare}`)).toBeNull();
-    expect(queryByText("Deze kleur")).toBeInTheDocument();
+    expect(queryByText("Selecteer deze kleur")).toBeInTheDocument();
   });
 
   test("Select colour", () => {
@@ -37,10 +37,10 @@ describe("ColourPickerComponent Test Suite", () => {
     const { container, queryByText } = renderWithProviders(<ColourPickerComponent />, { preloadedState: initialState });
 
     fireEvent.click(container.querySelector(`div.${categoryClassNames.colorSquare}`));
-    fireEvent.click(queryByText("Deze kleur"));
+    fireEvent.click(queryByText("Selecteer deze kleur"));
 
     expect(container.querySelector(`div.${categoryClassNames.colorSquare}`)).toBeInTheDocument();
-    expect(queryByText("Deze kleur")).toBeNull();
+    expect(queryByText("Selecteer deze kleur")).toBeNull();
   });
 
 })

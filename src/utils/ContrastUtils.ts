@@ -1,4 +1,4 @@
-﻿import {IColor} from "@fluentui/react";
+﻿import { IColor } from "@fluentui/react";
 
 export const isLowContrast = (backgroundColour: IColor): boolean => {
     const contrastTreshold = 7;

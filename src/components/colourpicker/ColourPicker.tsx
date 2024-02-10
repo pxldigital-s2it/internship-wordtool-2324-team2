@@ -1,10 +1,10 @@
 ﻿import React from "react";
-import {ColorPicker, IColor} from "@fluentui/react";
+import { ColorPicker, IColor } from "@fluentui/react";
 
-import {ColourPickerProps} from "./ColourPicker.types";
-import {isLowContrast} from "../../utils/ContrastUtils";
+import { ColourPickerProps } from "./ColourPicker.types";
+import { isLowContrast } from "../../utils/ContrastUtils";
 
-const ColourPicker: React.FC<ColourPickerProps> = ({selectedColor, setSelectedColor}) => {
+const ColourPicker: React.FC<ColourPickerProps> = ({ selectedColor, setSelectedColor }) => {
     const onColorChanged = (_ev: React.SyntheticEvent<HTMLElement>, color: IColor) => {
         setSelectedColor(color.str);
 
