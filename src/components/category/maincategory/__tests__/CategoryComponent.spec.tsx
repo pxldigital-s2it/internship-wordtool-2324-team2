@@ -30,7 +30,7 @@ describe("CategoryComponent Test Suite", () => {
   test("Initial render", () => {
     const { getByText } = renderWithProviders(createComponent(DEFAULT_PROPS), { preloadedState: initialState });
 
-    expect(getByText(`${DEFAULT_PROPS.title}`)).toBeInTheDocument();
+    expect(getByText(`[${DEFAULT_PROPS.code}] ${DEFAULT_PROPS.title}`)).toBeInTheDocument();
   });
 
   test("Clicking on the header toggles the content", () => {
@@ -42,7 +42,7 @@ describe("CategoryComponent Test Suite", () => {
     expect(container.querySelector(`div.${categoryClassNames.categoryContent}`)).not.toBeInTheDocument();
     expect(container.querySelector("i[data-icon-name=\"ChevronRight\"]")).toBeInTheDocument();
 
-    fireEvent.click(getByText(`${DEFAULT_PROPS.title}`));
+    fireEvent.click(getByText(`[${DEFAULT_PROPS.code}] ${DEFAULT_PROPS.title}`));
 
     expect(container.querySelector(`div.${categoryClassNames.categoryContent}`)).toBeInTheDocument();
     expect(container.querySelector("i[data-icon-name=\"ChevronDown\"]")).toBeInTheDocument();
@@ -67,7 +67,7 @@ describe("CategoryComponent Test Suite", () => {
     jest.spyOn(require("../../../../middleware/modal/ModalMiddleware"), "openUpdateCategoryModal").mockImplementation((id) => ({ payload: id, type: "OPEN_UPDATE_CATEGORY_MODAL" }));
     jest.spyOn(require("../../../../middleware/category/CategoryMiddleware"), "deleteCategory").mockImplementation((id) => ({ payload: id, type: "DELETE_CATEGORY" }))
     const openContextMenu = (getByText: { (id: Matcher, options?: SelectorMatcherOptions): HTMLElement; (arg0: string): Element | Node | Document | Window; }) => {
-      fireEvent.contextMenu(getByText(`${DEFAULT_PROPS.title}${DEFAULT_PROPS.subCategories.length > 0 ? ` (${DEFAULT_PROPS.subCategories.length})` : ""}`));
+      fireEvent.contextMenu(getByText(`[${DEFAULT_PROPS.code}] ${DEFAULT_PROPS.title}${DEFAULT_PROPS.subCategories.length > 0 ? ` (${DEFAULT_PROPS.subCategories.length})` : ""}`));
     }
 
     test('Right-clicking on the header opens the context menu with correct options', () => {
