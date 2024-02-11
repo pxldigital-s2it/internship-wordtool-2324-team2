@@ -1,6 +1,6 @@
-﻿import {ColourObject} from "../../types/ColourObject";
-import {RGBColour} from "../../types/RGBColour";
-import {getColorObject} from "../ColorUtils";
+﻿import { ColourObject } from "../../types/ColourObject";
+import { RGBColour } from "../../types/RGBColour";
+import { getColorObject } from "../ColorUtils";
 
 describe("Color Test Suite", () => {
     test("if null hex value when getting colour object then white colour object returned", () => {

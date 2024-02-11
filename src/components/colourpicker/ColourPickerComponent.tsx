@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { selectColour, setColour } from "../../redux/category/category.slice";
 import { Button } from "@fluentui/react-components";
 import { isLowContrast } from "../../utils/ContrastUtils";
-import {getColorObject} from "../../utils/ColorUtils";
+import { getColorObject } from "../../utils/ColorUtils";
 
 const ColourPickerComponent = () => {
     const [open, setOpen] = useState(false);
