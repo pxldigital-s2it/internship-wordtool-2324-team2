@@ -5,19 +5,7 @@ import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { selectColour, setColour } from "../../redux/category/category.slice";
 import { Button } from "@fluentui/react-components";
 import { isLowContrast } from "../../utils/ContrastUtils";
-import { hexToRgb } from "../../utils/ColorUtils";
-import { ColourObject } from "../../types/ColourObject";
-import { RGBColour } from "../../types/RGBColour";
-
-// Updated getColorObject function
-const getColorObject = (color): ColourObject => {
-    if (!color) {
-        color = "#ffffff";
-    }
-    
-    const rgbColour: RGBColour = hexToRgb(color);
-    return new ColourObject(rgbColour, color);
-};
+import {getColorObject} from "../../utils/ColorUtils";
 
 const ColourPickerComponent = () => {
     const [open, setOpen] = useState(false);
@@ -31,7 +19,6 @@ const ColourPickerComponent = () => {
 
     const handleClosePanel = () => {
         setOpen(false);
-        setContrastWarning("");
     };
 
     useEffect(() => {
@@ -64,7 +51,7 @@ const ColourPickerComponent = () => {
                     <Button style={{ margin: "15px 0px" }} onClick={handleClosePanel}>Selecteer deze kleur</Button>
 
                     <div style={{ backgroundColor: colour, padding: "10px" }}>
-                        <p style={{ color: "#000000" }}>Black text preview</p>
+                        <p style={{ color: "#000000" }}>Preview (zwart)</p>
                     </div>
                 </>
             ) : (

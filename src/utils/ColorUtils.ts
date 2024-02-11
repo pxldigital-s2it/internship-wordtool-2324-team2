@@ -1,4 +1,14 @@
 ﻿import { RGBColour } from "../types/RGBColour";
+import { ColourObject } from "../types/ColourObject";
+
+export const getColorObject = (color): ColourObject => {
+    if (!color) {
+        color = "#ffffff";
+    }
+
+    const rgbColour: RGBColour = hexToRgb(color);
+    return new ColourObject(rgbColour, color);
+};
 
 export const hexToRgb = (hex): RGBColour => {
     const validHex = /^#(?:[0-9a-fA-F]{3}){1,2}$/;

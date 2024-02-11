@@ -45,8 +45,6 @@ describe("ColourPickerComponent Test Suite", () => {
     });
 
     test("If change colour when low contrast then show low contrast warning", async () => {
-        const dispatchMock = jest.fn();
-        jest.spyOn(require("../../../redux/hooks"), "useAppDispatch").mockReturnValue(dispatchMock);
         jest.spyOn(require("../../../utils/ContrastUtils"), "isLowContrast").mockReturnValue(true);
         const { container } = renderWithProviders(
             <ColourPickerComponent/>, { preloadedState: initialState });
@@ -59,8 +57,6 @@ describe("ColourPickerComponent Test Suite", () => {
     });
 
     test("If change colour when not low contrast then show low contrast warning", async () => {
-        const dispatchMock = jest.fn();
-        jest.spyOn(require("../../../redux/hooks"), "useAppDispatch").mockReturnValue(dispatchMock);
         jest.spyOn(require("../../../utils/ContrastUtils"), "isLowContrast").mockReturnValue(false);
         const { container } = renderWithProviders(
             <ColourPickerComponent/>, { preloadedState: initialState });
@@ -69,7 +65,7 @@ describe("ColourPickerComponent Test Suite", () => {
 
         const warningElement = container.querySelector("#contrastWarning")
         expect(warningElement).toBeInTheDocument();
-        expect(warningElement).toBeEmpty();
+        expect(warningElement).toBeEmptyDOMElement();
     });
 
 })
