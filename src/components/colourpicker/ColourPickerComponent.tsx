@@ -40,7 +40,7 @@ const ColourPickerComponent = () => {
 
             let warning: string = null;
             if (isLowContrast(currentBackgroundColor)) {
-                warning = "Low contrast!";
+                warning = "Laag contrast: slecht leesbaar";
             }
             
             setContrastWarning(warning);
@@ -58,7 +58,7 @@ const ColourPickerComponent = () => {
                     </div>
 
                     <div style={{ color: "red", height: "20px", marginTop: "-15px" }}>
-                        <p>{contrastWarning}</p>
+                        <p id="contrastWarning" >{contrastWarning}</p>
                     </div>
 
                     <Button style={{ margin: "15px 0px" }} onClick={handleClosePanel}>Selecteer deze kleur</Button>
