@@ -15,16 +15,14 @@ describe('FreeFeedbackInput Integration Test Suite', () => {
         expect(getByPlaceholderText(STRING_RESOURCES.freefeedbackinput.textarea.placeholder)).toBeInTheDocument();
     });
 
-    describe('FreeFeedbackInput onClick to insert text', () => {
-        test('should call insertFreeFeedback when button is clicked', async () => {
-            const spy = jest.spyOn(officeDocument, "insertFreeFeedback");
-            const { getByText, getByPlaceholderText } = renderWithProviders(<FreeFeedbackInput  />, { preloadedState: initialState });
+    test('should call insertFreeFeedback when button is clicked', () => {
+        const spy = jest.spyOn(officeDocument, "insertFreeFeedback");
+        const { getByText, getByPlaceholderText } = renderWithProviders(<FreeFeedbackInput  />, { preloadedState: initialState });
 
-            fireEvent.change(getByPlaceholderText(STRING_RESOURCES.freefeedbackinput.textarea.placeholder), { target: { value: "Test feedback" } });
+        fireEvent.change(getByPlaceholderText(STRING_RESOURCES.freefeedbackinput.textarea.placeholder), { target: { value: "Test feedback" } });
 
-            fireEvent.click(getByText(STRING_RESOURCES.freefeedbackinput.button.label));
+        fireEvent.click(getByText(STRING_RESOURCES.freefeedbackinput.button.label));
 
-            expect(spy).toHaveBeenCalledWith("Test feedback");
-        });
+        expect(spy).toHaveBeenCalledWith("Test feedback");
     });
 });
