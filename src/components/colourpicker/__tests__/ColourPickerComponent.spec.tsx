@@ -7,40 +7,65 @@ import { fireEvent } from "@testing-library/react";
 
 describe("ColourPickerComponent Test Suite", () => {
 
-  test("Initial render", () => {
-    const { container, queryByText } = renderWithProviders(<ColourPickerComponent />, { preloadedState: initialState });
-    expect(container.querySelector(`div.${categoryClassNames.colorSquare}`)).toBeInTheDocument();
-    expect(queryByText("Deze kleur")).toBeNull();
-  });
+    test("Initial render", () => {
+        const { container, queryByText } = renderWithProviders(<ColourPickerComponent/>, { preloadedState: initialState });
+        expect(container.querySelector(`div.${categoryClassNames.colorSquare}`)).toBeInTheDocument();
+        expect(queryByText("Selecteer deze kleur")).toBeNull();
+    });
 
-  test("Open ColourPicker", () => {
-    const { container, queryByText } = renderWithProviders(<ColourPickerComponent />, { preloadedState: initialState });
+    test("Open ColourPicker", () => {
+        const { container, queryByText } = renderWithProviders(<ColourPickerComponent/>, { preloadedState: initialState });
 
-    fireEvent.click(container.querySelector(`div.${categoryClassNames.colorSquare}`));
+        fireEvent.click(container.querySelector(`div.${categoryClassNames.colorSquare}`));
 
-    expect(container.querySelector(`div.${categoryClassNames.colorSquare}`)).toBeNull();
-    expect(queryByText("Deze kleur")).toBeInTheDocument();
-  });
+        expect(container.querySelector(`div.${categoryClassNames.colorSquare}`)).toBeNull();
+        expect(queryByText("Selecteer deze kleur")).toBeInTheDocument();
+    });
 
-  test("Select colour", () => {
-    const dispatchMock = jest.fn();
-    jest.spyOn(require( "../../../redux/hooks"), "useAppDispatch").mockReturnValue(dispatchMock);
-    const { container, getByLabelText } = renderWithProviders(<ColourPickerComponent />, { preloadedState: initialState });
+    test("Select colour", () => {
+        const dispatchMock = jest.fn();
+        jest.spyOn(require("../../../redux/hooks"), "useAppDispatch").mockReturnValue(dispatchMock);
+        const { container, getByLabelText } = renderWithProviders(
+            <ColourPickerComponent/>, { preloadedState: initialState });
 
-    fireEvent.click(container.querySelector(`div.${categoryClassNames.colorSquare}`));
-    fireEvent.change(getByLabelText("Hex"), { target: { value: "999999" } });
+        fireEvent.click(container.querySelector(`div.${categoryClassNames.colorSquare}`));
+        fireEvent.change(getByLabelText("Hex"), { target: { value: "999999" } });
 
-    expect(dispatchMock).toHaveBeenCalledWith({ payload: "#999999", type: "category/setColour" });
-  });
+        expect(dispatchMock).toHaveBeenCalledWith({ payload: "#999999", type: "category/setColour" });
+    });
 
-  test("Close ColourPicker", () => {
-    const { container, queryByText } = renderWithProviders(<ColourPickerComponent />, { preloadedState: initialState });
+    test("Close ColourPicker", () => {
+        const { container, queryByText } = renderWithProviders(<ColourPickerComponent/>, { preloadedState: initialState });
 
-    fireEvent.click(container.querySelector(`div.${categoryClassNames.colorSquare}`));
-    fireEvent.click(queryByText("Deze kleur"));
+        fireEvent.click(container.querySelector(`div.${categoryClassNames.colorSquare}`));
+        fireEvent.click(queryByText("Selecteer deze kleur"));
 
-    expect(container.querySelector(`div.${categoryClassNames.colorSquare}`)).toBeInTheDocument();
-    expect(queryByText("Deze kleur")).toBeNull();
-  });
+        expect(container.querySelector(`div.${categoryClassNames.colorSquare}`)).toBeInTheDocument();
+        expect(queryByText("Selecteer deze kleur")).toBeNull();
+    });
+
+    test("If change colour when low contrast then show low contrast warning", async () => {
+        jest.spyOn(require("../../../utils/ContrastUtils"), "isLowContrast").mockReturnValue(true);
+        const { container } = renderWithProviders(
+            <ColourPickerComponent/>, { preloadedState: initialState });
+
+        fireEvent.click(container.querySelector(`div.${categoryClassNames.colorSquare}`));
+
+        const warningElement = container.querySelector("#contrastWarning")
+        expect(warningElement).toBeInTheDocument();
+        expect(warningElement).toHaveTextContent("Laag contrast: slecht leesbaar");
+    });
+
+    test("If change colour when not low contrast then show low contrast warning", async () => {
+        jest.spyOn(require("../../../utils/ContrastUtils"), "isLowContrast").mockReturnValue(false);
+        const { container } = renderWithProviders(
+            <ColourPickerComponent/>, { preloadedState: initialState });
+
+        fireEvent.click(container.querySelector(`div.${categoryClassNames.colorSquare}`));
+
+        const warningElement = container.querySelector("#contrastWarning")
+        expect(warningElement).toBeInTheDocument();
+        expect(warningElement).toBeEmptyDOMElement();
+    });
 
 })
