@@ -12,7 +12,6 @@ import {
   updateCategory,
   updateSubCategory
 } from "../ModalMiddleware";
-import SubCategory from "../../../types/SubCategory";
 import Category from "../../../types/Category";
 import { setColour } from "../../../redux/category/category.slice";
 
