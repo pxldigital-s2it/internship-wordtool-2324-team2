@@ -3,7 +3,6 @@ import { IconButton } from "@fluentui/react/lib/Button";
 import * as React from "react";
 import { CategoryHeaderProps } from "./CategoryHeader.types";
 import { FC } from "react";
-import { sectionClassNames } from "../subcategory/SubCategoryComponent.styles";
 
 
 const CategoryHeader: FC<CategoryHeaderProps> = ({ colour, id, code, isOpen, name, setIsOpen, sections }) => {
