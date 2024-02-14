@@ -3,8 +3,7 @@ import { mergeStyleSets } from "@fluentui/react";
 export const sectionClassNames = mergeStyleSets({
   activeRowColorBlock: {
     boxShadow: "black -1px 0px 1px -1px",
-    height: "38px",
-    position: "absolute",
+    height: "48px",
     top: 0,
     width: "4px"
   },
@@ -25,11 +24,11 @@ export const sectionClassNames = mergeStyleSets({
       ":hover": {
         color: "red", // Color changes when individual icon is hovered
         opacity: 1, // Make icon visible and change color on hover
-        transform: "scale(1.2)"
+        transform: "scale(1.15)"
       }
     },
     textAlign: "center",
-    transition: "opacity 0.15s ease-in-out, color 0.3s, transform 0.33s ease-in-out",
+    transition: "opacity 0.15s ease-in-out, color 0.3s, transform 0.08s ease-in-out",
     verticalAlign: "middle"
   },
   section: {
@@ -74,6 +73,7 @@ export const sectionClassNames = mergeStyleSets({
     color: "#323130", // using a color from the Fluent UI neutral palette
     fontSize: "14px",
     padding: "4px 0", // slight padding for the text
-    paddingLeft: "20px"
+    paddingLeft: "20px",
+    transition: 'opacity 0.6s ease-in-out'
   }
 });
