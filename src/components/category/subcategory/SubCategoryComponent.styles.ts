@@ -24,10 +24,11 @@ export const sectionClassNames = mergeStyleSets({
       ":hover": {
         color: "red", // Color changes when individual icon is hovered
         opacity: 1, // Make icon visible and change color on hover
-        transform: "scale(1.15)"
+        transform: "scale(1.25)"
       }
     },
     textAlign: "center",
+    transform: "scale(1.15)",
     transition: "opacity 0.15s ease-in-out, color 0.3s, transform 0.08s ease-in-out",
     verticalAlign: "middle"
   },
