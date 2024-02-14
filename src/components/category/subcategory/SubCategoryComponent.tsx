@@ -97,17 +97,6 @@ const SubCategoryComponent: React.FC<SubCategory> = ({ id, categoryId, descripti
     }
   ];
 
-  // This is for fast edit
-  // additional state to handle adding a new subcategory
-  const [addingSubCategory, setAddingSubCategory] = useState(false);
-  const newSubCategoryRef = useRef(null);
-
-  useEffect(() => {
-    // automatically focus the new subcategory input when it becomes visible
-    if (addingSubCategory && newSubCategoryRef.current) {
-      newSubCategoryRef.current.focus();
-    }
-  }, [addingSubCategory]);
 
   return (
     <tr onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}
@@ -117,8 +106,8 @@ const SubCategoryComponent: React.FC<SubCategory> = ({ id, categoryId, descripti
           <div style={{
             backgroundColor: categoryDetails.colour || backgroundColor,
             height: isHovered ? "38px" : "32px",
-            width: isHovered ? "16px" : "1px",
-            marginTop: "-1px"
+            marginTop: "-1px",
+            width: isHovered ? "16px" : "1px"
           }} className={sectionClassNames.activeRowColorBlock}>&nbsp;</div>
         </div>
       </td>
