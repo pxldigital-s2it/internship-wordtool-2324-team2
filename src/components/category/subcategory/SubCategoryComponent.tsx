@@ -12,7 +12,7 @@ import { useState, useEffect } from "react";
 import { Icon } from "@fluentui/react";
 
 // component representing a single section
-const SubCategoryComponent: FC<SubCategory> = ({ id, categoryId, description, isFavorite: initialIsFavorite }) => {
+const SubCategoryComponent: FC<SubCategory> = ({ id, categoryId, description, isFavorite: initialIsFavorite, color }) => {
   const [isFavorite, setIsFavorite] = useState(initialIsFavorite);
   const [isHovered, setIsHovered] = useState(false);
   const dispatch = useAppDispatch();
@@ -20,6 +20,14 @@ const SubCategoryComponent: FC<SubCategory> = ({ id, categoryId, description, is
   // TODO: Update isFavorite in backend
   const toggleFavorite = () => {
     setIsFavorite(!isFavorite);
+  };
+
+  const handleDelete = () => {
+    dispatch(deleteSubCategory(id))
+  };
+
+  const handleEdit = () => {
+    dispatch(openUpdateSubCategoryModal({ categoryId, description, id, isFavorite }))
   };
 
   useEffect(() => {
@@ -45,20 +53,34 @@ const SubCategoryComponent: FC<SubCategory> = ({ id, categoryId, description, is
     <tr id={`cat_${categoryId}_sub_${id}`} className={sectionClassNames.section}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}>
-      <td>
-        <span onClick={toggleFavorite} className={`${sectionClassNames.favoriteIcon} ${isFavorite ? 'isFavorite' : ''}`}
-              style={{ cursor: 'pointer' }}>
+      <td style={{ paddingRight: '6px' }}><div className={sectionClassNames.activeRowColorBlock} style={{
+        backgroundColor: color,
+        visibility: isHovered ? "visible" : "hidden"
+      }}>&nbsp;</div></td>
+      <td onClick={toggleFavorite} title={isFavorite ? "Verwijderen als Favoriet" : "Toevoegen als Favoriet"}>
+        <span
+              className={`${sectionClassNames.menuIcon} ${isFavorite ? 'isFavorite' : ''} ${isFavorite || isHovered ? 'showIcon' : ''} `}>
           <Icon iconName={isFavorite || isHovered ? "FavoriteStarFill" : "FavoriteStar"} />
+        </span>
+      </td>
+      <td onClick={handleEdit}>
+        <span className={`${sectionClassNames.menuIcon} ${isHovered ? 'showIcon' : ''}`}>
+          <Icon iconName="Edit" title="Wijzigen" />
         </span>
       </td>
       <td onClick={() => handleTextInsertion(categoryId, description)} style={{ width: '100%' }}
           className={sectionClassNames.sectionText}>
         {description}
       </td>
+      <td onClick={handleDelete}>
+        <span className={`${sectionClassNames.menuIcon} ${isHovered ? 'showIcon' : ''}`}>
+          <Icon iconName="Delete" title="Verwijderen"  />
+        </span>
+      </td>
       <td>
         <ContextMenu
           trigger={
-            <Icon iconName="More" className={sectionClassNames.contextMenuIcon} />
+            <Icon iconName="More" className={`${sectionClassNames.menuIcon} ${sectionClassNames.contextMenuIcon} ${isHovered ? 'showIcon' : ''} `} />
           }
           menuItems={menuItems}
         />

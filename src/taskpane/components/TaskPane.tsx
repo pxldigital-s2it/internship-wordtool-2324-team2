@@ -9,7 +9,10 @@ import { loadData } from "../../middleware/category/CategoryMiddleware";
 // Styles for the taskpane and the title bar
 const taskPaneClassNames = mergeStyleSets({
   taskPane: {
-    padding: "10px 0" // padding above and below the task pane content
+    borderCollapse: "collapse",
+    boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+    padding: "10px 0", // padding above and below the task pane content
+    width: "100%"
   },
   titleBar: {
     // dark blue background for the title bar
@@ -33,28 +36,28 @@ const TaskPane: React.FC = () => {
     dispatch(loadData());
   }, []);
 
-  return (
-    <div>
-      <div className={taskPaneClassNames.titleBar}>MayDay</div>
-      <Modal />
+    return (
       <div className={taskPaneClassNames.taskPane}>
-        {isLoading && <div>Aan het laden...</div>}
-        <table style={{ width:'100%' }}>
-          <thead>
-          <tr>
-          </tr>
-          </thead>
-          <tbody style={{ width: '100%' }}>
-          {categories && categories.map(category => (
-            // render the subcategories as rows
-            <CategoryComponent key={category.id} {...category} />
-          ))}
-          </tbody>
-        </table>
-        <AddButton />
+        <div className={taskPaneClassNames.titleBar}>MayDay</div>
+        <Modal />
+        <div className={taskPaneClassNames.taskPane}>
+          {isLoading && <div>Aan het laden...</div>}
+          <table style={{ borderCollapse: "collapse", width: "100%" }}>
+            <thead>
+            <tr>
+            </tr>
+            </thead>
+            <tbody style={{ width: '100%' }}>
+            {categories && categories.map(category => (
+              // render the subcategories as rows
+              <CategoryComponent key={category.id} {...category} />
+            ))}
+            </tbody>
+          </table>
+          <AddButton />
+        </div>
       </div>
-    </div>
-  );
+    );
 };
 
 export default TaskPane;

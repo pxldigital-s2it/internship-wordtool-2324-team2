@@ -1,45 +1,68 @@
 import { mergeStyleSets } from "@fluentui/react";
 
 export const sectionClassNames = mergeStyleSets({
+  activeRowColorBlock: {
+    boxShadow: "black -1px 0px 1px -1px",
+    height: "38px",
+    position: "absolute",
+    top: 0,
+    width: "4px"
+  },
   contextMenuIcon: {
     cursor: "pointer",
     fontSize: "16px",
     padding: "0 8px"
   },
-  favoriteIcon: {
-    color: "rgb(50, 49, 48)",
+  menuIcon: {
+    color: "#323130",
     fontSize: "14px",
     height: "24px",
     lineHeight: "24px",
     margin: "0 auto",
-    padding: "4px",
+    opacity: 0, // Icons are hidden by default
+    padding: "0 8px",
     selectors: {
-      "&.isFavorite": {
-        color: "red"
-      },
       ":hover": {
-        boxShadow: "red 0px 0px 1px 0px",
-        color: "red"
-        // transform: "scale(1.2)",
+        color: "red", // Color changes when individual icon is hovered
+        opacity: 1, // Make icon visible and change color on hover
+        transform: "scale(1.2)"
       }
     },
     textAlign: "center",
-    transition: "color 0.3s ease-in-out, transform 0.3s ease",
+    transition: "opacity 0.3s, color 0.3s, transform 0.3s",
     verticalAlign: "middle"
   },
   section: {
-    borderBottom: "1px solid #e1dfdd", // light border for separation
+    borderBottom: "1px solid #e1dfdd",
     cursor: "pointer",
+    height: "40px",
+    margin: "0 auto",
     padding: "5px 0",
     selectors: {
+      ".isFavorite": {
+        color: "orange",
+        opacity: 1,
+        selectors: {
+          ":hover": {
+            color: "red"
+          }
+        }
+      },
       ":hover": {
-        backgroundColor: "#eaeaea"
+        backgroundColor: "#eaeaea",
+        transform: "scale(1.02)", // slight scale up on hover,
+        transition: "transform 0.2s, backgroundColor 0.5s"
+      },
+      ":hover .showIcon": {
+        opacity: 1 // Icons become visible when the row is hovered
       },
       ":last-child": {
         borderBottom: "none" // no border for the last item
       }
     },
-    userSelect: "none"
+    textAlign: "left",
+    userSelect: "none",
+    verticalAlign: "middle"
   },
   sectionIcon: {
     color: "#323130",
