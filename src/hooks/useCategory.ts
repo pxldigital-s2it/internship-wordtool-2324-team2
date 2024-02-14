@@ -35,7 +35,8 @@ const useCategory = () => {
     if (isSubCategory(data)) {
       const subCategory = {
         categoryId: data.categoryId,
-        description: readFormField(formRef, "description")
+        description: readFormField(formRef, "description"),
+        isFavorite: false
       };
       if (create) {
         dispatch(saveSubCategory(subCategory));

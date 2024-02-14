@@ -22,7 +22,7 @@ describe("useCategory Test Suite", () => {
     modal: {
       ...STATE.modal,
       category: { code: "123", colour: "#000000", id: "123", title: "123" },
-      subCategory: { categoryId: "123", description: "123" }
+      subCategory: { categoryId: "123", description: "123", isFavorite: false }
     }
   };
 

@@ -39,9 +39,18 @@ const TaskPane: React.FC = () => {
       <Modal />
       <div className={taskPaneClassNames.taskPane}>
         {isLoading && <div>Aan het laden...</div>}
-        {categories && categories.map((category) => (
-          <CategoryComponent key={category.id} {...category} />
-        ))}
+        <table style={{ width:'100%' }}>
+          <thead>
+          <tr>
+          </tr>
+          </thead>
+          <tbody style={{ width: '100%' }}>
+          {categories && categories.map(category => (
+            // render the subcategories as rows
+            <CategoryComponent key={category.id} {...category} />
+          ))}
+          </tbody>
+        </table>
         <AddButton />
       </div>
     </div>

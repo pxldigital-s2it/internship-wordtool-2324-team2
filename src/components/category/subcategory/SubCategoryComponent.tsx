@@ -8,15 +8,27 @@ import insertAndHighlightText from "../../../taskpane/office-document";
 import { FC } from "react";
 import { deleteSubCategory } from "../../../middleware/category/CategoryMiddleware";
 import SubCategory from "../../../types/SubCategory";
-
+import { useState, useEffect } from "react";
+import { Icon } from "@fluentui/react";
 
 // component representing a single section
-const SubCategoryComponent: FC<SubCategory> = ({ id, categoryId, description }) => {
+const SubCategoryComponent: FC<SubCategory> = ({ id, categoryId, description, isFavorite: initialIsFavorite }) => {
+  const [isFavorite, setIsFavorite] = useState(initialIsFavorite);
+  const [isHovered, setIsHovered] = useState(false);
   const dispatch = useAppDispatch();
+
+  // TODO: Update isFavorite in backend
+  const toggleFavorite = () => {
+    setIsFavorite(!isFavorite);
+  };
+
+  useEffect(() => {
+
+  }, [isFavorite]);
 
   const menuItems = [
     {
-      handler: () => dispatch(openUpdateSubCategoryModal({ categoryId, description, id })),
+      handler: () => dispatch(openUpdateSubCategoryModal({ categoryId, description, id, isFavorite })),
       label: categoryContextMenu.getEditLabel()
     },
     {
@@ -30,13 +42,28 @@ const SubCategoryComponent: FC<SubCategory> = ({ id, categoryId, description }) 
   };
 
   return (
-    <div id={`cat_${categoryId}_sub_${id}`} className={sectionClassNames.section}
-         onClick={() => handleTextInsertion(categoryId, description)}>
-      <ContextMenu trigger={
-        <span className={sectionClassNames.sectionText}>
-          {description}
-        </span>} menuItems={menuItems} />
-    </div>
+    <tr id={`cat_${categoryId}_sub_${id}`} className={sectionClassNames.section}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}>
+      <td>
+        <span onClick={toggleFavorite} className={`${sectionClassNames.favoriteIcon} ${isFavorite ? 'isFavorite' : ''}`}
+              style={{ cursor: 'pointer' }}>
+          <Icon iconName={isFavorite || isHovered ? "FavoriteStarFill" : "FavoriteStar"} />
+        </span>
+      </td>
+      <td onClick={() => handleTextInsertion(categoryId, description)} style={{ width: '100%' }}
+          className={sectionClassNames.sectionText}>
+        {description}
+      </td>
+      <td>
+        <ContextMenu
+          trigger={
+            <Icon iconName="More" className={sectionClassNames.contextMenuIcon} />
+          }
+          menuItems={menuItems}
+        />
+      </td>
+    </tr>
   );
 };
 

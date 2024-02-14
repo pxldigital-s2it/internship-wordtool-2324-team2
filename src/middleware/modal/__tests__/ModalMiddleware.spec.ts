@@ -100,7 +100,8 @@ describe("ModalMiddleware Test Suite", () => {
     const subCategory: SubCategory = {
       categoryId: "Some categoryId",
       description: "Some description",
-      id: subCategoryId
+      id: subCategoryId,
+      isFavorite: false
     };
     const category: Category = {
       code: "Some code",
@@ -218,7 +219,8 @@ describe("ModalMiddleware Test Suite", () => {
       categoryId: "Some categoryId",
       code: "Some code",
       description: "Some description",
-      id: "Some id"
+      id: "Some id",
+      isFavorite: false
     };
 
     const _callAndCheckDispatchCalls = async (dispatchCalls: (string | undefined)[]) => await callAndCheckDispatchCalls(saveSubCategory(subCategory), dispatchCalls);
@@ -257,7 +259,8 @@ describe("ModalMiddleware Test Suite", () => {
       categoryId: "Some categoryId",
       code: "Some code",
       description: "Some description",
-      id: "123"
+      id: "123",
+      isFavorite: false
     };
 
     const _callAndCheckDispatchCalls = async (dispatchCalls) => await callAndCheckDispatchCalls(updateSubCategory("123", subCategory), dispatchCalls);

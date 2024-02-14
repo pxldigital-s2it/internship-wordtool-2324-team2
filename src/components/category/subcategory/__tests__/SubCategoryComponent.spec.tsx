@@ -17,12 +17,14 @@ describe('SubCategoryComponent Integration Test Suite', () => {
     {
       categoryId: "cat-1",
       description: "SubCategory 1 Description",
-      id: "subcat-1"
+      id: "subcat-1",
+      isFavorite: false
     },
     {
       categoryId: "cat-1",
       description: "SubCategory 2 Description",
-      id: "subcat-2"
+      id: "subcat-2",
+      isFavorite: false
     }
   ];
 
