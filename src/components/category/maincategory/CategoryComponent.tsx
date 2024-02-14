@@ -11,39 +11,55 @@ import Category from "../../../types/Category";
 import { deleteCategory } from "../../../middleware/category/CategoryMiddleware";
 
 const CategoryComponent: React.FC<Category> = ({ id, title, colour, subCategories, code }) => {
-    const [isOpen, setIsOpen] = useState(false);
-    const dispatch = useAppDispatch();
+  const [isOpen, setIsOpen] = useState(false);
+  const dispatch = useAppDispatch();
 
-    return (
-        <div>
-            <ContextMenu trigger={<CategoryHeader colour={colour} id={id} isOpen={isOpen} setIsOpen={setIsOpen}
-                                                  sections={subCategories.length} name={`[${code}] ${title}`}/>}
-               menuItems={
-                   [
-                     {
-                       handler: () => dispatch(openCreateSubCategoryModal({ code, colour, id, subCategories, title })),
-                       label: categoryContextMenu.getSubCategoryLabel()
-                     },
-                     {
-                       handler: () => dispatch(openUpdateCategoryModal({ code, colour, id, subCategories, title })),
-                       label: categoryContextMenu.getEditLabel()
-                     },
-                       {
+  return (
+    <table style={{
+      backgroundColor: colour + "1A",
+      width: "100%"
+    }}>
+      <thead>
+      <tr>
+        <ContextMenu trigger={<CategoryHeader colour={colour} id={id} code={code} isOpen={isOpen} setIsOpen={setIsOpen}
+                                              sections={subCategories.length}
+                                              name={id == "favorites" ? `${code} ${title}` : `${title}`} />}
+                     menuItems={
+                       [
+                         {
+                           handler: () => dispatch(openCreateSubCategoryModal({
+                             code,
+                             colour,
+                             id,
+                             subCategories,
+                             title
+                           })),
+                           label: categoryContextMenu.getSubCategoryLabel()
+                         },
+                         {
+                           handler: () => dispatch(openUpdateCategoryModal({ code, colour, id, subCategories, title })),
+                           label: categoryContextMenu.getEditLabel()
+                         },
+                         {
                            handler: () => dispatch(deleteCategory(id)),
                            label: categoryContextMenu.getDeleteLabel()
-                       }
-                   ]
-               }
-            />
-            {isOpen && (
-                <div className={categoryClassNames.categoryContent}>
-                    {subCategories && subCategories.map((subCategory) => (
-                        <SubCategoryComponent key={subCategory.id} {...subCategory} />
-                    ))}
-                </div>
-            )}
-        </div>
-    );
+                         }
+                       ]
+                     }
+        />
+      </tr>
+      </thead>
+      <tbody>
+      {isOpen && (
+        <tr className={categoryClassNames.categoryContent}>
+          {subCategories && subCategories.map((subCategory) => (
+            <SubCategoryComponent key={subCategory.id} {...subCategory} backgroundColor={colour} />
+          ))}
+        </tr>
+      )}
+      </tbody>
+    </table>
+);
 };
 
 export default CategoryComponent;

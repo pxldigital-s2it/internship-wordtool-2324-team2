@@ -32,7 +32,8 @@ export const openCreateSubCategoryModal = (category: Category) => {
       dispatch(setCategory(category));
       const subCategory: SubCategory = {
         categoryId: category.id,
-      description: null };
+      description: null,
+      isFavorite: false };
       dispatch(setSubCategory(subCategory));
       dispatch(setOpen(true));
   };
@@ -47,26 +48,6 @@ export const openUpdateCategoryModal = (category: Category) => {
       dispatch(setColour(category.colour));
       dispatch(setSubCategory(undefined));
       dispatch(setOpen(true));
-  };
-};
-
-export const openUpdateSubCategoryModal = (subCategory: SubCategory) => {
-  return async (dispatch: AppDispatch) => {
-    try {
-        const categoryResponse = getById(StorageKeys.CATEGORY, subCategory.categoryId);
-        if (categoryResponse) {
-          dispatch(setTitle(categoryContextMenu.getEditLabel()));
-          dispatch(setCreate(false));
-          dispatch(setCategory(categoryResponse));
-          dispatch(setSubCategory(subCategory));
-          dispatch(setOpen(true));
-        } else {
-          throw new Error("Geen unieke categorie kunnen vinden.");
-        }
-    } catch (e) {
-      // TODO: Toast to notify user smth went wrong.
-      console.error(e.message);
-    }
   };
 };
 
@@ -138,6 +119,19 @@ export const updateSubCategory = (id: string, subCategory: SubCategory) => {
   return async (dispatch: AppDispatch) => {
     try {
       update(StorageKeys.SUBCATEGORY, id, subCategory);
+      await dispatch(loadData());
+      dispatch(closeModal());
+    } catch (e) {
+      // TODO: Toast to notify user smth went wrong.
+      console.error(e.message);
+    }
+  };
+};
+
+export const updateSubCategoryDescriptionById = (id: string, description: string) => {
+  return async (dispatch: AppDispatch) => {
+    try {
+      update(StorageKeys.SUBCATEGORY, id, { description });
       await dispatch(loadData());
       dispatch(closeModal());
     } catch (e) {

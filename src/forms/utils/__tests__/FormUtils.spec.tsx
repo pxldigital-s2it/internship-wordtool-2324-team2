@@ -21,12 +21,14 @@ describe("FormUtils Test Suite", () => {
 
   const partialSubCategory: SubCategory = {
     categoryId: "1",
-    description: "testDescription"
+    description: "testDescription",
+    isFavorite: false
   };
   const subCategory: SubCategory = {
     ...partialSubCategory,
     description: "SubCategory 1",
-    id: "1"
+    id: "1",
+    isFavorite: false
   };
 
   const partialCategory: Category = {

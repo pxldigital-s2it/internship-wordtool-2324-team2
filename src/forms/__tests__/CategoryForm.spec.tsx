@@ -13,7 +13,8 @@ describe("CategoryForm Test Suite", () => {
   const subCategory: SubCategory = {
     categoryId: "testCategoryId",
     description: "testDescription",
-    id: "testId"
+    id: "testId",
+    isFavorite: false
   };
   const handleSubmit = jest.fn();
   const useCategoryMock = useCategory as unknown as jest.Mock;
@@ -45,7 +46,7 @@ describe("CategoryForm Test Suite", () => {
   });
 
   test("handleSubmit", () => {
-    setupUseCategoryMock({ categoryId: "testCategoryId", description: null });
+    setupUseCategoryMock({ categoryId: "testCategoryId", description: null, isFavorite: false });
     const { container, getByText } = renderWithProviders(<CategoryForm />, { preloadedState: initialState });
 
     expect(getByText("Bevestigen")).toBeDisabled();

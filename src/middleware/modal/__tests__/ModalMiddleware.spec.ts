@@ -7,13 +7,11 @@ import {
   openCreateCategoryModal,
   openCreateSubCategoryModal,
   openUpdateCategoryModal,
-  openUpdateSubCategoryModal,
   saveCategory,
   saveSubCategory,
   updateCategory,
   updateSubCategory
 } from "../ModalMiddleware";
-import SubCategory from "../../../types/SubCategory";
 import Category from "../../../types/Category";
 import { setColour } from "../../../redux/category/category.slice";
 
@@ -91,49 +89,6 @@ describe("ModalMiddleware Test Suite", () => {
       ];
 
       await _callAndCheckDispatchCalls(dispatchCalls);
-    });
-  });
-
-  describe("openUpdateSubCategoryModal", () => {
-
-    const subCategoryId = "123";
-    const subCategory: SubCategory = {
-      categoryId: "Some categoryId",
-      description: "Some description",
-      id: subCategoryId
-    };
-    const category: Category = {
-      code: "Some code",
-      colour: "#000000",
-      id: "1",
-      title: "testTitle"
-    };
-
-
-    const _callAndCheckDispatchCalls = async (dispatchCalls) => await callAndCheckDispatchCalls(openUpdateSubCategoryModal(subCategory), dispatchCalls);
-
-    test("happy path", async () => {
-      const dispatchCalls = [
-        setTitle.type,
-        setCreate.type,
-        setCategory.type,
-        setSubCategory.type,
-        setOpen.type
-      ];
-      storageMock("getById", () => category);
-
-      await _callAndCheckDispatchCalls(dispatchCalls);
-    });
-
-    test("no category data", async () => {
-      const dispatchCalls = [];
-
-      storageMock("getById", () => {});
-
-      await _callAndCheckDispatchCalls(dispatchCalls);
-
-      expect(consoleSpy).toHaveBeenCalledTimes(1);
-      expect(consoleSpy).toHaveBeenCalledWith("Geen unieke categorie kunnen vinden.");
     });
   });
 
@@ -218,7 +173,8 @@ describe("ModalMiddleware Test Suite", () => {
       categoryId: "Some categoryId",
       code: "Some code",
       description: "Some description",
-      id: "Some id"
+      id: "Some id",
+      isFavorite: false
     };
 
     const _callAndCheckDispatchCalls = async (dispatchCalls: (string | undefined)[]) => await callAndCheckDispatchCalls(saveSubCategory(subCategory), dispatchCalls);
@@ -257,7 +213,8 @@ describe("ModalMiddleware Test Suite", () => {
       categoryId: "Some categoryId",
       code: "Some code",
       description: "Some description",
-      id: "123"
+      id: "123",
+      isFavorite: false
     };
 
     const _callAndCheckDispatchCalls = async (dispatchCalls) => await callAndCheckDispatchCalls(updateSubCategory("123", subCategory), dispatchCalls);
