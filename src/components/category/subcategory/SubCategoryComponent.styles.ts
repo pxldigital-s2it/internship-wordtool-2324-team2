@@ -35,12 +35,12 @@ export const sectionClassNames = mergeStyleSets({
     verticalAlign: "middle"
   },
   section: {
+    backgroundColor: "#f5f5f5",
     borderBottom: "1px solid #e1dfdd",
+    borderRadius: "5px",
     height: "40px",
     margin: "0 auto",
     padding: "5px 0",
-    backgroundColor: "#f5f5f5",
-    borderRadius: "5px",
     selectors: {
       ".isFavorite": {
         color: "orange",
