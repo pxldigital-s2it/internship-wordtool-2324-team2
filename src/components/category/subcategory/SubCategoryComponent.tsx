@@ -16,8 +16,6 @@ import { Icon } from "@fluentui/react";
 import { ContextMenu } from "../../index";
 import * as React from "react";
 import { categoryContextMenu } from "../../../patterns/observer";
-import { update } from "../../../utils/StorageUtils";
-import { StorageKeys } from "../../../utils/StorageUtils.types";
 
 const ENABLE_FAST_EDIT = true; // Toggle this to enable/disable fast edit
 
