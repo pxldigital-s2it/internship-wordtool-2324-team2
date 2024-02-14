@@ -13,7 +13,8 @@ const taskPaneClassNames = mergeStyleSets({
     borderCollapse: "collapse",
     boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
     padding: "10px 0",
-    width: "100%"
+    width: "100%",
+    marginBottom: "80px"
   },
   titleBar: {
     backgroundColor: "#005a9e",
@@ -22,6 +23,16 @@ const taskPaneClassNames = mergeStyleSets({
     fontWeight: "600",
     padding: "10px 20px",
     textAlign: "center"
+  },
+  fixedInputBox: {
+    height: "64px",
+    width: "100%",
+    backgroundColor: "white",
+    position: "fixed",
+    bottom: "0",
+    zIndex: "1000",
+    paddingLeft: "30px",
+    left: "-24px"
   }
 });
 
@@ -72,7 +83,9 @@ const TaskPane: React.FC = () => {
   return (
     <div className={taskPaneClassNames.taskPane}>
       <div className={taskPaneClassNames.titleBar}>MayDay</div>
-      <FreeFeedbackInput />
+      <div className={taskPaneClassNames.fixedInputBox}>
+        <FreeFeedbackInput />
+      </div>
       <div style={{ paddingLeft: '16px' }}>
         <Toggle
           label="Favorieten apart bovenaan tonen"
