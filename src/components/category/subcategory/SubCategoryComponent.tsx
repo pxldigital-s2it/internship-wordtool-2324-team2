@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useAppDispatch } from "../../../redux/hooks";
 import SubCategory from "../../../types/SubCategory";
 import {
@@ -6,17 +6,43 @@ import {
   getCategoryDataById,
   updateSubCategoryIsFavorite
 } from "../../../middleware/category/CategoryMiddleware";
-import { openUpdateSubCategoryModal } from "../../../middleware/modal/ModalMiddleware";
+import {
+  openUpdateSubCategoryModal,
+  updateSubCategory,
+  updateSubCategoryDescriptionById
+} from "../../../middleware/modal/ModalMiddleware";
 import insertAndHighlightText from "../../../taskpane/office-document";
 import { sectionClassNames } from "./SubCategoryComponent.styles";
 import { Icon } from "@fluentui/react";
 import { ContextMenu } from "../../index";
 import * as React from "react";
 import { categoryContextMenu } from "../../../patterns/observer";
+import { update } from "../../../utils/StorageUtils";
+import { StorageKeys } from "../../../utils/StorageUtils.types";
+
+const ENABLE_FAST_EDIT = true; // Toggle this to enable/disable fast edit
 
 const SubCategoryComponent: React.FC<SubCategory> = ({ id, categoryId, description, isFavorite, backgroundColor }) => {
+  // For the icons
   const [isHovered, setIsHovered] = useState(false);
+
+  // For the favorites' category details
   const [categoryDetails, setCategoryDetails] = useState({ code: '', colour: '' });
+
+  // For fast edit
+  const [isEditing, setIsEditing] = useState(false);
+  const [tempDescription, setTempDescription] = useState(description);
+  const textareaRef = useRef(null);
+
+  // runs when the isEditing state changes
+  useEffect(() => {
+    if (textareaRef.current) {
+      textareaRef.current.focus();
+      const length = textareaRef.current.value.length;
+      textareaRef.current.setSelectionRange(length, length);
+    }
+  }, [isEditing]);
+
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -39,8 +65,14 @@ const SubCategoryComponent: React.FC<SubCategory> = ({ id, categoryId, descripti
   }, [dispatch, id]);
 
   const handleEdit = useCallback(() => {
-    dispatch(openUpdateSubCategoryModal({ categoryId, description, id, isFavorite }));
-  }, [dispatch, categoryId, description, id, isFavorite]);
+    if (ENABLE_FAST_EDIT) {
+      setIsEditing(!isEditing);
+    } else {
+
+      // modal opening logic here
+      dispatch(openUpdateSubCategoryModal({ categoryId, description, id, isFavorite }));
+    }
+  }, [dispatch, categoryId, description, id, isFavorite, isEditing]);
 
   const handleTextInsertion = useCallback(async () => {
     await insertAndHighlightText(categoryId, description);
@@ -77,17 +109,62 @@ const SubCategoryComponent: React.FC<SubCategory> = ({ id, categoryId, descripti
       <td onClick={handleEdit}>
         <Icon iconName="Edit" className={`${sectionClassNames.menuIcon} ${isHovered && 'showIcon'}`} title="Wijzigen" />
       </td>
-      <td onClick={handleTextInsertion} style={{ transition: "opacity 0.5s ease-in-out", width: "100%" }}
-          className={sectionClassNames.sectionText}>
-        {description}
+      <td onClick={!isEditing ? handleTextInsertion : undefined}
+          style={{ transition: "opacity 0.5s ease-in-out", width: "100%" }} className={sectionClassNames.sectionText}>
+        {!isEditing ? (
+          description
+        ) : (
+          <textarea
+            style={{ fontFamily: "Segoe UI", width: "90%" }}
+            value={tempDescription}
+            onChange={(e) => setTempDescription(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" && !e.shiftKey) {
+                e.preventDefault();
+
+                // submit logic
+                setIsEditing(false);
+                dispatch(updateSubCategoryDescriptionById(id, tempDescription));
+              } else if (e.key === "Escape") {
+                e.preventDefault();
+
+                // cancel logic
+                setIsEditing(false);
+                setTempDescription(description);
+              }
+
+              // shift+enter for a new line is handled by default
+            }}
+            onBlur={() => {
+              // revert to original description and exit fast edit mode when the textarea loses focus
+              setTempDescription(description);
+              setIsEditing(false);
+            }}
+            autoFocus
+          />
+        )}
+        {
+          isEditing && (
+            <div style={{ display: "inline-block", marginLeft: "6px" }}>
+              <Icon iconName="CheckMark" onClick={() => {
+                setIsEditing(false);
+                dispatch(updateSubCategoryDescriptionById(id, tempDescription));
+              }} />
+              <Icon iconName="Cancel" onClick={() => {
+                setIsEditing(false);
+                setTempDescription(description);
+              }} />
+            </div>
+          )
+        }
       </td>
       <td onClick={handleDelete}>
-        <Icon iconName="Delete" className={`${sectionClassNames.menuIcon} ${isHovered && 'showIcon'}`}
+        <Icon iconName="Delete" className={`${sectionClassNames.menuIcon} ${isHovered && "showIcon"}`}
               title="Verwijderen" />
       </td>
       <td>
         <ContextMenu trigger={<Icon title={"Meer bekijken"} iconName="More"
-                                    className={`${sectionClassNames.menuIcon} ${sectionClassNames.contextMenuIcon} ${isHovered && 'showIcon'}`} />}
+                                    className={`${sectionClassNames.menuIcon} ${sectionClassNames.contextMenuIcon} ${isHovered && "showIcon"}`} />}
                      menuItems={menuItems} />
       </td>
     </tr>

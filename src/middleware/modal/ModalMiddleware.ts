@@ -147,3 +147,16 @@ export const updateSubCategory = (id: string, subCategory: SubCategory) => {
     }
   };
 };
+
+export const updateSubCategoryDescriptionById = (id: string, description: string) => {
+  return async (dispatch: AppDispatch) => {
+    try {
+      update(StorageKeys.SUBCATEGORY, id, { description });
+      await dispatch(loadData());
+      dispatch(closeModal());
+    } catch (e) {
+      // TODO: Toast to notify user smth went wrong.
+      console.error(e.message);
+    }
+  };
+};
