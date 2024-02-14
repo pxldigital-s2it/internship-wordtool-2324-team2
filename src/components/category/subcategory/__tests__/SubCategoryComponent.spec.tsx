@@ -7,7 +7,7 @@ import { categoryClassNames } from "../../maincategory/CategoryComponent.styles"
 import SubCategoryComponent from "../SubCategoryComponent";
 import { renderWithProviders } from "../../../../__tests__/utils/TestUtils";
 import { initialState } from "../../../../redux/store";
-import insertAndHighlightText from "../../../../taskpane/office-document";
+import { insertAndHighlightText } from "../../../../taskpane/office-document";
 
 jest.mock("../../../../taskpane/office-document");
 
@@ -74,7 +74,7 @@ describe("SubCategoryComponent Integration Test Suite", () => {
 
 
     describe("Subcategory onClick to insert text", () => {
-      test("should call insertText when span is clicked", async () => {
+      test("should call insertAndHighlightText when span is clicked", async () => {
         const { getByText } = renderWithProviders(<SubCategoryComponent
           categoryId={mockCategory.id} {...mockSubCategories[0]} />, { preloadedState: initialState });
 

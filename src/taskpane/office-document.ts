@@ -45,8 +45,7 @@ function insertAndHighlight(range: Word.Range, descriptionInsert: string, catego
   insertedRange.font.highlightColor = "white";
 }
 
-const insertAndHighlightText = async (categoryId: string, description: string) => {
-  // Write text to the document.
+export const insertAndHighlightText = async (categoryId: string, description: string) => {
   try {
     await Word.run(async (context) => {
       const range = context.document.getSelection();
@@ -78,4 +77,21 @@ const insertAndHighlightText = async (categoryId: string, description: string) =
   }
 };
 
-export default insertAndHighlightText;
+export const insertFreeFeedback = async (text: string) => {
+    try {
+        await Word.run(async (context) => {
+            if (text !== "") {
+                const range = context.document.getSelection();
+
+                const insertedRange = range.insertText(" (" + text + ") ", "End");
+
+                insertedRange.font.color = "red";
+                insertedRange.font.highlightColor = "white";
+
+                await context.sync();
+            }
+        });
+    } catch (error) {
+        console.log("Error: " + error);
+    }
+};
