@@ -29,7 +29,7 @@ export const sectionClassNames = mergeStyleSets({
       }
     },
     textAlign: "center",
-    transition: "opacity 0.3s, color 0.3s, transform 0.3s",
+    transition: "opacity 0.15s ease-in-out, color 0.3s, transform 0.33s ease-in-out",
     verticalAlign: "middle"
   },
   section: {
@@ -51,7 +51,7 @@ export const sectionClassNames = mergeStyleSets({
       ":hover": {
         backgroundColor: "#eaeaea",
         transform: "scale(1.02)", // slight scale up on hover,
-        transition: "transform 0.2s, backgroundColor 0.5s"
+        transition: "transform 0.15s ease-in-out, backgroundColor 0.35s"
       },
       ":hover .showIcon": {
         opacity: 1 // Icons become visible when the row is hovered

@@ -38,7 +38,7 @@ const CategoryComponent: React.FC<Category> = ({ id, title, colour, subCategorie
             {isOpen && (
                 <div className={categoryClassNames.categoryContent}>
                     {subCategories && subCategories.map((subCategory) => (
-                        <SubCategoryComponent key={subCategory.id} {...subCategory} color={colour}/>
+                        <SubCategoryComponent key={subCategory.id} {...subCategory} backgroundColor={colour}/>
                     ))}
                 </div>
             )}

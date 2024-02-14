@@ -12,7 +12,7 @@ import { useState, useEffect } from "react";
 import { Icon } from "@fluentui/react";
 
 // component representing a single section
-const SubCategoryComponent: FC<SubCategory> = ({ id, categoryId, description, isFavorite: initialIsFavorite, color }) => {
+const SubCategoryComponent: FC<SubCategory> = ({ id, categoryId, description, isFavorite: initialIsFavorite, backgroundColor }) => {
   const [isFavorite, setIsFavorite] = useState(initialIsFavorite);
   const [isHovered, setIsHovered] = useState(false);
   const dispatch = useAppDispatch();
@@ -54,7 +54,7 @@ const SubCategoryComponent: FC<SubCategory> = ({ id, categoryId, description, is
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}>
       <td style={{ paddingRight: '6px' }}><div className={sectionClassNames.activeRowColorBlock} style={{
-        backgroundColor: color,
+        backgroundColor: backgroundColor,
         visibility: isHovered ? "visible" : "hidden"
       }}>&nbsp;</div></td>
       <td onClick={toggleFavorite} title={isFavorite ? "Verwijderen als Favoriet" : "Toevoegen als Favoriet"}>

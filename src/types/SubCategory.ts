@@ -3,7 +3,7 @@ interface SubCategory {
   description: Nullable<string>;
   id?: string;
   isFavorite: boolean;
-  color?: Nullable<string>;
+  backgroundColor?: Nullable<string>;
 }
 
 export default SubCategory;
