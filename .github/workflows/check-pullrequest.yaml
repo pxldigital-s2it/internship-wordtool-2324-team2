@@ -10,12 +10,13 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
+          cache: 'npm'
       - name: Install dependencies
-        run: npm install
+        run: npm ci
       - name: Run tests and collect coverage
         run: npm run test
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v4.0.1
         env:
-          CODECOV_TOKEN: c4a53bb0-e7ee-4329-8591-03b1b4a42c43
+          CODECOV_TOKEN: ${{secrets.CODECOV_TOKEN}}
 
