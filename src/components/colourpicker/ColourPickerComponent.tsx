@@ -41,6 +41,9 @@ const ColourPickerComponent = () => {
         <div>
             {open ? (
                 <>
+                    <div style={{ textAlign: "right" }}>
+                        <div id="closeButton" onClick={handleClosePanel} style={{ cursor:"pointer" }}>x</div>
+                    </div>
                     <div style={{ marginLeft: "-15px" }}>
                         <ColourPicker selectedColor={colour} setSelectedColor={handleSelectColour}/>
                     </div>
