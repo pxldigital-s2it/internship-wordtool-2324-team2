@@ -24,7 +24,7 @@ const SubCategoryComponent: React.FC<SubCategory> = ({ id, categoryId, descripti
   const [isHovered, setIsHovered] = useState(false);
 
   // For the favorites' category details
-  const [categoryDetails, setCategoryDetails] = useState({ code: '', colour: '' });
+  const [categoryDetails, setCategoryDetails] = useState({ code: "", colour: "" });
 
   // For fast edit
   const [isEditing, setIsEditing] = useState(false);
@@ -42,10 +42,10 @@ const SubCategoryComponent: React.FC<SubCategory> = ({ id, categoryId, descripti
 
   // Handle when fast edit textarea loses focus
   const handleBlur = () => {
-      if (isEditing) {
-        setIsEditing(false);
-        setTempDescription(description);
-      }
+    if (isEditing) {
+      setIsEditing(false);
+      setTempDescription(description);
+    }
   };
 
   const dispatch = useAppDispatch();
@@ -99,7 +99,7 @@ const SubCategoryComponent: React.FC<SubCategory> = ({ id, categoryId, descripti
   return (
     <tr onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}
         className={sectionClassNames.section}>
-      <td style={{ paddingRight: '6px' }}>
+      <td style={{ paddingRight: "6px" }}>
         <div style={{ width: "16px" }}>
           <div style={{
             backgroundColor: categoryDetails.colour || backgroundColor,
@@ -111,10 +111,10 @@ const SubCategoryComponent: React.FC<SubCategory> = ({ id, categoryId, descripti
       </td>
       <td onClick={toggleFavorite} title={isFavorite ? "Uit Favorieten verwijderen" : "Aan Favorieten toevoegen"}>
         <Icon iconName={isFavorite ? "FavoriteStarFill" : "FavoriteStar"}
-              className={`${sectionClassNames.menuIcon} ${isFavorite && 'isFavorite'} ${isHovered && 'showIcon'}`} />
+              className={`${sectionClassNames.menuIcon} ${isFavorite && "isFavorite"} ${isHovered && "showIcon"}`} />
       </td>
       <td onClick={handleEdit}>
-        <Icon iconName="Edit" className={`${sectionClassNames.menuIcon} ${isHovered && 'showIcon'}`} title="Wijzigen" />
+        <Icon iconName="Edit" className={`${sectionClassNames.menuIcon} ${isHovered && "showIcon"}`} title="Wijzigen" />
       </td>
       <td onClick={!isEditing ? handleTextInsertion : undefined}
           style={{ transition: "opacity 0.5s ease-in-out", width: "100%" }} className={sectionClassNames.sectionText}>

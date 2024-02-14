@@ -17,11 +17,18 @@ const CategoryComponent: React.FC<Category> = ({ id, title, colour, subCategorie
   return (
     <div>
       <ContextMenu trigger={<CategoryHeader colour={colour} id={id} code={code} isOpen={isOpen} setIsOpen={setIsOpen}
-                                            sections={subCategories.length} name={id == 'favorites' ? `${code} ${title}` : `${title}`}/>}
+                                            sections={subCategories.length}
+                                            name={id == "favorites" ? `${code} ${title}` : `${title}`} />}
                    menuItems={
                      [
                        {
-                         handler: () => dispatch(openCreateSubCategoryModal({ code, colour, id, subCategories, title })),
+                         handler: () => dispatch(openCreateSubCategoryModal({
+                           code,
+                           colour,
+                           id,
+                           subCategories,
+                           title
+                         })),
                          label: categoryContextMenu.getSubCategoryLabel()
                        },
                        {
@@ -38,7 +45,7 @@ const CategoryComponent: React.FC<Category> = ({ id, title, colour, subCategorie
       {isOpen && (
         <div className={categoryClassNames.categoryContent}>
           {subCategories && subCategories.map((subCategory) => (
-            <SubCategoryComponent key={subCategory.id} {...subCategory} backgroundColor={colour}/>
+            <SubCategoryComponent key={subCategory.id} {...subCategory} backgroundColor={colour} />
           ))}
         </div>
       )}
