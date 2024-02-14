@@ -43,7 +43,7 @@ describe("SubCategoryComponent Integration Test Suite", () => {
   test("SubCategoryComponent renders within CategoryComponent", () => {
     const { getByText, queryByText, container } = renderWithProviders(
       <CategoryComponent {...mockCategory} />, { preloadedState: initialState });
-    const categoryTitleWithCount = `[${mockCategory.code}] ${mockCategory.title} (${mockSubCategories.length})`;
+    const categoryTitleWithCount = `${mockCategory.title} (${mockSubCategories.length})`;
 
     // check if CategoryComponent renders correctly with title and subcategory count
     expect(getByText(categoryTitleWithCount)).toBeInTheDocument();
@@ -77,61 +77,68 @@ describe("SubCategoryComponent Integration Test Suite", () => {
       type: "DELETE_SUB_CATEGORY"
     }));
 
-    test("Context menu opens on right click", () => {
-      const { getByText } = renderWithProviders(<SubCategoryComponent
+    test("Context menu opens on right click on 'Meer bekijken' icon", async () => {
+      const { getByTitle, findByText } = renderWithProviders(<SubCategoryComponent
         categoryId={mockCategory.id} {...mockSubCategories[0]} />, { preloadedState: initialState });
 
-      const subCategoryComponentContent = getByText(mockSubCategories[0].description);
+      const meerBekijkenIcon = getByTitle("Meer bekijken");
 
-      fireEvent.contextMenu(subCategoryComponentContent);
+      fireEvent.contextMenu(meerBekijkenIcon);
 
-      const contextMenuWijzigen = getByText("Wijzigen");
-      const contextMenuVerwijderen = getByText("Verwijderen");
+      const contextMenuWijzigen = await findByText("Wijzigen");
+      const contextMenuVerwijderen = await findByText("Verwijderen");
+
+      // Assertions to ensure the context menu options are rendered
       expect(contextMenuWijzigen).toBeInTheDocument();
       expect(contextMenuVerwijderen).toBeInTheDocument();
     });
 
-    test("Clicking on the Wijzigen option opens the update modal", () => {
-      const { getByText } = renderWithProviders(<SubCategoryComponent
+
+    test("Clicking on the Wijzigen option opens the update modal", async () => {
+      const { getByTitle, findByText } = renderWithProviders(<SubCategoryComponent
         categoryId={mockCategory.id} {...mockSubCategories[0]} />, { preloadedState: initialState });
 
-      const subCategoryComponentContent = getByText(mockSubCategories[0].description);
+      const meerBekijkenIcon = getByTitle("Meer bekijken");
 
-      fireEvent.contextMenu(subCategoryComponentContent);
+      fireEvent.contextMenu(meerBekijkenIcon);
 
-      fireEvent.click(getByText(categoryContextMenu.getEditLabel()));
+      const contextMenuWijzigen = await findByText("Wijzigen");
+
+      fireEvent.click(contextMenuWijzigen);
       expect(dispatchMock).toHaveBeenCalledWith({
         payload: mockSubCategories[0],
         type: "OPEN_CREATE_SUB_CATEGORY_MODAL"
       });
     });
 
-    test("Clicking on the Verwijderen option calls deleteSubCategory", () => {
-      const { getByText } = renderWithProviders(<SubCategoryComponent
+    test("Clicking on the Verwijderen option calls deleteSubCategory", async () => {
+      const { getByTitle, findByText } = renderWithProviders(<SubCategoryComponent
         categoryId={mockCategory.id} {...mockSubCategories[0]} />, { preloadedState: initialState });
 
-      const subCategoryComponentContent = getByText(mockSubCategories[0].description);
+      const meerBekijkenIcon = getByTitle("Meer bekijken");
 
-      fireEvent.contextMenu(subCategoryComponentContent);
+      fireEvent.contextMenu(meerBekijkenIcon);
 
-      fireEvent.click(getByText(categoryContextMenu.getDeleteLabel()));
+      const contextMenuVerwijderen = await findByText("Verwijderen");
+
+      fireEvent.click(contextMenuVerwijderen);
+
       expect(dispatchMock).toHaveBeenCalledWith({ payload: mockSubCategories[0].id, type: "DELETE_SUB_CATEGORY" });
     });
 
-  });
 
+    describe("Subcategory onClick to insert text", () => {
+      test("should call insertText when span is clicked", async () => {
+        const { getByText } = renderWithProviders(<SubCategoryComponent
+          categoryId={mockCategory.id} {...mockSubCategories[0]} />, { preloadedState: initialState });
 
-  describe("Subcategory onClick to insert text", () => {
-    test("should call insertText when span is clicked", async () => {
-      const { getByText } = renderWithProviders(<SubCategoryComponent
-        categoryId={mockCategory.id} {...mockSubCategories[0]} />, { preloadedState: initialState });
+        fireEvent.click(getByText(mockSubCategories[0].description));
 
-      fireEvent.click(getByText(mockSubCategories[0].description));
-
-      expect(insertAndHighlightText).toHaveBeenCalledWith(
-        mockCategory.id,
-        mockSubCategories[0].description
-      );
+        expect(insertAndHighlightText).toHaveBeenCalledWith(
+          mockCategory.id,
+          mockSubCategories[0].description
+        );
+      });
     });
   });
 });

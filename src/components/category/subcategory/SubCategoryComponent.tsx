@@ -97,7 +97,9 @@ const SubCategoryComponent: React.FC<SubCategory> = ({ id, categoryId, descripti
 
 
   return (
-    <tr onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}
+    <div style={{
+      width: "100%"
+    }} onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}
         className={sectionClassNames.section}>
       <td style={{ paddingRight: "6px" }}>
         <div style={{ width: "16px" }}>
@@ -158,7 +160,7 @@ const SubCategoryComponent: React.FC<SubCategory> = ({ id, categoryId, descripti
                                     className={`${sectionClassNames.menuIcon} ${sectionClassNames.contextMenuIcon} ${isHovered && "showIcon"}`} />}
                      menuItems={menuItems} />
       </td>
-    </tr>
+    </div>
   );
 };
 

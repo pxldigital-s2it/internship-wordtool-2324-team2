@@ -14,7 +14,8 @@ const CategoryHeader: FC<CategoryHeaderProps> = ({ colour, id, code, isOpen, nam
       onClick={() => setIsOpen(!isOpen)}
       style = {{
         fontWeight: 500,
-        height: "24px"
+        height: "24px",
+        width: "100%"
       }}
     >
         {id != "favorites" ? <div

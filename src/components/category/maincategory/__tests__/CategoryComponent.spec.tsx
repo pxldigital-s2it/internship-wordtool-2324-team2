@@ -39,12 +39,12 @@ describe("CategoryComponent Test Suite", () => {
       getByText
     } = renderWithProviders(createComponent(DEFAULT_PROPS), { preloadedState: initialState });
 
-    expect(container.querySelector(`div.${categoryClassNames.categoryContent}`)).not.toBeInTheDocument();
+    expect(container.querySelector(`tr.${categoryClassNames.categoryContent}`)).not.toBeInTheDocument();
     expect(container.querySelector("i[data-icon-name=\"ChevronRight\"]")).toBeInTheDocument();
 
     fireEvent.click(getByText(`${DEFAULT_PROPS.title}`));
 
-    expect(container.querySelector(`div.${categoryClassNames.categoryContent}`)).toBeInTheDocument();
+    expect(container.querySelector(`tr.${categoryClassNames.categoryContent}`)).toBeInTheDocument();
     expect(container.querySelector("i[data-icon-name=\"ChevronDown\"]")).toBeInTheDocument();
   });
 
@@ -56,7 +56,7 @@ describe("CategoryComponent Test Suite", () => {
 
     fireEvent.click(container.querySelector("i[data-icon-name=\"ChevronRight\"]"));
 
-    expect(container.querySelector(`div.${categoryClassNames.categoryContent}`)).toBeInTheDocument();
+    expect(container.querySelector(`tr.${categoryClassNames.categoryContent}`)).toBeInTheDocument();
     expect(container.querySelector("i[data-icon-name=\"ChevronDown\"]")).toBeInTheDocument();
   });
 

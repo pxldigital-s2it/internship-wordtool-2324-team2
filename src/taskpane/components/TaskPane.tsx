@@ -91,16 +91,11 @@ const TaskPane: React.FC = () => {
       {isLoading ? (
         <div>Aan het laden...</div>
       ) : (
-        <table style={{ borderCollapse: "collapse", width: "100%" }}>
-          <thead>
-          <tr></tr>
-          </thead>
-          <tbody>
+        <div style={{ borderCollapse: "collapse", width: "100%" }}>
           {modifiedCategories.map(category => (
             <CategoryComponent key={category.id} {...category} />
           ))}
-          </tbody>
-        </table>
+        </div>
       )}
       <AddButton />
     </div>

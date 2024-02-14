@@ -15,44 +15,51 @@ const CategoryComponent: React.FC<Category> = ({ id, title, colour, subCategorie
   const dispatch = useAppDispatch();
 
   return (
-    <div style={{
-      backgroundColor: colour+"1A"
+    <table style={{
+      backgroundColor: colour + "1A",
+      width: "100%"
     }}>
-      <ContextMenu trigger={<CategoryHeader colour={colour} id={id} code={code} isOpen={isOpen} setIsOpen={setIsOpen}
-                                            sections={subCategories.length}
-                                            name={id == "favorites" ? `${code} ${title}` : `${title}`} />}
-                   menuItems={
-                     [
-                       {
-                         handler: () => dispatch(openCreateSubCategoryModal({
-                           code,
-                           colour,
-                           id,
-                           subCategories,
-                           title
-                         })),
-                         label: categoryContextMenu.getSubCategoryLabel()
-                       },
-                       {
-                         handler: () => dispatch(openUpdateCategoryModal({ code, colour, id, subCategories, title })),
-                         label: categoryContextMenu.getEditLabel()
-                       },
-                       {
-                         handler: () => dispatch(deleteCategory(id)),
-                         label: categoryContextMenu.getDeleteLabel()
-                       }
-                     ]
-                   }
-      />
+      <thead>
+      <tr>
+        <ContextMenu trigger={<CategoryHeader colour={colour} id={id} code={code} isOpen={isOpen} setIsOpen={setIsOpen}
+                                              sections={subCategories.length}
+                                              name={id == "favorites" ? `${code} ${title}` : `${title}`} />}
+                     menuItems={
+                       [
+                         {
+                           handler: () => dispatch(openCreateSubCategoryModal({
+                             code,
+                             colour,
+                             id,
+                             subCategories,
+                             title
+                           })),
+                           label: categoryContextMenu.getSubCategoryLabel()
+                         },
+                         {
+                           handler: () => dispatch(openUpdateCategoryModal({ code, colour, id, subCategories, title })),
+                           label: categoryContextMenu.getEditLabel()
+                         },
+                         {
+                           handler: () => dispatch(deleteCategory(id)),
+                           label: categoryContextMenu.getDeleteLabel()
+                         }
+                       ]
+                     }
+        />
+      </tr>
+      </thead>
+      <tbody>
       {isOpen && (
-        <div className={categoryClassNames.categoryContent}>
+        <tr className={categoryClassNames.categoryContent}>
           {subCategories && subCategories.map((subCategory) => (
             <SubCategoryComponent key={subCategory.id} {...subCategory} backgroundColor={colour} />
           ))}
-        </div>
+        </tr>
       )}
-    </div>
-  );
+      </tbody>
+    </table>
+);
 };
 
 export default CategoryComponent;
