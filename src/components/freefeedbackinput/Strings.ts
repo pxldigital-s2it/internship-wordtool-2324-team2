@@ -1,7 +1,7 @@
 const strings = {
     freefeedbackinput: {
         button: {
-            label: "Vrije feedback invoegen"
+            title: "Opmerking toevoegen"
         },
         textarea: {
             placeholder: "Vrije feedback"

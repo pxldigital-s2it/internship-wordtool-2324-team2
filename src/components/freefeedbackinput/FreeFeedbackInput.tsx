@@ -44,6 +44,7 @@ const FreeFeedbackInput =() => {
                                     padding: "18px",
                                     width: "100%"
                                 }}
+                                title={ STRING_RESOURCES.freefeedbackinput.button.title }
                             />
                         </td>
                     </tr>
