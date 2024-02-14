@@ -3,6 +3,7 @@ import { IconButton } from "@fluentui/react/lib/Button";
 import * as React from "react";
 import { CategoryHeaderProps } from "./CategoryHeader.types";
 import { FC } from "react";
+import { sectionClassNames } from "../subcategory/SubCategoryComponent.styles";
 
 
 const CategoryHeader: FC<CategoryHeaderProps> = ({ colour, id, code, isOpen, name, setIsOpen, sections }) => {
@@ -12,17 +13,22 @@ const CategoryHeader: FC<CategoryHeaderProps> = ({ colour, id, code, isOpen, nam
       id={`category-${id}`}
       className={categoryClassNames.categoryHeader}
       onClick={() => setIsOpen(!isOpen)}
+      style = {{
+        fontWeight: 500,
+        height: "24px"
+      }}
     >
-        {id != 'favorites' ? <div
+        {id != "favorites" ? <div
           className={categoryClassNames.colorSquare}
           style={{
             backgroundColor: colour,
             color: "black",
-            fontFamily: "monospace",
-            paddingTop: "2px",
+            fontFamily: "Consolas",
+            fontSize: "12px",
+            fontWeight: 200,
             textAlign: "center"
           }}>
-            {code}
+          {code}
         </div> : ""}
         <IconButton
           iconProps={{ iconName: isOpen ? "ChevronDown" : "ChevronRight" }}

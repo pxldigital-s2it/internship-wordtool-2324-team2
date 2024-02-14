@@ -117,7 +117,7 @@ const SubCategoryComponent: React.FC<SubCategory> = ({ id, categoryId, descripti
         <Icon iconName="Edit" className={`${sectionClassNames.menuIcon} ${isHovered && "showIcon"}`} title="Wijzigen" />
       </td>
       <td onClick={!isEditing ? handleTextInsertion : undefined}
-          style={{ transition: "opacity 0.5s ease-in-out", width: "100%" }} className={sectionClassNames.sectionText}>
+          style={{ width: "100%" }} className={sectionClassNames.sectionText}>
         {!isEditing ? (
           description
         ) : (

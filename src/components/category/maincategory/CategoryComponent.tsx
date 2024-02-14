@@ -15,7 +15,9 @@ const CategoryComponent: React.FC<Category> = ({ id, title, colour, subCategorie
   const dispatch = useAppDispatch();
 
   return (
-    <div>
+    <div style={{
+      backgroundColor: colour+"1A"
+    }}>
       <ContextMenu trigger={<CategoryHeader colour={colour} id={id} code={code} isOpen={isOpen} setIsOpen={setIsOpen}
                                             sections={subCategories.length}
                                             name={id == "favorites" ? `${code} ${title}` : `${title}`} />}
