@@ -5,7 +5,7 @@ import { CategoryHeaderProps } from "./CategoryHeader.types";
 import { FC } from "react";
 
 
-const CategoryHeader: FC<CategoryHeaderProps> = ({ colour, id, isOpen, name, setIsOpen, sections }) => {
+const CategoryHeader: FC<CategoryHeaderProps> = ({ colour, id, code, isOpen, name, setIsOpen, sections }) => {
 
   return (
       <div
@@ -15,10 +15,17 @@ const CategoryHeader: FC<CategoryHeaderProps> = ({ colour, id, isOpen, name, set
     >
         {id != 'favorites' ? <div
           className={categoryClassNames.colorSquare}
-          style={{ backgroundColor: colour }}
-        /> : ""}
-      <IconButton
-        iconProps={{ iconName: isOpen ? "ChevronDown" : "ChevronRight" }}
+          style={{
+            backgroundColor: colour,
+            color: "black",
+            fontFamily: "monospace",
+            paddingTop: "2px",
+            textAlign: "center"
+          }}>
+            {code}
+        </div> : ""}
+        <IconButton
+          iconProps={{ iconName: isOpen ? "ChevronDown" : "ChevronRight" }}
         className={categoryClassNames.arrowIcon}
         onClick={() => setIsOpen(!isOpen)}
       />

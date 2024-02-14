@@ -29,6 +29,6 @@ export const categoryClassNames = mergeStyleSets({
   colorSquare: {
     border: "1px solid #ccc",
     height: "24px",
-    width: "36px"
+    width: "48px"
   }
 });

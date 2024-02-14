@@ -62,10 +62,13 @@ const SubCategoryComponent: React.FC<SubCategory> = ({ id, categoryId, descripti
     <tr onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}
         className={sectionClassNames.section}>
       <td style={{ paddingRight: '6px' }}>
-        <div style={{
-          backgroundColor: categoryDetails.colour || backgroundColor,
-          height: isHovered ? "36px" : "0px"
-        }} className={sectionClassNames.activeRowColorBlock}>&nbsp;</div>
+        <div style={{ width: "16px" }}>
+          <div style={{
+            backgroundColor: categoryDetails.colour || backgroundColor,
+            height: isHovered ? "36px" : "32px",
+            width: isHovered ? "16px" : "1px"
+          }} className={sectionClassNames.activeRowColorBlock}>&nbsp;</div>
+        </div>
       </td>
       <td onClick={toggleFavorite} title={isFavorite ? "Verwijderen als Favoriet" : "Toevoegen als Favoriet"}>
         <Icon iconName={isFavorite ? "FavoriteStarFill" : "FavoriteStar"}

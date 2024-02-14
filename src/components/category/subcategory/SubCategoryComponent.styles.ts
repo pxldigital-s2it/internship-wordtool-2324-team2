@@ -5,8 +5,8 @@ export const sectionClassNames = mergeStyleSets({
     boxShadow: "black -1px 0px 1px -1px",
     height: "0px",
     top: 0,
-    transition: "height 0.2s ease-in-out",
-    width: "4px"
+    transition: "width 0.2s ease-in-out",
+    width: "0px"
   },
   contextMenuIcon: {
     cursor: "pointer",
@@ -62,7 +62,7 @@ export const sectionClassNames = mergeStyleSets({
       }
     },
     textAlign: "left",
-    transition: "transform 0.15s ease-in-out, backgroundColor 0.35s",
+    transition: "transform 0.5s, backgroundColor 0.35s",
     userSelect: "none",
     verticalAlign: "middle"
   },
