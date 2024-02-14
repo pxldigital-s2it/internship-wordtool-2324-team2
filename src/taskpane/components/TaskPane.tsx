@@ -27,6 +27,7 @@ const taskPaneClassNames = mergeStyleSets({
 const TaskPane: React.FC = () => {
   const dispatch = useAppDispatch();
   const [favoritesHoistingEnabled, setFavoritesHoistingEnabled] = useState(true);
+  const [favoritesHidingEnabled, setFavoritesHidingEnabled] = useState(true);
 
   const categories = useAppSelector(selectData) || []; // Ensure categories is always an array
   const isLoading = useAppSelector(selectIsLoading);
@@ -45,7 +46,7 @@ const TaskPane: React.FC = () => {
 
   const processedCategories = categories.map(category => {
     const filteredSubCategories = favoritesHoistingEnabled
-      ? category.subCategories.filter(sub => !sub.isFavorite)
+      ? category.subCategories.filter(sub => !favoritesHidingEnabled || !sub.isFavorite)
       : category.subCategories;
 
     return {
@@ -70,11 +71,19 @@ const TaskPane: React.FC = () => {
   return (
     <div className={taskPaneClassNames.taskPane}>
       <div className={taskPaneClassNames.titleBar}>MayDay</div>
-      <div style={{ padding: '16px', width: '100%' }}>
+      <div style={{ paddingLeft: '16px' }}>
         <Toggle
-          label="Favorieten bovenaan tonen"
+          label="Favorieten apart bovenaan tonen"
           checked={favoritesHoistingEnabled}
           onChange={() => setFavoritesHoistingEnabled(!favoritesHoistingEnabled)}
+          style={{ margin: '10px'  }}
+        />
+      </div>
+      <div style={{ paddingLeft: '16px' }}>
+        <Toggle
+          label="Favorieten ook verbergen uit eigen categorie"
+          checked={favoritesHidingEnabled}
+          onChange={() => setFavoritesHidingEnabled(!favoritesHidingEnabled)}
           style={{ margin: '10px' }}
         />
       </div>
@@ -83,7 +92,9 @@ const TaskPane: React.FC = () => {
         <div>Aan het laden...</div>
       ) : (
         <table style={{ borderCollapse: "collapse", width: "100%" }}>
-          <thead><tr></tr></thead>
+          <thead>
+          <tr></tr>
+          </thead>
           <tbody>
           {modifiedCategories.map(category => (
             <CategoryComponent key={category.id} {...category} />
