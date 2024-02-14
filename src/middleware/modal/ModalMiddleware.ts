@@ -51,26 +51,6 @@ export const openUpdateCategoryModal = (category: Category) => {
   };
 };
 
-export const openUpdateSubCategoryModal = (subCategory: SubCategory) => {
-  return async (dispatch: AppDispatch) => {
-    try {
-        const categoryResponse = getById(StorageKeys.CATEGORY, subCategory.categoryId);
-        if (categoryResponse) {
-          dispatch(setTitle(categoryContextMenu.getEditLabel()));
-          dispatch(setCreate(false));
-          dispatch(setCategory(categoryResponse));
-          dispatch(setSubCategory(subCategory));
-          dispatch(setOpen(true));
-        } else {
-          throw new Error("Geen unieke categorie kunnen vinden.");
-        }
-    } catch (e) {
-      // TODO: Toast to notify user smth went wrong.
-      console.error(e.message);
-    }
-  };
-};
-
 export const closeModal = () => {
   return (dispatch: AppDispatch) => {
     dispatch(setOpen(false));

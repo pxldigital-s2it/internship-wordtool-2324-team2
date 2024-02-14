@@ -7,7 +7,6 @@ import {
   openCreateCategoryModal,
   openCreateSubCategoryModal,
   openUpdateCategoryModal,
-  openUpdateSubCategoryModal,
   saveCategory,
   saveSubCategory,
   updateCategory,
@@ -91,50 +90,6 @@ describe("ModalMiddleware Test Suite", () => {
       ];
 
       await _callAndCheckDispatchCalls(dispatchCalls);
-    });
-  });
-
-  describe("openUpdateSubCategoryModal", () => {
-
-    const subCategoryId = "123";
-    const subCategory: SubCategory = {
-      categoryId: "Some categoryId",
-      description: "Some description",
-      id: subCategoryId,
-      isFavorite: false
-    };
-    const category: Category = {
-      code: "Some code",
-      colour: "#000000",
-      id: "1",
-      title: "testTitle"
-    };
-
-
-    const _callAndCheckDispatchCalls = async (dispatchCalls) => await callAndCheckDispatchCalls(openUpdateSubCategoryModal(subCategory), dispatchCalls);
-
-    test("happy path", async () => {
-      const dispatchCalls = [
-        setTitle.type,
-        setCreate.type,
-        setCategory.type,
-        setSubCategory.type,
-        setOpen.type
-      ];
-      storageMock("getById", () => category);
-
-      await _callAndCheckDispatchCalls(dispatchCalls);
-    });
-
-    test("no category data", async () => {
-      const dispatchCalls = [];
-
-      storageMock("getById", () => {});
-
-      await _callAndCheckDispatchCalls(dispatchCalls);
-
-      expect(consoleSpy).toHaveBeenCalledTimes(1);
-      expect(consoleSpy).toHaveBeenCalledWith("Geen unieke categorie kunnen vinden.");
     });
   });
 

@@ -67,10 +67,6 @@ describe("SubCategoryComponent Integration Test Suite", () => {
   describe("SubCategoryComponent Context Menu", () => {
     const dispatchMock = jest.fn();
     jest.spyOn(require("../../../../redux/hooks"), "useAppDispatch").mockImplementation(() => dispatchMock);
-    jest.spyOn(require("../../../../middleware/modal/ModalMiddleware"), "openUpdateSubCategoryModal").mockImplementation((id) => ({
-      payload: id,
-      type: "OPEN_CREATE_SUB_CATEGORY_MODAL"
-    }));
     jest.spyOn(require("../../../../middleware/category/CategoryMiddleware"), "deleteSubCategory").mockImplementation((id) => ({
       payload: id,
       type: "DELETE_SUB_CATEGORY"

@@ -7,7 +7,6 @@ import {
   updateSubCategoryIsFavorite
 } from "../../../middleware/category/CategoryMiddleware";
 import {
-  openUpdateSubCategoryModal,
   updateSubCategoryDescriptionById
 } from "../../../middleware/modal/ModalMiddleware";
 import insertAndHighlightText from "../../../taskpane/office-document";
@@ -15,7 +14,6 @@ import { sectionClassNames } from "./SubCategoryComponent.styles";
 import { Icon } from "@fluentui/react";
 import * as React from "react";
 
-const ENABLE_FAST_EDIT = true; // Toggle this to enable/disable fast edit
 
 const SubCategoryComponent: React.FC<SubCategory> = ({ id, categoryId, description, isFavorite, backgroundColor }) => {
   // For the icons
@@ -68,13 +66,7 @@ const SubCategoryComponent: React.FC<SubCategory> = ({ id, categoryId, descripti
   }, [dispatch, id]);
 
   const handleEdit = useCallback(() => {
-    if (ENABLE_FAST_EDIT) {
-      setIsEditing(!isEditing);
-    } else {
-
-      // modal opening logic here
-      dispatch(openUpdateSubCategoryModal({ categoryId, description, id, isFavorite }));
-    }
+    setIsEditing(!isEditing);
   }, [dispatch, categoryId, description, id, isFavorite, isEditing]);
 
   const handleTextInsertion = useCallback(async () => {
@@ -86,7 +78,7 @@ const SubCategoryComponent: React.FC<SubCategory> = ({ id, categoryId, descripti
     <div style={{
       width: "100%"
     }} onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}
-        className={sectionClassNames.section}>
+         className={sectionClassNames.section}>
       <td style={{ paddingRight: "6px" }}>
         <div style={{ width: "16px" }}>
           <div style={{
