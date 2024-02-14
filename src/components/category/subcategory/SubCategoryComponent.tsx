@@ -70,7 +70,7 @@ const SubCategoryComponent: React.FC<SubCategory> = ({ id, categoryId, descripti
           }} className={sectionClassNames.activeRowColorBlock}>&nbsp;</div>
         </div>
       </td>
-      <td onClick={toggleFavorite} title={isFavorite ? "Verwijderen als Favoriet" : "Toevoegen als Favoriet"}>
+      <td onClick={toggleFavorite} title={isFavorite ? "Uit Favorieten verwijderen" : "Aan Favorieten toevoegen"}>
         <Icon iconName={isFavorite ? "FavoriteStarFill" : "FavoriteStar"}
               className={`${sectionClassNames.menuIcon} ${isFavorite && 'isFavorite'} ${isHovered && 'showIcon'}`} />
       </td>
@@ -86,7 +86,7 @@ const SubCategoryComponent: React.FC<SubCategory> = ({ id, categoryId, descripti
               title="Verwijderen" />
       </td>
       <td>
-        <ContextMenu trigger={<Icon iconName="More"
+        <ContextMenu trigger={<Icon title={"Meer bekijken"} iconName="More"
                                     className={`${sectionClassNames.menuIcon} ${sectionClassNames.contextMenuIcon} ${isHovered && 'showIcon'}`} />}
                      menuItems={menuItems} />
       </td>

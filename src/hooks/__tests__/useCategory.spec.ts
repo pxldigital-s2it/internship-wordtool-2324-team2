@@ -94,7 +94,8 @@ describe("useCategory Test Suite", () => {
           expect(spyInstance).toHaveBeenCalledTimes(1);
           expect(spyInstance).toHaveBeenCalledWith(StorageKeys.SUBCATEGORY, {
             categoryId: "123",
-            description: "testDescription"
+            description: "testDescription",
+            isFavorite: false
           });
         }, { preloadedState: stateWithCategoryAndSubCategory });
         _unmount = unmount;
@@ -116,7 +117,7 @@ describe("useCategory Test Suite", () => {
           await result.handleSubmit(ref);
 
           expect(spyInstance).toHaveBeenCalledTimes(1);
-          expect(spyInstance).toHaveBeenCalledWith(StorageKeys.SUBCATEGORY, "123", {  categoryId: "123", description: "testDescription" });
+          expect(spyInstance).toHaveBeenCalledWith(StorageKeys.SUBCATEGORY, "123", {  categoryId: "123", description: "testDescription", isFavorite: false });
         }, {
           preloadedState: {
             ...stateWithCategoryAndSubCategory,
@@ -125,7 +126,8 @@ describe("useCategory Test Suite", () => {
               create: false,
               subCategory: {
                 ...stateWithCategoryAndSubCategory.modal.subCategory,
-                id: "123"
+                id: "123",
+                isFavorite: false
               }
             }
           }
