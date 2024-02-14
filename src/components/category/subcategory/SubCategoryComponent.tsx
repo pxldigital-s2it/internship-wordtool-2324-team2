@@ -13,9 +13,7 @@ import {
 import insertAndHighlightText from "../../../taskpane/office-document";
 import { sectionClassNames } from "./SubCategoryComponent.styles";
 import { Icon } from "@fluentui/react";
-import { ContextMenu } from "../../index";
 import * as React from "react";
-import { categoryContextMenu } from "../../../patterns/observer";
 
 const ENABLE_FAST_EDIT = true; // Toggle this to enable/disable fast edit
 
@@ -84,18 +82,6 @@ const SubCategoryComponent: React.FC<SubCategory> = ({ id, categoryId, descripti
   }, [categoryId, description]);
 
 
-  const menuItems = [
-    {
-      handler: () => dispatch(openUpdateSubCategoryModal({ categoryId, description, id, isFavorite })),
-      label: categoryContextMenu.getEditLabel()
-    },
-    {
-      handler: () => dispatch(deleteSubCategory(id)),
-      label: categoryContextMenu.getDeleteLabel()
-    }
-  ];
-
-
   return (
     <div style={{
       width: "100%"
@@ -155,11 +141,7 @@ const SubCategoryComponent: React.FC<SubCategory> = ({ id, categoryId, descripti
         <Icon iconName="Delete" className={`${sectionClassNames.menuIcon} ${isHovered && "showIcon"}`}
               title="Verwijderen" />
       </td>
-      <td>
-        <ContextMenu trigger={<Icon title={"Meer bekijken"} iconName="More"
-                                    className={`${sectionClassNames.menuIcon} ${sectionClassNames.contextMenuIcon} ${isHovered && "showIcon"}`} />}
-                     menuItems={menuItems} />
-      </td>
+      <td></td>
     </div>
   );
 };

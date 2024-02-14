@@ -76,55 +76,6 @@ describe("SubCategoryComponent Integration Test Suite", () => {
       type: "DELETE_SUB_CATEGORY"
     }));
 
-    test("Context menu opens on right click on 'Meer bekijken' icon", async () => {
-      const { getByTitle, findByText } = renderWithProviders(<SubCategoryComponent
-        categoryId={mockCategory.id} {...mockSubCategories[0]} />, { preloadedState: initialState });
-
-      const meerBekijkenIcon = getByTitle("Meer bekijken");
-
-      fireEvent.contextMenu(meerBekijkenIcon);
-
-      const contextMenuWijzigen = await findByText("Wijzigen");
-      const contextMenuVerwijderen = await findByText("Verwijderen");
-
-      // Assertions to ensure the context menu options are rendered
-      expect(contextMenuWijzigen).toBeInTheDocument();
-      expect(contextMenuVerwijderen).toBeInTheDocument();
-    });
-
-
-    test("Clicking on the Wijzigen option opens the update modal", async () => {
-      const { getByTitle, findByText } = renderWithProviders(<SubCategoryComponent
-        categoryId={mockCategory.id} {...mockSubCategories[0]} />, { preloadedState: initialState });
-
-      const meerBekijkenIcon = getByTitle("Meer bekijken");
-
-      fireEvent.contextMenu(meerBekijkenIcon);
-
-      const contextMenuWijzigen = await findByText("Wijzigen");
-
-      fireEvent.click(contextMenuWijzigen);
-      expect(dispatchMock).toHaveBeenCalledWith({
-        payload: mockSubCategories[0],
-        type: "OPEN_CREATE_SUB_CATEGORY_MODAL"
-      });
-    });
-
-    test("Clicking on the Verwijderen option calls deleteSubCategory", async () => {
-      const { getByTitle, findByText } = renderWithProviders(<SubCategoryComponent
-        categoryId={mockCategory.id} {...mockSubCategories[0]} />, { preloadedState: initialState });
-
-      const meerBekijkenIcon = getByTitle("Meer bekijken");
-
-      fireEvent.contextMenu(meerBekijkenIcon);
-
-      const contextMenuVerwijderen = await findByText("Verwijderen");
-
-      fireEvent.click(contextMenuVerwijderen);
-
-      expect(dispatchMock).toHaveBeenCalledWith({ payload: mockSubCategories[0].id, type: "DELETE_SUB_CATEGORY" });
-    });
-
 
     describe("Subcategory onClick to insert text", () => {
       test("should call insertText when span is clicked", async () => {
