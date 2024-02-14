@@ -3,14 +3,15 @@ import ColourPicker from "./ColourPicker";
 import ColourSquare from "./ColourSquare";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { selectColour, setColour } from "../../redux/category/category.slice";
-import { Button } from "@fluentui/react-components";
 import { isLowContrast } from "../../utils/ContrastUtils";
 import { getColorObject } from "../../utils/ColorUtils";
 
 const ColourPickerComponent = () => {
     const [open, setOpen] = useState(false);
     const dispatch = useAppDispatch();
-    const colour = useAppSelector(selectColour);
+    const tempColour = useAppSelector(selectColour);
+    const colour = tempColour ? tempColour : "#ffffff";
+    
     const [contrastWarning, setContrastWarning] = useState<string>("");
 
     const handleSelectColour = (newColour) => {
@@ -44,12 +45,10 @@ const ColourPickerComponent = () => {
                         <ColourPicker selectedColor={colour} setSelectedColor={handleSelectColour}/>
                     </div>
 
-                    <div style={{ color: "red", height: "20px", marginTop: "-15px" }}>
+                    <div style={{ color: "red", height: "20px", marginBottom: "15px", marginTop: "-15px" }}>
                         <p id="contrastWarning" >{contrastWarning}</p>
                     </div>
-
-                    <Button style={{ margin: "15px 0px" }} onClick={handleClosePanel}>Selecteer deze kleur</Button>
-
+                    
                     <div style={{ backgroundColor: colour, padding: "10px" }}>
                         <p style={{ color: "#000000" }}>Preview (zwart)</p>
                     </div>

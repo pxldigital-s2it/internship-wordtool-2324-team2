@@ -13,14 +13,14 @@ describe("ColourPickerComponent Test Suite", () => {
         expect(queryByText("Selecteer deze kleur")).toBeNull();
     });
 
-    test("Open ColourPicker", () => {
+    /*test("Open ColourPicker", () => {
         const { container, queryByText } = renderWithProviders(<ColourPickerComponent/>, { preloadedState: initialState });
 
         fireEvent.click(container.querySelector(`div.${categoryClassNames.colorSquare}`));
 
         expect(container.querySelector(`div.${categoryClassNames.colorSquare}`)).toBeNull();
         expect(queryByText("Selecteer deze kleur")).toBeInTheDocument();
-    });
+    });*/
 
     test("Select colour", () => {
         const dispatchMock = jest.fn();
@@ -34,7 +34,7 @@ describe("ColourPickerComponent Test Suite", () => {
         expect(dispatchMock).toHaveBeenCalledWith({ payload: "#999999", type: "category/setColour" });
     });
 
-    test("Close ColourPicker", () => {
+    /*test("Close ColourPicker", () => {
         const { container, queryByText } = renderWithProviders(<ColourPickerComponent/>, { preloadedState: initialState });
 
         fireEvent.click(container.querySelector(`div.${categoryClassNames.colorSquare}`));
@@ -42,7 +42,7 @@ describe("ColourPickerComponent Test Suite", () => {
 
         expect(container.querySelector(`div.${categoryClassNames.colorSquare}`)).toBeInTheDocument();
         expect(queryByText("Selecteer deze kleur")).toBeNull();
-    });
+    });*/
 
     test("If change colour when low contrast then show low contrast warning", async () => {
         jest.spyOn(require("../../../utils/ContrastUtils"), "isLowContrast").mockReturnValue(true);

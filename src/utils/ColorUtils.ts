@@ -2,10 +2,6 @@
 import { ColourObject } from "../types/ColourObject";
 
 export const getColorObject = (color): ColourObject => {
-    if (!color) {
-        color = "#ffffff";
-    }
-
     const rgbColour: RGBColour = hexToRgb(color);
     return new ColourObject(rgbColour, color);
 };
