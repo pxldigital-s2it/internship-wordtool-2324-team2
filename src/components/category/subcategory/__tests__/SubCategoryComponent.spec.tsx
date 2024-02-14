@@ -7,7 +7,6 @@ import { categoryClassNames } from "../../maincategory/CategoryComponent.styles"
 import SubCategoryComponent from "../SubCategoryComponent";
 import { renderWithProviders } from "../../../../__tests__/utils/TestUtils";
 import { initialState } from "../../../../redux/store";
-import { categoryContextMenu } from "../../../../patterns/observer";
 import insertAndHighlightText from "../../../../taskpane/office-document";
 
 jest.mock("../../../../taskpane/office-document");
