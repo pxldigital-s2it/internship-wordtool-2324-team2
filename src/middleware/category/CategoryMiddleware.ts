@@ -2,7 +2,7 @@ import { loadDataFailure, loadDataStart, loadDataSuccess } from "../../redux/cat
 import { AppDispatch } from "../../redux/store";
 import Category from "../../types/Category";
 import SubCategory from "../../types/SubCategory";
-import { deleteById, getAll } from "../../utils/StorageUtils";
+import { deleteById, getAll, update } from "../../utils/StorageUtils";
 import { StorageKeys } from "../../utils/StorageUtils.types";
 
 export const loadData = () => {
@@ -28,6 +28,17 @@ export const deleteSubCategory = (subCategoryId: string) => {
     return async (dispatch: AppDispatch) => {
         try {
             deleteById(StorageKeys.SUBCATEGORY, subCategoryId)
+            await dispatch(loadData())
+        } catch (error) {
+            console.error(error.message);
+        }
+    };
+}
+
+export const updateSubCategoryIsFavorite = (subCategoryId: string, isFavorite: boolean) => {
+    return async (dispatch: AppDispatch) => {
+        try {
+            update(StorageKeys.SUBCATEGORY, subCategoryId, { isFavorite: isFavorite });
             await dispatch(loadData())
         } catch (error) {
             console.error(error.message);

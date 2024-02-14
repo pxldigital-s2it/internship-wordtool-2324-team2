@@ -1,7 +1,7 @@
 import { useCallback, useState } from "react";
 import { useAppDispatch } from "../../../redux/hooks";
 import SubCategory from "../../../types/SubCategory";
-import { deleteSubCategory } from "../../../middleware/category/CategoryMiddleware";
+import { deleteSubCategory, updateSubCategoryIsFavorite } from "../../../middleware/category/CategoryMiddleware";
 import { openUpdateSubCategoryModal } from "../../../middleware/modal/ModalMiddleware";
 import insertAndHighlightText from "../../../taskpane/office-document";
 import { sectionClassNames } from "./SubCategoryComponent.styles";
@@ -16,7 +16,11 @@ const SubCategoryComponent: React.FC<SubCategory> = ({ id, categoryId, descripti
 
   const dispatch = useAppDispatch();
 
-  const toggleFavorite = useCallback(() => setIsFavorite((fav) => !fav), []);
+  const toggleFavorite = useCallback(() => {
+    const shouldBeFavorite = !isFavorite;
+    setIsFavorite(shouldBeFavorite);
+    dispatch(updateSubCategoryIsFavorite(id, shouldBeFavorite)), []
+  }, [dispatch, id]);
 
   const handleDelete = useCallback(() => {
     dispatch(deleteSubCategory(id));
