@@ -1,7 +1,11 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useAppDispatch } from "../../../redux/hooks";
 import SubCategory from "../../../types/SubCategory";
-import { deleteSubCategory, updateSubCategoryIsFavorite } from "../../../middleware/category/CategoryMiddleware";
+import {
+  deleteSubCategory,
+  getCategoryDataById,
+  updateSubCategoryIsFavorite
+} from "../../../middleware/category/CategoryMiddleware";
 import { openUpdateSubCategoryModal } from "../../../middleware/modal/ModalMiddleware";
 import insertAndHighlightText from "../../../taskpane/office-document";
 import { sectionClassNames } from "./SubCategoryComponent.styles";
@@ -10,17 +14,25 @@ import { ContextMenu } from "../../index";
 import * as React from "react";
 import { categoryContextMenu } from "../../../patterns/observer";
 
-const SubCategoryComponent: React.FC<SubCategory> = ({ id, categoryId, description, isFavorite: initialIsFavorite, backgroundColor }) => {
-  const [isFavorite, setIsFavorite] = useState(initialIsFavorite);
+const SubCategoryComponent: React.FC<SubCategory> = ({ id, categoryId, description, isFavorite, backgroundColor }) => {
   const [isHovered, setIsHovered] = useState(false);
-
+  const [categoryDetails, setCategoryDetails] = useState({ code: '', colour: '' });
   const dispatch = useAppDispatch();
 
+  useEffect(() => {
+    if (isFavorite) {
+      dispatch(getCategoryDataById(categoryId)).then(data => {
+        if (data) {
+          setCategoryDetails({ code: data.code, colour: data.colour });
+        }
+      });
+    }
+  }, [dispatch, categoryId, isFavorite]);
+
   const toggleFavorite = useCallback(() => {
-    const shouldBeFavorite = !isFavorite;
-    setIsFavorite(shouldBeFavorite);
-    dispatch(updateSubCategoryIsFavorite(id, shouldBeFavorite)), []
-  }, [dispatch, id]);
+    dispatch(updateSubCategoryIsFavorite(id, !isFavorite));
+  }, [dispatch, id, isFavorite]);
+
 
   const handleDelete = useCallback(() => {
     dispatch(deleteSubCategory(id));
@@ -47,24 +59,33 @@ const SubCategoryComponent: React.FC<SubCategory> = ({ id, categoryId, descripti
   ];
 
   return (
-    <tr onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)} className={sectionClassNames.section}>
+    <tr onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}
+        className={sectionClassNames.section}>
       <td style={{ paddingRight: '6px' }}>
-        <div style={{ backgroundColor: backgroundColor, visibility: isHovered ? "visible" : "hidden" }} className={sectionClassNames.activeRowColorBlock}>&nbsp;</div>
+        <div style={{
+          backgroundColor: categoryDetails.colour || backgroundColor,
+          height: isHovered ? "36px" : "0px"
+        }} className={sectionClassNames.activeRowColorBlock}>&nbsp;</div>
       </td>
       <td onClick={toggleFavorite} title={isFavorite ? "Verwijderen als Favoriet" : "Toevoegen als Favoriet"}>
-        <Icon iconName={isFavorite ? "FavoriteStarFill" : "FavoriteStar"} className={`${sectionClassNames.menuIcon} ${isFavorite && 'isFavorite'} ${isHovered && 'showIcon'}`} />
+        <Icon iconName={isFavorite ? "FavoriteStarFill" : "FavoriteStar"}
+              className={`${sectionClassNames.menuIcon} ${isFavorite && 'isFavorite'} ${isHovered && 'showIcon'}`} />
       </td>
       <td onClick={handleEdit}>
         <Icon iconName="Edit" className={`${sectionClassNames.menuIcon} ${isHovered && 'showIcon'}`} title="Wijzigen" />
       </td>
-      <td onClick={handleTextInsertion} style={{ transition: "opacity 0.5s ease-in-out", width: "100%" }} className={sectionClassNames.sectionText}>
+      <td onClick={handleTextInsertion} style={{ transition: "opacity 0.5s ease-in-out", width: "100%" }}
+          className={sectionClassNames.sectionText}>
         {description}
       </td>
       <td onClick={handleDelete}>
-        <Icon iconName="Delete" className={`${sectionClassNames.menuIcon} ${isHovered && 'showIcon'}`} title="Verwijderen" />
+        <Icon iconName="Delete" className={`${sectionClassNames.menuIcon} ${isHovered && 'showIcon'}`}
+              title="Verwijderen" />
       </td>
       <td>
-        <ContextMenu trigger={<Icon iconName="More" className={`${sectionClassNames.menuIcon} ${sectionClassNames.contextMenuIcon} ${isHovered && 'showIcon'}`} />} menuItems={menuItems} />
+        <ContextMenu trigger={<Icon iconName="More"
+                                    className={`${sectionClassNames.menuIcon} ${sectionClassNames.contextMenuIcon} ${isHovered && 'showIcon'}`} />}
+                     menuItems={menuItems} />
       </td>
     </tr>
   );

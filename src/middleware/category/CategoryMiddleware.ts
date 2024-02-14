@@ -35,6 +35,18 @@ export const deleteSubCategory = (subCategoryId: string) => {
     };
 }
 
+export const deleteCategory = (categoryId: string) => {
+    return async (dispatch: AppDispatch) => {
+        try {
+            deleteById(StorageKeys.CATEGORY, categoryId)
+            await dispatch(loadData())
+        } catch (error) {
+            console.error(error.message);
+        }
+    };
+}
+
+
 export const updateSubCategoryIsFavorite = (subCategoryId: string, isFavorite: boolean) => {
     return async (dispatch: AppDispatch) => {
         try {
@@ -46,13 +58,37 @@ export const updateSubCategoryIsFavorite = (subCategoryId: string, isFavorite: b
     };
 }
 
-export const deleteCategory = (categoryId: string) => {
-    return async (dispatch: AppDispatch) => {
+/*
+ * Method to get full category data including subcategories by category ID
+ */
+export const getCategoryDataById = (categoryId: string) => {
+    return async () => {
         try {
-            deleteById(StorageKeys.CATEGORY, categoryId)
-            await dispatch(loadData())
+            // fetch all categories and subcategories
+            const categories = getAll(StorageKeys.CATEGORY);
+            const subCategories = getAll(StorageKeys.SUBCATEGORY);
+
+            // find the specific category by ID
+            const specificCategory = categories.find((category: Category) => category.id === categoryId);
+
+            if (!specificCategory) {
+                throw new Error("Category not found");
+            }
+
+            // filter subcategories that belong to the specific category
+            const filteredSubCategories = subCategories.filter((subCategory: SubCategory) => subCategory.categoryId === categoryId);
+
+            // combine category with its subcategories
+            const combinedData = {
+                ...specificCategory,
+                subCategories: filteredSubCategories
+            };
+
+            console.log(combinedData);
+
+            return combinedData;
         } catch (error) {
-            console.error(error.message);
+            console.error("Error getting category data:", error.message);
         }
     };
-}
+};
