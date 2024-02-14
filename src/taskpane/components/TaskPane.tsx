@@ -23,8 +23,8 @@ const taskPaneClassNames = mergeStyleSets({
   taskPane: {
     borderCollapse: "collapse",
     boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
-    padding: "10px 0",
     marginBottom: "80px",
+    padding: "10px 0",
     width: "100%"
   },
   titleBar: {
