@@ -76,10 +76,10 @@ export const sectionClassNames = mergeStyleSets({
   },
   sectionText: {
     color: "#323130", // using a color from the Fluent UI neutral palette
-    fontSize: "14px",
-    padding: "4px 0", // slight padding for the text
-    paddingLeft: "20px",
-    transition: 'opacity 0.6s ease-in-out',
     cursor: "pointer",
+    fontSize: "14px", // slight padding for the text
+    padding: "4px 0",
+    paddingLeft: "20px",
+    transition: "opacity 0.6s ease-in-out"
   }
 });
