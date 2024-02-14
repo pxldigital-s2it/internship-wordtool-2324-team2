@@ -15,6 +15,7 @@ export const sectionClassNames = mergeStyleSets({
   },
   menuIcon: {
     color: "#323130",
+    cursor: "pointer",
     fontSize: "14px",
     height: "24px",
     lineHeight: "24px",
@@ -35,10 +36,11 @@ export const sectionClassNames = mergeStyleSets({
   },
   section: {
     borderBottom: "1px solid #e1dfdd",
-    cursor: "pointer",
     height: "40px",
     margin: "0 auto",
     padding: "5px 0",
+    backgroundColor: "#f5f5f5",
+    borderRadius: "5px",
     selectors: {
       ".isFavorite": {
         color: "orange",
@@ -77,6 +79,7 @@ export const sectionClassNames = mergeStyleSets({
     fontSize: "14px",
     padding: "4px 0", // slight padding for the text
     paddingLeft: "20px",
-    transition: 'opacity 0.6s ease-in-out'
+    transition: 'opacity 0.6s ease-in-out',
+    cursor: "pointer",
   }
 });

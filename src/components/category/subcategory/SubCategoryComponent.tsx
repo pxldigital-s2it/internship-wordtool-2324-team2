@@ -8,7 +8,6 @@ import {
 } from "../../../middleware/category/CategoryMiddleware";
 import {
   openUpdateSubCategoryModal,
-  updateSubCategory,
   updateSubCategoryDescriptionById
 } from "../../../middleware/modal/ModalMiddleware";
 import insertAndHighlightText from "../../../taskpane/office-document";
@@ -42,6 +41,14 @@ const SubCategoryComponent: React.FC<SubCategory> = ({ id, categoryId, descripti
       textareaRef.current.setSelectionRange(length, length);
     }
   }, [isEditing]);
+
+  // Handle when fast edit textarea loses focus
+  const handleBlur = () => {
+      if (isEditing) {
+        setIsEditing(false);
+        setTempDescription(description);
+      }
+  };
 
   const dispatch = useAppDispatch();
 
@@ -90,6 +97,18 @@ const SubCategoryComponent: React.FC<SubCategory> = ({ id, categoryId, descripti
     }
   ];
 
+  // This is for fast edit
+  // additional state to handle adding a new subcategory
+  const [addingSubCategory, setAddingSubCategory] = useState(false);
+  const newSubCategoryRef = useRef(null);
+
+  useEffect(() => {
+    // automatically focus the new subcategory input when it becomes visible
+    if (addingSubCategory && newSubCategoryRef.current) {
+      newSubCategoryRef.current.focus();
+    }
+  }, [addingSubCategory]);
+
   return (
     <tr onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}
         className={sectionClassNames.section}>
@@ -97,8 +116,9 @@ const SubCategoryComponent: React.FC<SubCategory> = ({ id, categoryId, descripti
         <div style={{ width: "16px" }}>
           <div style={{
             backgroundColor: categoryDetails.colour || backgroundColor,
-            height: isHovered ? "36px" : "32px",
-            width: isHovered ? "16px" : "1px"
+            height: isHovered ? "38px" : "32px",
+            width: isHovered ? "16px" : "1px",
+            marginTop: "-1px"
           }} className={sectionClassNames.activeRowColorBlock}>&nbsp;</div>
         </div>
       </td>
@@ -115,6 +135,8 @@ const SubCategoryComponent: React.FC<SubCategory> = ({ id, categoryId, descripti
           description
         ) : (
           <textarea
+            // This ref is for moving the caret to the last char when taking focus for quick edit
+            ref={textareaRef}
             style={{ fontFamily: "Segoe UI", width: "90%" }}
             value={tempDescription}
             onChange={(e) => setTempDescription(e.target.value)}
@@ -133,30 +155,12 @@ const SubCategoryComponent: React.FC<SubCategory> = ({ id, categoryId, descripti
                 setTempDescription(description);
               }
 
-              // shift+enter for a new line is handled by default
+              // shift enter for a new line is handled by default
             }}
-            onBlur={() => {
-              // revert to original description and exit fast edit mode when the textarea loses focus
-              setTempDescription(description);
-              setIsEditing(false);
-            }}
+            onBlur={handleBlur}
             autoFocus
           />
         )}
-        {
-          isEditing && (
-            <div style={{ display: "inline-block", marginLeft: "6px" }}>
-              <Icon iconName="CheckMark" onClick={() => {
-                setIsEditing(false);
-                dispatch(updateSubCategoryDescriptionById(id, tempDescription));
-              }} />
-              <Icon iconName="Cancel" onClick={() => {
-                setIsEditing(false);
-                setTempDescription(description);
-              }} />
-            </div>
-          )
-        }
       </td>
       <td onClick={handleDelete}>
         <Icon iconName="Delete" className={`${sectionClassNames.menuIcon} ${isHovered && "showIcon"}`}
