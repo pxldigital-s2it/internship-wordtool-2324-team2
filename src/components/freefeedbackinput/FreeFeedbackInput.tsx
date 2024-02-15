@@ -4,6 +4,7 @@ import STRING_RESOURCES from "./Strings";
 import { useState } from "react";
 import { insertFreeFeedback, insertFreeFeedbackAndHighlightText } from "./FreeFeedbackInput.utils";
 import { PrimaryButton } from "@fluentui/react/lib/Button";
+import {updateSubCategoryDescriptionById} from "../../middleware/modal/ModalMiddleware";
 
 export interface FreeFeedbackInputProps {
     categoryId?: string,
@@ -54,6 +55,7 @@ const FreeFeedbackInput: React.FC<FreeFeedbackInputProps> = ({ categoryId }) => 
 
                                         // submit logic
                                         await handleTextInsertion();
+                                        setText("");
                                     } else if (e.key === "Escape") {
                                         e.preventDefault();
 
