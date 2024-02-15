@@ -3,6 +3,7 @@ import Category from "../types/Category";
 import { isCategory, isSubCategory } from "../types/IsType";
 import { getRandomUuid } from "./UuidUtils";
 import { StorageKeys } from "./StorageUtils.types";
+import PersistStrategy from "../patterns/strategy/PersistStrategy";
 
 
 const equals = (a: Category | SubCategory, b: Category | SubCategory) => {
@@ -99,3 +100,104 @@ export const loadInitialStorage = (data: { categories: Category[], subCategories
     });
   }
 };
+
+export class StoragePersistStrategy implements PersistStrategy {
+
+  save(key: string, value: any): void {
+    save(key, value);
+  }
+
+  getAll(key: string): any {
+    return getAll(key);
+  }
+
+  getById(key: string, id: string): any {
+    return getById(key, id);
+  }
+
+  update(key: string, id: string, value: any): void {
+    update(key, id, value);
+  }
+
+  deleteById(key: string, id: string): void {
+    deleteById(key, id);
+  }
+
+  loadInitialStorage(data: { categories: Category[], subCategories: SubCategory[] }): void {
+    loadInitialStorage(data);
+  }
+
+}
+
+
+export class FetchPersistStrategy implements PersistStrategy {
+
+  async save(key: string, value: any) {
+    const response = await fetch(`http://localhost:3000/${key}`, {
+      body: JSON.stringify(value),
+      headers: {
+        "Content-Type": "application/json"
+      },
+      method: "POST"
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to save");
+    }
+  }
+
+  async getAll(key: string) {
+    const response = await fetch(`http://localhost:3000/${key}`);
+
+    if (!response.ok) {
+      throw new Error("Failed to get");
+    }
+
+    return response.json();
+  }
+
+  async getById(key: string, id: string) {
+    const response = await fetch(`http://localhost:3000/${key}/${id}`);
+
+    if (!response.ok) {
+      throw new Error("Failed to get by id");
+    }
+
+    return response.json();
+  }
+
+  async update(key: string, id: string, value: any) {
+    const response = await fetch(`http://localhost:3000/${key}/${id}`, {
+      body: JSON.stringify(value),
+      headers: {
+        "Content-Type": "application/json"
+      },
+      method: "PUT"
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to update");
+    }
+  }
+
+  async deleteById(key: string, id: string) {
+    const response = await fetch(`http://localhost:3000/${key}/${id}`, {
+      method: "DELETE"
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to delete");
+    }
+  }
+
+  async loadInitialStorage(data: { categories: Category[], subCategories: SubCategory[] }) {
+    for (const category of data.categories) {
+      await this.save(StorageKeys.CATEGORY, category);
+    }
+
+    for (const subCategory of data.subCategories) {
+      await this.save(StorageKeys.SUBCATEGORY, subCategory);
+    }
+  }
+
+}
