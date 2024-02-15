@@ -27,7 +27,7 @@ describe('FreeFeedbackInput Integration Test Suite', () => {
     });
 
     test('FreeFeedbackInput key down enter to insert text should call insertFreeFeedback', async () => {
-        const { getByTitle, getByPlaceholderText } = renderWithProviders(<FreeFeedbackInput  />, { preloadedState: initialState });
+        const { getByPlaceholderText } = renderWithProviders(<FreeFeedbackInput  />, { preloadedState: initialState });
 
         const freeInputTextarea = getByPlaceholderText(STRING_RESOURCES.freefeedbackinput.textarea.placeholder);
 
@@ -47,7 +47,7 @@ describe('FreeFeedbackInput Integration Test Suite', () => {
     });
 
     test('FreeFeedbackInput key down escape to clear textarea', () => {
-        const { getByTitle, getByPlaceholderText } = renderWithProviders(<FreeFeedbackInput  />, { preloadedState: initialState });
+        const { getByPlaceholderText } = renderWithProviders(<FreeFeedbackInput  />, { preloadedState: initialState });
 
         const freeInputTextarea = getByPlaceholderText(STRING_RESOURCES.freefeedbackinput.textarea.placeholder);
 
