@@ -4,7 +4,6 @@ import STRING_RESOURCES from "./Strings";
 import { useState } from "react";
 import { insertFreeFeedback } from "../../taskpane/office-document";
 import { PrimaryButton } from "@fluentui/react/lib/Button";
-import {updateSubCategoryDescriptionById} from "../../middleware/modal/ModalMiddleware";
 
 const FreeFeedbackInput =() => {
     const [text, setText] = useState<string>("");
