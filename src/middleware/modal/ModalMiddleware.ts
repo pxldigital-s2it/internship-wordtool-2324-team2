@@ -27,27 +27,28 @@ export const openCreateCategoryModal = () => {
 
 export const openCreateSubCategoryModal = (category: Category) => {
   return async (dispatch: AppDispatch) => {
-      dispatch(setTitle(categoryContextMenu.getSubCategoryLabel()));
-      dispatch(setCreate(true));
-      dispatch(setCategory(category));
-      const subCategory: SubCategory = {
-        categoryId: category.id,
+    dispatch(setTitle(categoryContextMenu.getSubCategoryLabel()));
+    dispatch(setCreate(true));
+    dispatch(setCategory(category));
+    const subCategory: SubCategory = {
+      categoryId: category.id,
       description: null,
-      isFavorite: false };
-      dispatch(setSubCategory(subCategory));
-      dispatch(setOpen(true));
+      isFavorite: false
+    };
+    dispatch(setSubCategory(subCategory));
+    dispatch(setOpen(true));
   };
 };
 
 
 export const openUpdateCategoryModal = (category: Category) => {
   return async (dispatch: AppDispatch) => {
-      dispatch(setTitle(categoryContextMenu.getEditLabel()));
-      dispatch(setCreate(false));
-      dispatch(setCategory(category));
-      dispatch(setColour(category.colour));
-      dispatch(setSubCategory(undefined));
-      dispatch(setOpen(true));
+    dispatch(setTitle(categoryContextMenu.getEditLabel()));
+    dispatch(setCreate(false));
+    dispatch(setCategory(category));
+    dispatch(setColour(category.colour));
+    dispatch(setSubCategory(undefined));
+    dispatch(setOpen(true));
   };
 };
 
@@ -73,7 +74,7 @@ export const getCategory = async (categoryId: string): Promise<Category> => {
     console.error(e.message);
   }
 
-  return category
+  return category;
 };
 
 export const saveCategory = (category: Category) => {
