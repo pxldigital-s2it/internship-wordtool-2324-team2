@@ -38,7 +38,7 @@ const FreeFeedbackInput: React.FC<FreeFeedbackInputProps> = ({ categoryId }) => 
                 <tbody>
                     <tr
                         style={{
-                            height: "100%",
+                            height: "100%"
                         }}>
                         <td
                         style={{
