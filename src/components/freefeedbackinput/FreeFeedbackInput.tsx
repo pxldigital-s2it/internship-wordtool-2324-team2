@@ -20,12 +20,13 @@ const FreeFeedbackInput =() => {
         <div>
             <table
                 style={{
+                    height: "100%",
                     width: "100%"
                 }}>
                 <tbody>
                     <tr
                         style={{
-                            height: "100%"
+                            height: "100%",
                         }}>
                         <td
                         style={{
@@ -61,7 +62,6 @@ const FreeFeedbackInput =() => {
                                 onClick={handleTextInsertion}
                                 style={{
                                     height: "100%",
-                                    padding: "18px",
                                     width: "100%"
                                 }}
                                 title={ STRING_RESOURCES.freefeedbackinput.button.title }
