@@ -1,6 +1,6 @@
 import { renderWithProviders } from "../../../__tests__/utils/TestUtils";
 import { initialState } from "../../../redux/store";
-import {fireEvent, waitFor} from "@testing-library/react";
+import { fireEvent, waitFor } from "@testing-library/react";
 import React from "react";
 import FreeFeedbackInput from "../FreeFeedbackInput";
 import STRING_RESOURCES from "../Strings";
@@ -33,14 +33,12 @@ describe('FreeFeedbackInput Integration Test Suite', () => {
 
         fireEvent.change(freeInputTextarea, { target: { value: "Test feedback" } });
 
-        fireEvent.keyDown(freeInputTextarea, { key: "Enter", code: 13, charCode: 13 });
+        fireEvent.keyDown(freeInputTextarea, { charCode: 13, code: 13, key: "Enter" });
 
         expect(insertFreeFeedback).toHaveBeenCalledWith("Test feedback");
 
         (insertFreeFeedback as jest.Mock).mockResolvedValue(true);
 
-        // In de test gooit de insertFreeFeedback method een error en wordt daarna de setText(""); niet meer uitgevoerd
-        // Vandaar faalt onderstaande regel
         await waitFor(() =>
             expect(freeInputTextarea.textContent).toBe("")
         );
@@ -53,7 +51,7 @@ describe('FreeFeedbackInput Integration Test Suite', () => {
 
         fireEvent.change(freeInputTextarea, { target: { value: "Test feedback" } });
 
-        fireEvent.keyDown(freeInputTextarea, { key: "Escape", code: 13, charCode: 13 });
+        fireEvent.keyDown(freeInputTextarea, { charCode: 13, code: 13, key: "Escape" });
 
         expect(freeInputTextarea.textContent).toBe("");
     });
