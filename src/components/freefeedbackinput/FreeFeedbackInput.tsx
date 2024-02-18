@@ -2,14 +2,23 @@ import { Textarea } from "@fluentui/react-components";
 import * as React from "react";
 import STRING_RESOURCES from "./Strings";
 import { useState } from "react";
-import { insertFreeFeedback } from "../../taskpane/office-document";
+import {insertAndHighlightText, insertFreeFeedback} from "../../taskpane/office-document";
 import { PrimaryButton } from "@fluentui/react/lib/Button";
 
-const FreeFeedbackInput =() => {
+export interface FreeFeedbackInputProps {
+    categoryId ?: string,
+    description ?: string
+}
+
+const FreeFeedbackInput: React.FC<FreeFeedbackInputProps> = ({ categoryId, description }) => {
     const [text, setText] = useState<string>("");
 
     const handleTextInsertion = async () => {
         await insertFreeFeedback(text);
+
+        if (categoryId && description) {
+            await insertAndHighlightText(categoryId, description)
+        }
     };
 
     const handleTextChange = async (event: React.ChangeEvent<HTMLTextAreaElement>) => {
