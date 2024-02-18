@@ -5,7 +5,6 @@ import React from "react";
 import FreeFeedbackInput, { FreeFeedbackInputProps } from "../FreeFeedbackInput";
 import STRING_RESOURCES from "../Strings";
 import { insertFreeFeedback, insertAndHighlightText } from "../../../taskpane/office-document";
-import { FreeFeedbackInputProps } from "../FreeFeedbackInput";
 
 jest.mock("../../../taskpane/office-document");
 
