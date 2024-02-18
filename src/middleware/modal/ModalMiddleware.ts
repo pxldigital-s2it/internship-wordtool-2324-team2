@@ -14,6 +14,7 @@ import { setColour } from "../../redux/category/category.slice";
 import { loadData } from "../category/CategoryMiddleware";
 import { getById, save, update } from "../../utils/StorageUtils";
 import { StorageKeys } from "../../utils/StorageUtils.types";
+import SubSubCategory from "../../types/SubSubCategory";
 
 
 export const openCreateCategoryModal = () => {
@@ -116,7 +117,7 @@ export const saveSubCategory = (subCategory: SubCategory) => {
   };
 };
 
-export const updateSubCategory = (id: string, subCategory: SubCategory) => {
+export const updateSubCategory = (id: string, subCategory: Partial<SubCategory>) => {
   return async (dispatch: AppDispatch) => {
     try {
       update(StorageKeys.SUBCATEGORY, id, subCategory);
@@ -129,10 +130,23 @@ export const updateSubCategory = (id: string, subCategory: SubCategory) => {
   };
 };
 
-export const updateSubCategoryDescriptionById = (id: string, description: string) => {
+export const saveSubSubCategory = (subSubCategory: SubSubCategory) => {
   return async (dispatch: AppDispatch) => {
     try {
-      update(StorageKeys.SUBCATEGORY, id, { description });
+      save(StorageKeys.SUBSUBCATEGORY, subSubCategory);
+      dispatch(loadData());
+      dispatch(closeModal());
+    } catch (e) {
+      // TODO: Toast to notify user smth went wrong.
+      console.error(e.message);
+    }
+  };
+};
+
+export const updateSubSubCategory = (id: string, subSubCategory: Partial<SubSubCategory>) => {
+  return async (dispatch: AppDispatch) => {
+    try {
+      update(StorageKeys.SUBSUBCATEGORY, id, subSubCategory);
       await dispatch(loadData());
       dispatch(closeModal());
     } catch (e) {

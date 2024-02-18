@@ -101,7 +101,8 @@ describe("Storage Test Suite", () => {
           title: "Category 3"
         }
       ],
-      subCategories: []
+      subCategories: [],
+      subSubCategories: []
     };
     jest.spyOn(require("../UuidUtils"), "getRandomUuid").mockReturnValue("3");
     Storage.prototype.getItem = jest.fn().mockReturnValue(null);
@@ -121,7 +122,8 @@ describe("Storage Test Suite", () => {
           title: "Category 3"
         }
       ],
-      subCategories: []
+      subCategories: [],
+      subSubCategories: []
     };
     jest.spyOn(require("../UuidUtils"), "getRandomUuid").mockReturnValue("3");
 

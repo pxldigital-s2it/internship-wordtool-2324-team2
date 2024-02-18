@@ -225,5 +225,132 @@
       "description": "Geen cleane versie",
       "id": "sub_category_8_6"
     }
+  ],
+  "subSubCategories": [
+    {
+      "subCategoryId": "sub_category_1_3",
+      "description": "Moet cursief",
+      "id": "sub_sub_category_1_3_1"
+    },
+    {
+      "subCategoryId": "sub_category_1_3",
+      "description": "Moet niet cursief",
+      "id": "sub_sub_category_1_3_2"
+    },
+    {
+      "subCategoryId": "sub_category_2_2",
+      "description": "algemeen",
+      "id": "sub_sub_category_2_2_1"
+    },
+    {
+      "subCategoryId": "sub_category_2_2",
+      "description": "slechte interpunctie (algemeen)",
+      "id": "sub_sub_category_2_2_2"
+    },
+    {
+      "subCategoryId": "sub_category_2_2",
+      "description": "'Dit omdat'",
+      "id": "sub_sub_category_2_2_3"
+    },
+    {
+      "subCategoryId": "sub_category_2_2",
+      "description": "comma splice",
+      "id": "sub_sub_category_2_2_4"
+    },
+    {
+      "subCategoryId": "sub_category_2_3",
+      "description": "algemeen",
+      "id": "sub_sub_category_2_3_1"
+    },
+    {
+      "subCategoryId": "sub_category_2_3",
+      "description": "plaats van 'echter' in de zin",
+      "id": "sub_sub_category_2_3_2"
+    },
+    {
+      "subCategoryId": "sub_category_2_3",
+      "description": "fout in de werkwoordelijke eindgroep",
+      "id": "sub_sub_category_2_3_3"
+    },
+    {
+      "subCategoryId": "sub_category_5_2",
+      "description": "gebruik van toekomstige tijd waar tijdloos schrijven vereist is",
+      "id": "sub_sub_category_5_2_1"
+    },
+    {
+      "subCategoryId": "sub_category_5_2",
+      "description": "mengen van ww-tijden",
+      "id": "sub_sub_category_5_2_2"
+    },
+    {
+      "subCategoryId": "sub_category_5_2",
+      "description": "onnodig voltooid verleden tijd",
+      "id": "sub_sub_category_5_2_3"
+    },
+    {
+      "subCategoryId": "sub_category_5_2",
+      "description": "gebruik van onvoltooid tegenwoordige tijd waar voltooid tegenwoordige tijd vereist is",
+      "id": "sub_sub_category_5_2_4"
+    },
+    {
+      "subCategoryId": "sub_category_5_2",
+      "description": "gebruik van onvoltooid verleden tijd waar voltooid verleden tijd vereist is",
+      "id": "sub_sub_category_5_2_5"
+    },
+    {
+      "subCategoryId": "sub_category_5_2",
+      "description": "gebruik van onvoltooid tegenwoordige tijd waar voltooid verleden tijd vereist is",
+      "id": "sub_sub_category_5_2_6"
+    },
+    {
+      "subCategoryId": "sub_category_5_2",
+      "description": "gebruik van voltooid tegenwoordige tijd waar voltooid verleden tijd vereist is",
+      "id": "sub_sub_category_5_2_7"
+    },
+    {
+      "subCategoryId": "sub_category_5_2",
+      "description": "gebruik van voltooid verleden tijd waar voltooid tegenwoordige tijd vereist is",
+      "id": "sub_sub_category_5_2_8"
+    },
+    {
+      "subCategoryId": "sub_category_5_2",
+      "description": "gebruik van voltooid tegenwoordige tijd waar voltooid tegenwoordige tijd vereist is",
+      "id": "sub_sub_category_5_2_9"
+    },
+    {
+      "subCategoryId": "sub_category_5_2",
+      "description": "gebruik van voltooid verleden tijd waar voltooid verleden tijd vereist is",
+      "id": "sub_sub_category_5_2_10"
+    },
+    {
+      "subCategoryId": "sub_category_6_5",
+      "description": "mits/vermits",
+      "id": "sub_sub_category_6_5_1"
+    },
+    {
+      "subCategoryId": "sub_category_6_5",
+      "description": "tenslotte/ten slotte",
+      "id": "sub_sub_category_6_5_2"
+    },
+    {
+      "subCategoryId": "sub_category_6_5",
+      "description": "moest / mocht",
+      "id": "sub_sub_category_6_5_3"
+    },
+    {
+      "subCategoryId": "sub_category_6_5",
+      "description": "hen/hun",
+      "id": "sub_sub_category_6_5_4"
+    },
+    {
+      "subCategoryId": "sub_category_6_5",
+      "description": "bestaan in/uit",
+      "id": "sub_sub_category_6_5_5"
+    },
+    {
+      "subCategoryId": "sub_category_6_5",
+      "description": "het bedrijf cegeka",
+      "id": "sub_sub_category_6_5_6"
+    }
   ]
 }
