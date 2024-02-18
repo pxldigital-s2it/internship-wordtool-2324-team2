@@ -26,7 +26,7 @@ const FreeFeedbackInput =() => {
                 <tbody>
                     <tr
                         style={{
-                            height: "100%",
+                            height: "100%"
                         }}>
                         <td
                         style={{
