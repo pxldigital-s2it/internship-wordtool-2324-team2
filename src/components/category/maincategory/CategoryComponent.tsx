@@ -17,6 +17,7 @@ const CategoryComponent: React.FC<Category> = ({ id, title, colour, subCategorie
   return (
     <table style={{
       backgroundColor: colour + "1A",
+      tableLayout: "fixed",
       width: "100%"
     }}>
       <thead>

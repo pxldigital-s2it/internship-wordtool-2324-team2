@@ -13,6 +13,17 @@ export const sectionClassNames = mergeStyleSets({
     fontSize: "16px",
     padding: "0 8px"
   },
+  descriptionTextContainerDiv: {
+    display: "grid",
+    width: "95%"
+  },
+  descriptionTextDiv: {
+    flexGrow: 1,
+    minWidth: "50px",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    whiteSpace: "nowrap"
+  },
   menuIcon: {
     color: "#323130",
     cursor: "pointer",
@@ -80,6 +91,7 @@ export const sectionClassNames = mergeStyleSets({
     fontSize: "14px", // slight padding for the text
     padding: "4px 0",
     paddingLeft: "20px",
-    transition: "opacity 0.6s ease-in-out"
+    transition: "opacity 0.6s ease-in-out",
+    width: "100%"
   }
 });
