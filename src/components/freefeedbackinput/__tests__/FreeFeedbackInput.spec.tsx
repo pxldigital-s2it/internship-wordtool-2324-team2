@@ -4,7 +4,10 @@ import { fireEvent, waitFor } from "@testing-library/react";
 import React from "react";
 import FreeFeedbackInput, { FreeFeedbackInputProps } from "../FreeFeedbackInput";
 import STRING_RESOURCES from "../Strings";
+<<<<<<< HEAD
 import { insertAndHighlightText, insertFreeFeedback } from "../../../taskpane/office-document";
+=======
+>>>>>>> 5cc3496 (Functionality for category without subcategories)
 
 jest.mock("../../../taskpane/office-document");
 
