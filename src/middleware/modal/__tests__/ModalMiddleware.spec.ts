@@ -9,11 +9,14 @@ import {
   openUpdateCategoryModal,
   saveCategory,
   saveSubCategory,
+  saveSubSubCategory,
   updateCategory,
-  updateSubCategory
+  updateSubCategory,
+  updateSubSubCategory
 } from "../ModalMiddleware";
 import Category from "../../../types/Category";
 import { setColour } from "../../../redux/category/category.slice";
+import SubSubCategory from "../../../types/SubSubCategory";
 
 describe("ModalMiddleware Test Suite", () => {
 
@@ -218,6 +221,82 @@ describe("ModalMiddleware Test Suite", () => {
     };
 
     const _callAndCheckDispatchCalls = async (dispatchCalls) => await callAndCheckDispatchCalls(updateSubCategory("123", subCategory), dispatchCalls);
+
+
+    test("happy path", async () => {
+      const dispatchCalls = [
+        "loadData",
+        undefined,
+        setOpen.type,
+        setSubCategory.type,
+        setTitle.type,
+        setCategory.type,
+        setColour.type
+      ];
+
+      storageMock("update", () => {});
+
+      await _callAndCheckDispatchCalls(dispatchCalls);
+    });
+
+    test("network error", async () => {
+      const dispatchCalls = [];
+
+      storageMock("update", () => {throw new Error("Network Error")});
+
+      await _callAndCheckDispatchCalls(dispatchCalls);
+      expect(consoleSpy).toHaveBeenCalledTimes(1);
+      expect(consoleSpy).toHaveBeenCalledWith("Network Error");
+    });
+  });
+
+  describe("saveSubSubCategory", () => {
+
+    const subSubCategory: SubSubCategory = {
+      description: "Some description",
+      id: "Some id",
+      subCategoryId: "Some subCategoryId"
+    };
+
+    const _callAndCheckDispatchCalls = async (dispatchCalls: (string | undefined)[]) => await callAndCheckDispatchCalls(saveSubSubCategory(subSubCategory), dispatchCalls);
+
+
+    test("happy path", async () => {
+      const dispatchCalls = [
+        "loadData",
+        undefined,
+        setOpen.type,
+        setSubCategory.type,
+        setTitle.type,
+        setCategory.type,
+        setColour.type
+      ];
+
+      storageMock("save", () => {});
+
+      await _callAndCheckDispatchCalls(dispatchCalls);
+    });
+
+    test("network error", async () => {
+      const dispatchCalls = [];
+
+      storageMock("save", () => {throw new Error("Network Error")});
+
+      await _callAndCheckDispatchCalls(dispatchCalls);
+      expect(consoleSpy).toHaveBeenCalledTimes(1);
+      expect(consoleSpy).toHaveBeenCalledWith("Network Error");
+    });
+  });
+
+  describe("updateSubSubCategory", () => {
+
+    const subSubCategory: SubSubCategory = {
+      description: "Some description",
+      id: "123",
+      subCategoryId: "Some subCategoryId"
+    };
+
+    const _callAndCheckDispatchCalls = async (dispatchCalls) => await callAndCheckDispatchCalls(updateSubSubCategory("123", subSubCategory), dispatchCalls);
 
 
     test("happy path", async () => {

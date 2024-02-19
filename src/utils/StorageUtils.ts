@@ -1,27 +1,31 @@
 import SubCategory from "../types/SubCategory";
 import Category from "../types/Category";
-import { isCategory, isSubCategory } from "../types/IsType";
+import { isCategory, isSubCategory, isSubSubCategory } from "../types/IsType";
 import { getRandomUuid } from "./UuidUtils";
 import { StorageKeys } from "./StorageUtils.types";
 import PersistStrategy from "../patterns/strategy/PersistStrategy";
+import SubSubCategory from "../types/SubSubCategory";
 
 
-const equals = (a: Category | SubCategory, b: Category | SubCategory) => {
+const equals = (a: Category | SubCategory | SubSubCategory, b: Category | SubCategory | SubSubCategory) => {
   if (isCategory(a) && isCategory(b)) {
     return a.id === b.id
       && a.title === b.title
       && a.colour === b.colour
       && a.code === b.code
       && arrayEquals(a.subCategories, b.subCategories);
-  }
-  else if (isSubCategory(a) && isSubCategory(b)) {
+  } else if (isSubCategory(a) && isSubCategory(b)) {
     return a.id === b.id
-    && a.categoryId === b.categoryId
+      && a.categoryId === b.categoryId
+      && a.description === b.description;
+  } else if (isSubSubCategory(a) && isSubSubCategory(b)) {
+    return a.id === b.id
+      && a.subCategoryId === b.subCategoryId
       && a.description === b.description;
   }
 
   return false;
-}
+};
 
 const arrayEquals = (a: Category[] | SubCategory[], b: Category[] | SubCategory[]) => {
   if (a?.length !== b?.length) {
@@ -35,35 +39,34 @@ const arrayEquals = (a: Category[] | SubCategory[], b: Category[] | SubCategory[
   }
 
   return true;
-}
+};
 
 export const write = (key: string, value: any) => {
-  let value1 = JSON.stringify(value);
-  localStorage.setItem(key, value1);
-}
+  localStorage.setItem(key, JSON.stringify(value));
+};
 
 export const save = (key: string, value: any) => {
   const parsed = JSON.parse(localStorage.getItem(key));
-  if (!parsed || (parsed && !parsed.find((item: Category | SubCategory) => equals(item, value)))) {
+  if (!parsed || (parsed && !parsed.find((item: Category | SubCategory | SubSubCategory) => equals(item, value)))) {
     value.id = !value.id ? getRandomUuid() : value.id;
     write(key, [...(parsed ? parsed : []), value]);
   }
-}
+};
 
 export const getAll = (key: string) => {
   const items = localStorage.getItem(key);
 
   return items !== null ? JSON.parse(items) : [];
-}
+};
 
 export const getById = (key: string, id: string) => {
   const items = getAll(key);
 
-  return items.find((item: Category | SubCategory) => item.id === id);
-}
+  return items.find((item: Category | SubCategory | SubSubCategory) => item.id === id);
+};
 
 export const update = (key: string, id: string, value: any) => {
-  const updated = getAll(key).map((item: Category | SubCategory) => {
+  const updated = getAll(key).map((item: Category | SubCategory | SubSubCategory) => {
     if (item.id === id) {
       return {
         ...item,
@@ -75,17 +78,21 @@ export const update = (key: string, id: string, value: any) => {
   });
 
   write(key, updated);
-}
+};
 
 export const deleteById = (key: string, id: string) => {
   let all = getAll(key);
-  const updated = all.filter((item: Category | SubCategory) => item.id !== id);
+  const updated = all.filter((item: Category | SubCategory | SubSubCategory) => item.id !== id);
 
   if (!arrayEquals(all, updated)) {
     write(key, updated);
   }
-}
-export const loadInitialStorage = (data: { categories: Category[], subCategories: SubCategory[] }) => {
+};
+export const loadInitialStorage = (data: {
+  categories: Category[],
+  subCategories: SubCategory[],
+  subSubCategories: SubSubCategory[]
+}) => {
   const initialCategories = getAll(StorageKeys.CATEGORY);
   if (!initialCategories || initialCategories.length === 0) {
     data.categories.forEach(category => {
@@ -97,6 +104,13 @@ export const loadInitialStorage = (data: { categories: Category[], subCategories
   if (!initialSubCategories || initialSubCategories.length === 0) {
     data.subCategories.forEach(subCategory => {
       save(StorageKeys.SUBCATEGORY, subCategory);
+    });
+  }
+
+  const initialSubSubCategories = getAll(StorageKeys.SUBSUBCATEGORY);
+  if (!initialSubSubCategories || initialSubSubCategories.length === 0) {
+    data.subSubCategories.forEach(subSubCategory => {
+      save(StorageKeys.SUBSUBCATEGORY, subSubCategory);
     });
   }
 };
@@ -123,7 +137,7 @@ export class StoragePersistStrategy implements PersistStrategy {
     deleteById(key, id);
   }
 
-  loadInitialStorage(data: { categories: Category[], subCategories: SubCategory[] }): void {
+  loadInitialStorage(data: { categories: Category[], subCategories: SubCategory[], subSubCategories: SubSubCategory[] }): void {
     loadInitialStorage(data);
   }
 
@@ -190,13 +204,17 @@ export class FetchPersistStrategy implements PersistStrategy {
     }
   }
 
-  async loadInitialStorage(data: { categories: Category[], subCategories: SubCategory[] }) {
+  async loadInitialStorage(data: { categories: Category[], subCategories: SubCategory[], subSubCategories: SubSubCategory[] }) {
     for (const category of data.categories) {
       await this.save(StorageKeys.CATEGORY, category);
     }
 
     for (const subCategory of data.subCategories) {
       await this.save(StorageKeys.SUBCATEGORY, subCategory);
+    }
+
+    for (const subSubCategory of data.subSubCategories) {
+      await this.save(StorageKeys.SUBSUBCATEGORY, subSubCategory);
     }
   }
 

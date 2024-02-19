@@ -8,7 +8,7 @@ import {
   updateSubCategoryIsFavorite
 } from "../../../middleware/category/CategoryMiddleware";
 import {
-  updateSubCategoryDescriptionById
+  updateSubCategory
 } from "../../../middleware/modal/ModalMiddleware";
 import { sectionClassNames } from "./SubCategoryComponent.styles";
 import { Icon } from "@fluentui/react";
@@ -113,7 +113,7 @@ const SubCategoryComponent: React.FC<SubCategory> = ({ id, categoryId, descripti
 
                 // submit logic
                 setIsEditing(false);
-                dispatch(updateSubCategoryDescriptionById(id, tempDescription));
+                dispatch(updateSubCategory(id, { description: tempDescription }));
               } else if (e.key === "Escape") {
                 e.preventDefault();
 

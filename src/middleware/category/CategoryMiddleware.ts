@@ -4,18 +4,25 @@ import Category from "../../types/Category";
 import SubCategory from "../../types/SubCategory";
 import { deleteById, getAll, update } from "../../utils/StorageUtils";
 import { StorageKeys } from "../../utils/StorageUtils.types";
+import SubSubCategory from "../../types/SubSubCategory";
 
 export const loadData = () => {
     return async (dispatch: AppDispatch) => {
         try {
             dispatch(loadDataStart());
-            const categories = getAll(StorageKeys.CATEGORY);;
+            const categories = getAll(StorageKeys.CATEGORY);
             const subCategories = getAll(StorageKeys.SUBCATEGORY);
+            const subSubCategories = getAll(StorageKeys.SUBSUBCATEGORY);
+
+            const combinedSubCategories = subCategories.map((subCategory: SubCategory) => ({
+                ...subCategory,
+                subSubCategories: subSubCategories.filter((subSubCategory: SubSubCategory) => subSubCategory.subCategoryId === subCategory.id)
+            }));
 
             // Combine categories with their subcategories
             const combinedData = categories.map((category: Category) => ({
                 ...category,
-                subCategories: subCategories.filter((subCategory: SubCategory) => subCategory.categoryId === category.id)
+                subCategories: combinedSubCategories.filter((subCategory: SubCategory) => subCategory.categoryId === category.id)
             }));
             dispatch(loadDataSuccess(combinedData));
         } catch (error) {
