@@ -15,7 +15,7 @@ import { Icon } from "@fluentui/react";
 import * as React from "react";
 
 
-const SubCategoryComponent: React.FC<SubCategory> = ({ id, categoryId, description, isFavorite, backgroundColor }) => {
+const SubCategoryComponent: React.FC<SubCategory> = ({ id, categoryId, description, isFavorite, backgroundColor, subSubCategories }) => {
   // For the icons
   const [isHovered, setIsHovered] = useState(false);
 
@@ -75,6 +75,7 @@ const SubCategoryComponent: React.FC<SubCategory> = ({ id, categoryId, descripti
 
 
   return (
+    <>
     <div style={{
       width: "100%"
     }} onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}
@@ -138,6 +139,9 @@ const SubCategoryComponent: React.FC<SubCategory> = ({ id, categoryId, descripti
       </td>
       <td></td>
     </div>
+      {subSubCategories && subSubCategories.map((subSubCategory) => (
+        <div key={subSubCategory.id} > {subSubCategory.description} </div>)) }
+    </>
   );
 };
 
