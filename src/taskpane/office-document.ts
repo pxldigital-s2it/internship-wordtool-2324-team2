@@ -23,15 +23,15 @@ async function getCategoryStyleName(categoryId: string, styles: Word.StyleCollec
   return categoryStyleName;
 }
 
-async function getInsertText(description: string, context: Word.RequestContext, category: Category) {
-  const descriptionInsert = " (" + description + ") ";
+async function getInsertText(description: string, context: Word.RequestContext, category: Category, shortCode: string) {
+  const descriptionInsert = " (" + category.title + " - " + description + ") ";
   const searchResults = context.document.body.search(descriptionInsert);
 
   searchResults.load("items");
   await context.sync();
 
   if (searchResults.items?.length) {
-    return " (" + category.code + ") ";
+    return " (" + category.code + " " + shortCode + ") ";
   }
 
   return descriptionInsert;
@@ -45,7 +45,7 @@ function insertAndHighlight(range: Word.Range, descriptionInsert: string, catego
   insertedRange.font.highlightColor = "white";
 }
 
-export const insertAndHighlightText = async (categoryId: string, description: string) => {
+export const insertAndHighlightText = async (categoryId: string, description: string, shortCode: string) => {
   try {
     await Word.run(async (context) => {
       const range = context.document.getSelection();
@@ -65,7 +65,7 @@ export const insertAndHighlightText = async (categoryId: string, description: st
         await context.sync();
 
         const categoryStyleName = await getCategoryStyleName(categoryId, styles, context, category);
-        const descriptionInsert = await getInsertText(description, context, category);
+        const descriptionInsert = await getInsertText(description, context, category, shortCode);
 
         insertAndHighlight(range, descriptionInsert, categoryStyleName);
       }
