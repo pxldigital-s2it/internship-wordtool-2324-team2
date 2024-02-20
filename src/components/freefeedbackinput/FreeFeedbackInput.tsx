@@ -14,11 +14,10 @@ const FreeFeedbackInput: React.FC<FreeFeedbackInputProps> = ({ categoryId, descr
     const [text, setText] = useState<string>("");
 
     const handleTextInsertion = async () => {
+        await insertFreeFeedback(text);
+
         if (categoryId && description) {
-            await insertFreeFeedback(text);
             await insertAndHighlightText(categoryId, description)
-        } else {
-            await insertFreeFeedback(text);
         }
     };
 
