@@ -2,7 +2,7 @@ import { Textarea } from "@fluentui/react-components";
 import * as React from "react";
 import STRING_RESOURCES from "./Strings";
 import { useState } from "react";
-import {insertAndHighlightText, insertFreeFeedback} from "../../taskpane/office-document";
+import { insertAndHighlightText, insertFreeFeedback } from "../../taskpane/office-document";
 import { PrimaryButton } from "@fluentui/react/lib/Button";
 
 export interface FreeFeedbackInputProps {
