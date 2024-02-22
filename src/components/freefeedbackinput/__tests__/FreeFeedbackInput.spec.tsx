@@ -11,7 +11,8 @@ jest.mock("../../../taskpane/office-document");
 describe('FreeFeedbackInput Integration Test Suite', () => {
     const freeFeedbackInputProps: FreeFeedbackInputProps = {
         categoryId: "testId",
-        description: "testDescription"
+        description: "testDescription",
+        shortCode: "testSC"
     };
 
     const createComponentWithProps = (props: FreeFeedbackInputProps) => {
@@ -75,7 +76,9 @@ describe('FreeFeedbackInput Integration Test Suite', () => {
         await waitFor(() =>
             expect(insertAndHighlightText).toHaveBeenCalledWith(
                 "testId",
-                "testDescription"
+                "testDescription",
+                "testSC",
+                "Test feedback"
             )
         );
     });
