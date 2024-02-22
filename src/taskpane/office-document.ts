@@ -23,20 +23,20 @@ async function getCategoryStyleName(categoryId: string, styles: Word.StyleCollec
   return categoryStyleName;
 }
 
-async function getInsertText(description: string, context: Word.RequestContext, category: Category, shortCode: string) {
-  const descriptionInsert = " (" + category.title +
-      (category.title == description ? "" : " - " + description)
-      + ") ";
+async function getInsertText(description: string, context: Word.RequestContext, category: Category, shortCode: string, freeFeedback: string) {
+  let descriptionInsert = " (" + category.title +
+      (category.title == description ? "" : " - " + description);
   const searchResults = context.document.body.search(descriptionInsert);
 
   searchResults.load("items");
   await context.sync();
 
   if (searchResults.items?.length) {
-    return " (" + category.code +
-        (category.code == shortCode ? "" : " " + shortCode)
-        + ") ";
+    descriptionInsert = " (" + category.code +
+        (category.code == shortCode ? "" : " " + shortCode);
   }
+
+  descriptionInsert = descriptionInsert + (freeFeedback ? " - " + freeFeedback + ") " : ") ");
 
   return descriptionInsert;
 }
@@ -69,15 +69,7 @@ export const insertAndHighlightText = async (categoryId: string, description: st
         await context.sync();
 
         const categoryStyleName = await getCategoryStyleName(categoryId, styles, context, category);
-        let descriptionInsert = await getInsertText(description, context, category, shortCode);
-
-        if (freeFeedback) {
-            const thirdToLastIndex = descriptionInsert.length - 2;
-            descriptionInsert =
-                descriptionInsert.slice(0, thirdToLastIndex) +
-                " - " + freeFeedback +
-                descriptionInsert.slice(thirdToLastIndex);
-        }
+        const descriptionInsert = await getInsertText(description, context, category, shortCode, freeFeedback);
 
         insertAndHighlight(range, descriptionInsert, categoryStyleName);
       }
