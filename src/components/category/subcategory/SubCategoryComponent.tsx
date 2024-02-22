@@ -15,7 +15,7 @@ import { Icon } from "@fluentui/react";
 import * as React from "react";
 
 
-const SubCategoryComponent: React.FC<SubCategory> = ({ id, categoryId, description, isFavorite, backgroundColor }) => {
+const SubCategoryComponent: React.FC<SubCategory> = ({ id, categoryId, description, isFavorite, backgroundColor, shortCode, subSubCategories }) => {
   // For the icons
   const [isHovered, setIsHovered] = useState(false);
 
@@ -70,11 +70,12 @@ const SubCategoryComponent: React.FC<SubCategory> = ({ id, categoryId, descripti
   }, [dispatch, categoryId, description, id, isFavorite, isEditing]);
 
   const handleTextInsertion = useCallback(async () => {
-    await insertAndHighlightText(categoryId, description);
+    await insertAndHighlightText(categoryId, description, shortCode);
   }, [categoryId, description]);
 
 
   return (
+    <>
     <div style={{
       width: "100%"
     }} onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}
@@ -96,41 +97,38 @@ const SubCategoryComponent: React.FC<SubCategory> = ({ id, categoryId, descripti
       <td onClick={handleEdit}>
         <Icon iconName="Edit" className={`${sectionClassNames.menuIcon} ${isHovered && "showIcon"}`} title="Wijzigen" />
       </td>
-      <td onClick={!isEditing ? handleTextInsertion : undefined} className={sectionClassNames.sectionText}>
-        <div className={sectionClassNames.descriptionTextContainerDiv}>
-          <div className={sectionClassNames.descriptionTextDiv} title={description}>
-            {!isEditing ? (
-              description
-            ) : (
-              <textarea
-                // This ref is for moving the caret to the last char when taking focus for quick edit
-                ref={textareaRef}
-                style={{ fontFamily: "Segoe UI", width: "90%" }}
-                value={tempDescription}
-                onChange={(e) => setTempDescription(e.target.value)}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" && !e.shiftKey) {
-                    e.preventDefault();
+      <td onClick={!isEditing ? handleTextInsertion : undefined}
+          style={{ width: "100%" }} className={sectionClassNames.sectionText}>
+        {!isEditing ? (
+          shortCode + ". " + description
+        ) : (
+          <textarea
+            // This ref is for moving the caret to the last char when taking focus for quick edit
+            ref={textareaRef}
+            style={{ fontFamily: "Segoe UI", width: "90%" }}
+            value={tempDescription}
+            onChange={(e) => setTempDescription(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" && !e.shiftKey) {
+                e.preventDefault();
 
-                    // submit logic
-                    setIsEditing(false);
-                    dispatch(updateSubCategory(id, { description: tempDescription }));
-                  } else if (e.key === "Escape") {
-                    e.preventDefault();
+                // submit logic
+                setIsEditing(false);
+                dispatch(updateSubCategory(id, { description: tempDescription }));
+              } else if (e.key === "Escape") {
+                e.preventDefault();
 
-                    // cancel logic
-                    setIsEditing(false);
-                    setTempDescription(description);
-                  }
+                // cancel logic
+                setIsEditing(false);
+                setTempDescription(description);
+              }
 
-                  // shift enter for a new line is handled by default
-                }}
-                onBlur={handleBlur}
-                autoFocus
-              />
-            )}
-          </div>
-        </div>
+              // shift enter for a new line is handled by default
+            }}
+            onBlur={handleBlur}
+            autoFocus
+          />
+        )}
       </td>
       <td onClick={handleDelete}>
         <Icon iconName="Delete" className={`${sectionClassNames.menuIcon} ${isHovered && "showIcon"}`}
@@ -138,6 +136,9 @@ const SubCategoryComponent: React.FC<SubCategory> = ({ id, categoryId, descripti
       </td>
       <td></td>
     </div>
+      {subSubCategories && subSubCategories.map((subSubCategory, index) => (
+        <div key={subSubCategory.id} onClick={() => insertAndHighlightText(categoryId, description + " - " + subSubCategory.description, shortCode + "." + (index + 1))}> {shortCode + "." + (index + 1) + " " + subSubCategory.description} </div>)) }
+    </>
   );
 };
 
