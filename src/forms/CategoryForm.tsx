@@ -17,6 +17,7 @@ import { formatData, getFormField, readFormField, renderRow } from "./utils/Form
 import useCategory from "../hooks/useCategory";
 import { DisplayableCategory } from "./utils/FormUtils.types";
 import { closeModal } from "../middleware/modal/ModalMiddleware";
+import {ContrastWarning} from "../components/colourpicker/ContrastWarning";
 
 const useStyles = makeStyles({
   content: {
@@ -36,7 +37,8 @@ const CategoryForm = (): Nullable<ReactElement> => {
 
   const title = useAppSelector(selectTitle);
   const formRef = useRef<HTMLFormElement>(null);
-  const { categoryTitle, data, handleSubmit } = useCategory();
+  const [ showDialog, setShowDialog ] = useState(false);
+  const { categoryTitle, data, handleSubmit, saveData } = useCategory(setShowDialog);
 
   const validate = () => {
     let disabled = false;
@@ -83,6 +85,9 @@ const CategoryForm = (): Nullable<ReactElement> => {
           </Button>
         </DialogActions>
       </DialogBody>
+      {showDialog && (
+        <ContrastWarning saveData={() => saveData(formRef) } showDialog={showDialog} setShowDialog={setShowDialog}/>
+          )}
     </form>
   );
 };

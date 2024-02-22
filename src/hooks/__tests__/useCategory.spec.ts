@@ -33,7 +33,7 @@ describe("useCategory Test Suite", () => {
   describe("categoryTitle & data", () => {
 
     test("default render", () => {
-      const { result, unmount } = renderHookWithProviders(() => useCategory(), { preloadedState: STATE });
+      const { result, unmount } = renderHookWithProviders(() => useCategory(()=>{}), { preloadedState: STATE });
       _unmount = unmount;
 
       expect(result.current).toStrictEqual(expect.objectContaining({
@@ -47,7 +47,7 @@ describe("useCategory Test Suite", () => {
       const {
         result,
         unmount
-      } = renderHookWithProviders(() => useCategory(), { preloadedState: stateWithCategoryAndSubCategory });
+      } = renderHookWithProviders(() => useCategory(()=>{}), { preloadedState: stateWithCategoryAndSubCategory });
       _unmount = unmount;
 
       expect(result.current).toStrictEqual(expect.objectContaining({
@@ -61,7 +61,7 @@ describe("useCategory Test Suite", () => {
       const {
         result,
         unmount
-      } = renderHookWithProviders(() => useCategory(), { preloadedState: stateWithOnlyCategory });
+      } = renderHookWithProviders(() => useCategory(()=>{}), { preloadedState: stateWithOnlyCategory });
       _unmount = unmount;
 
       expect(result.current).toStrictEqual(expect.objectContaining({
@@ -81,7 +81,7 @@ describe("useCategory Test Suite", () => {
     test("create subCategory", async () => {
       await act(() => {
         const { unmount } = renderHookWithProviders(async () => {
-          const result = useCategory();
+          const result = useCategory(()=>{});
           const form = addFormSupport(new Map([
             ["description-input", "testDescription"]
           ]));
@@ -105,7 +105,7 @@ describe("useCategory Test Suite", () => {
     test("update subCategory", async () => {
       await act(() => {
         const { unmount } = renderHookWithProviders(async () => {
-          const result = useCategory();
+          const result = useCategory(()=>{});
 
           const form = addFormSupport(new Map([
             ["description-input", "testDescription"]
@@ -139,7 +139,7 @@ describe("useCategory Test Suite", () => {
     test("create category", async () => {
       await act(() => {
         const { unmount } = renderHookWithProviders(async () => {
-          const result = useCategory();
+          const result = useCategory(()=>{});
           const form = addFormSupport(new Map([
             ["code-input", "testCode"]
           ]));
@@ -161,7 +161,7 @@ describe("useCategory Test Suite", () => {
     test("update category", async () => {
       await act(() => {
         const { unmount } = renderHookWithProviders(async () => {
-          const result = useCategory();
+          const result = useCategory(()=>{});
 
           const form = addFormSupport(new Map([
             ["code-input", "testCode"]
