@@ -24,14 +24,18 @@ async function getCategoryStyleName(categoryId: string, styles: Word.StyleCollec
 }
 
 async function getInsertText(description: string, context: Word.RequestContext, category: Category, shortCode: string) {
-  const descriptionInsert = " (" + category.title + " - " + description + ") ";
+  const descriptionInsert = " (" + category.title +
+      (category.title == description ? "" : " - " + description)
+      + ") ";
   const searchResults = context.document.body.search(descriptionInsert);
 
   searchResults.load("items");
   await context.sync();
 
   if (searchResults.items?.length) {
-    return " (" + category.code + " " + shortCode + ") ";
+    return " (" + category.code +
+        (category.code == shortCode ? "" : " " + shortCode)
+        + ") ";
   }
 
   return descriptionInsert;
@@ -45,7 +49,7 @@ function insertAndHighlight(range: Word.Range, descriptionInsert: string, catego
   insertedRange.font.highlightColor = "white";
 }
 
-export const insertAndHighlightText = async (categoryId: string, description: string, shortCode: string) => {
+export const insertAndHighlightText = async (categoryId: string, description: string, shortCode: string, freeFeedback?: string) => {
   try {
     await Word.run(async (context) => {
       const range = context.document.getSelection();
@@ -65,7 +69,15 @@ export const insertAndHighlightText = async (categoryId: string, description: st
         await context.sync();
 
         const categoryStyleName = await getCategoryStyleName(categoryId, styles, context, category);
-        const descriptionInsert = await getInsertText(description, context, category, shortCode);
+        let descriptionInsert = await getInsertText(description, context, category, shortCode);
+
+        if (freeFeedback) {
+            const thirdToLastIndex = descriptionInsert.length - 2;
+            descriptionInsert =
+                descriptionInsert.slice(0, thirdToLastIndex) +
+                " - " + freeFeedback +
+                descriptionInsert.slice(thirdToLastIndex);
+        }
 
         insertAndHighlight(range, descriptionInsert, categoryStyleName);
       }
