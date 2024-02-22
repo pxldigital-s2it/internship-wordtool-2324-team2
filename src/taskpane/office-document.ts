@@ -23,7 +23,7 @@ async function getCategoryStyleName(categoryId: string, styles: Word.StyleCollec
     return categoryStyleName;
 }
 
-async function getInsertText(description: string, context: Word.RequestContext, category: Category, shortCode: string, freeFeedback: string) {
+async function getInsertText(description: string, context: Word.RequestContext, category: Category, shortCode?: string, freeFeedback?: string) {
     let descriptionInsert = " (" + category.title +
         (shortCode ? " - " + description : "") +
         ") ";
