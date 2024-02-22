@@ -7,16 +7,15 @@ import { PrimaryButton } from "@fluentui/react/lib/Button";
 
 export interface FreeFeedbackInputProps {
     categoryId?: string,
-    description?: string,
-    shortCode?: string
+    description?: string
 }
 
-const FreeFeedbackInput: React.FC<FreeFeedbackInputProps> = ({ categoryId, description, shortCode }) => {
+const FreeFeedbackInput: React.FC<FreeFeedbackInputProps> = ({ categoryId, description }) => {
     const [text, setText] = useState<string>("");
 
     const handleTextInsertion = async () => {
         if (categoryId && description) {
-            await insertAndHighlightText(categoryId, description, shortCode, text)
+            await insertAndHighlightText(categoryId, description, undefined, text)
         } else {
             await insertFreeFeedback(text);
         }

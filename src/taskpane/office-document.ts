@@ -25,18 +25,22 @@ async function getCategoryStyleName(categoryId: string, styles: Word.StyleCollec
 
 async function getInsertText(description: string, context: Word.RequestContext, category: Category, shortCode: string, freeFeedback: string) {
     let descriptionInsert = " (" + category.title +
-        (category.title == description ? "" : " - " + description);
+        (shortCode ? " - " + description : "") +
+        ") ";
     const searchResults = context.document.body.search(descriptionInsert);
 
     searchResults.load("items");
     await context.sync();
 
-    if (searchResults.items?.length) {
-        descriptionInsert = " (" + category.code +
-            (category.code == shortCode ? "" : " " + shortCode);
+    if (searchResults.items?.length && !freeFeedback) {
+        descriptionInsert = " (" + category.code + " " + shortCode + ") ";
+    } else if (freeFeedback) {
+        const thirdToLastIndex = descriptionInsert.length - 2;
+        descriptionInsert =
+            descriptionInsert.slice(0, thirdToLastIndex) +
+            " - " + freeFeedback +
+            descriptionInsert.slice(thirdToLastIndex);
     }
-
-    descriptionInsert = descriptionInsert + (freeFeedback ? " - " + freeFeedback + ") " : ") ");
 
     return descriptionInsert;
 }
@@ -49,7 +53,7 @@ function insertAndHighlight(range: Word.Range, descriptionInsert: string, catego
     insertedRange.font.highlightColor = "white";
 }
 
-export const insertAndHighlightText = async (categoryId: string, description: string, shortCode: string, freeFeedback?: string) => {
+export const insertAndHighlightText = async (categoryId: string, description: string, shortCode?: string, freeFeedback?: string) => {
     try {
         await Word.run(async (context) => {
             const range = context.document.getSelection();

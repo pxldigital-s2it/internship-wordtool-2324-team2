@@ -59,7 +59,7 @@ const CategoryComponent: React.FC<Category> = ({ id, title, colour, subCategorie
                     <SubCategoryComponent key={subCategory.id} {...subCategory} backgroundColor={colour} shortCode={(index + 1).toString()} />
                 ))
             ) : (
-                <FreeFeedbackInput categoryId={id} description={title} shortCode={code} />
+                <FreeFeedbackInput categoryId={id} description={title} />
             )}
           </tr>
       )}
