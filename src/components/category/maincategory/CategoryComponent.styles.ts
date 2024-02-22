@@ -18,7 +18,14 @@ export const categoryClassNames = mergeStyleSets({
     display: "flex",
     fontSize: "16px",
     fontWeight: "600",
-    padding: "10px 20px"
+    padding: "10px 20px",
+    selectors: {
+      ":hover": {
+        // translate X
+        transform: "translateX(2px)",
+        transition: "transform 0.15s ease"
+      }
+    }
   },
   categoryTitle: {
     alignItems: "center",
@@ -28,8 +35,14 @@ export const categoryClassNames = mergeStyleSets({
   },
   colorSquare: {
     border: "1px solid #ccc",
-    cursor: "auto",
+    cursor: "pointer",
     height: "24px",
+    selectors: {
+      ":hover": {
+        border: "1px solid #005a9e",
+        opacity: 0.8
+      }
+    },
     userSelect: "none",
     width: "48px"
   }
