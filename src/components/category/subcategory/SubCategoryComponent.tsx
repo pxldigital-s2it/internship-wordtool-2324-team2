@@ -136,8 +136,8 @@ const SubCategoryComponent: React.FC<SubCategory> = ({ id, categoryId, descripti
       </td>
       <td></td>
     </div>
-      {subSubCategories && subSubCategories.map((subSubCategory, index) => (
-        <div key={subSubCategory.id} onClick={() => insertAndHighlightText(categoryId, description + " - " + subSubCategory.description, shortCode + "." + (index + 1))}> {shortCode + "." + (index + 1) + " " + subSubCategory.description} </div>)) }
+      {subSubCategories && subSubCategories.map((subSubCategory) => (
+        <div key={subSubCategory.id} onClick={() => insertAndHighlightText(categoryId, description + " - " + subSubCategory.description, shortCode + "." + subSubCategory.shortCode)}> {shortCode + "." + subSubCategory.shortCode + " " + subSubCategory.description} </div>)) }
     </>
   );
 };
