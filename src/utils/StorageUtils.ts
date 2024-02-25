@@ -45,10 +45,18 @@ export const write = (key: string, value: any) => {
   localStorage.setItem(key, JSON.stringify(value));
 };
 
+// @ts-ignore
+const isSubOrSubSubCategory = (key: string) => [StorageKeys.SUBCATEGORY, StorageKeys.SUBSUBCATEGORY].includes(key);
+
 export const save = (key: string, value: any) => {
-  const parsed = JSON.parse(localStorage.getItem(key));
+  const parsed = getAll(key);
   if (!parsed || (parsed && !parsed.find((item: Category | SubCategory | SubSubCategory) => equals(item, value)))) {
     value.id = !value.id ? getRandomUuid() : value.id;
+
+    if (isSubOrSubSubCategory(key)) {
+      value.shortCode = `${parsed ? parsed.length + 1 : 1}`;
+    }
+
     write(key, [...(parsed ? parsed : []), value]);
   }
 };
@@ -80,14 +88,32 @@ export const update = (key: string, id: string, value: any) => {
   write(key, updated);
 };
 
+const reArrangeShortcodes = (key: string, id: string, updated: (Category | SubCategory | SubSubCategory)[]) => {
+  if (isSubOrSubSubCategory(key)) {
+    const toDelete = getById(key, id);
+    updated = updated.map((item: SubCategory | SubSubCategory) => {
+      if (parseInt(item.shortCode) > parseInt(toDelete.shortCode)) {
+        item.shortCode = `${parseInt(item.shortCode) - 1}`;
+      }
+
+      return item;
+    });
+  }
+
+  return updated;
+}
+
 export const deleteById = (key: string, id: string) => {
   let all = getAll(key);
-  const updated = all.filter((item: Category | SubCategory | SubSubCategory) => item.id !== id);
+  let updated = all.filter((item: Category | SubCategory | SubSubCategory) => item.id !== id);
+
+  updated = reArrangeShortcodes(key, id, updated);
 
   if (!arrayEquals(all, updated)) {
     write(key, updated);
   }
 };
+
 export const loadInitialStorage = (data: {
   categories: Category[],
   subCategories: SubCategory[],

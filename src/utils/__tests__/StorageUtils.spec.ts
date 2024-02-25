@@ -132,4 +132,315 @@ describe("Storage Test Suite", () => {
     expect(localStorage.setItem).not.toHaveBeenCalled();
   });
 
+  describe("handle shortCodes", () => {
+
+    test("should re-arrange shortCodes in localStorage if subSubCategory", () => {
+      const subSubCategories = [
+        {
+          code: "abc",
+          colour: "#000000",
+          id: "1",
+          shortCode: "1",
+          title: "SubSubCategory 1"
+        },
+        {
+          code: "def",
+          colour: "#999999",
+          id: "2",
+          shortCode: "2",
+          title: "SubSubCategory 2"
+        },
+        {
+          code: "ghi",
+          colour: "#ffffff",
+          id: "3",
+          shortCode: "3",
+          title: "SubSubCategory 3"
+        }
+      ];
+      jest.spyOn(Storage.prototype, "getItem");
+      Storage.prototype.getItem = jest.fn().mockReturnValue(JSON.stringify(subSubCategories));
+
+      deleteById(StorageKeys.SUBSUBCATEGORY, "1");
+
+      expect(localStorage.setItem).toHaveBeenCalledWith(StorageKeys.SUBSUBCATEGORY, JSON.stringify([
+        {
+          code: "def",
+          colour: "#999999",
+          id: "2",
+          shortCode: "1",
+          title: "SubSubCategory 2"
+        },
+        {
+          code: "ghi",
+          colour: "#ffffff",
+          id: "3",
+          shortCode: "2",
+          title: "SubSubCategory 3"
+        }
+      ]));
+
+    });
+
+    test("should re-arrange shortCodes in localStorage if subCategory", () => {
+      const subCategories = [
+        {
+          code: "abc",
+          colour: "#000000",
+          id: "1",
+          shortCode: "1",
+          title: "SubCategory 1"
+        },
+        {
+          code: "def",
+          colour: "#999999",
+          id: "2",
+          shortCode: "2",
+          title: "SubCategory 2"
+        },
+        {
+          code: "ghi",
+          colour: "#ffffff",
+          id: "3",
+          shortCode: "3",
+          title: "SubCategory 3"
+        },
+        {
+          code: "jkl",
+          colour: "#000000",
+          id: "4",
+          shortCode: "4",
+          title: "SubCategory 4"
+        }
+      ];
+      jest.spyOn(Storage.prototype, "getItem");
+      Storage.prototype.getItem = jest.fn().mockReturnValue(JSON.stringify(subCategories));
+
+      deleteById(StorageKeys.SUBCATEGORY, "2");
+
+      expect(localStorage.setItem).toHaveBeenCalledWith(StorageKeys.SUBCATEGORY, JSON.stringify([
+        {
+          code: "abc",
+          colour: "#000000",
+          id: "1",
+          shortCode: "1",
+          title: "SubCategory 1"
+        },
+        {
+          code: "ghi",
+          colour: "#ffffff",
+          id: "3",
+          shortCode: "2",
+          title: "SubCategory 3"
+        },
+        {
+          code: "jkl",
+          colour: "#000000",
+          id: "4",
+          shortCode: "3",
+          title: "SubCategory 4"
+        }
+      ]));
+    });
+
+    test('should handle shortCodes correctly when saving item that is first item in subCategories', () => {
+      jest.spyOn(Storage.prototype, "getItem");
+      Storage.prototype.getItem = jest.fn().mockReturnValue(JSON.stringify([]));
+
+      const newSubCategory = {
+        code: "mno",
+        colour: "#000000",
+        title: "SubCategory 5"
+      };
+      jest.spyOn(require("../UuidUtils"), "getRandomUuid").mockReturnValue("5");
+      save(StorageKeys.SUBCATEGORY, newSubCategory);
+
+      expect(localStorage.setItem).toHaveBeenCalledWith(StorageKeys.SUBCATEGORY, JSON.stringify([
+        {
+          code: "mno",
+          colour: "#000000",
+          title: "SubCategory 5",
+          // eslint-disable-next-line sort-keys
+          id: "5",
+          shortCode: "1"
+        }
+      ]));
+    })
+
+    test('should handle shortCodes correctly when saving item that is first item in subSubCategories', () => {
+      jest.spyOn(Storage.prototype, "getItem");
+      Storage.prototype.getItem = jest.fn().mockReturnValue(JSON.stringify([]));
+
+      const newSubSubCategory = {
+        code: "mno",
+        colour: "#000000",
+        title: "SubSubCategory 5"
+      };
+      jest.spyOn(require("../UuidUtils"), "getRandomUuid").mockReturnValue("5");
+      save(StorageKeys.SUBSUBCATEGORY, newSubSubCategory);
+
+      expect(localStorage.setItem).toHaveBeenCalledWith(StorageKeys.SUBSUBCATEGORY, JSON.stringify([
+        {
+          code: "mno",
+          colour: "#000000",
+          title: "SubSubCategory 5",
+          // eslint-disable-next-line sort-keys
+          id: "5",
+          shortCode: "1"
+        }
+      ]));
+    });
+
+    test('should handle shortCodes correctly when saving item that is not first item in subCategories', () => {
+      const subCategories = [
+        {
+          code: "abc",
+          colour: "#000000",
+          id: "1",
+          shortCode: "1",
+          title: "SubCategory 1"
+        },
+        {
+          code: "def",
+          colour: "#999999",
+          id: "2",
+          shortCode: "2",
+          title: "SubCategory 2"
+        },
+        {
+          code: "ghi",
+          colour: "#ffffff",
+          id: "3",
+          shortCode: "3",
+          title: "SubCategory 3"
+        },
+        {
+          code: "jkl",
+          colour: "#000000",
+          id: "4",
+          shortCode: "4",
+          title: "SubCategory 4"
+        }
+      ];
+      jest.spyOn(Storage.prototype, "getItem");
+      Storage.prototype.getItem = jest.fn().mockReturnValue(JSON.stringify(subCategories));
+
+      const newSubCategory = {
+        code: "mno",
+        colour: "#000000",
+        title: "SubCategory 5"
+      };
+      jest.spyOn(require("../UuidUtils"), "getRandomUuid").mockReturnValue("5");
+      save(StorageKeys.SUBCATEGORY, newSubCategory);
+
+      expect(localStorage.setItem).toHaveBeenCalledWith(StorageKeys.SUBCATEGORY, JSON.stringify([
+        {
+          code: "abc",
+          colour: "#000000",
+          id: "1",
+          shortCode: "1",
+          title: "SubCategory 1"
+        },
+        {
+          code: "def",
+          colour: "#999999",
+          id: "2",
+          shortCode: "2",
+          title: "SubCategory 2"
+        },
+        {
+          code: "ghi",
+          colour: "#ffffff",
+          id: "3",
+          shortCode: "3",
+          title: "SubCategory 3"
+        },
+        {
+          code: "jkl",
+          colour: "#000000",
+          id: "4",
+          shortCode: "4",
+          title: "SubCategory 4"
+        },
+        {
+          code: "mno",
+          colour: "#000000",
+          title: "SubCategory 5",
+          // eslint-disable-next-line sort-keys
+          id: "5",
+          shortCode: "5"
+        }
+      ]));
+    });
+
+    test('should handle shortCodes correctly when saving item that is not first item in subSubCategories', () => {
+      const subSubCategories = [
+        {
+          code: "abc",
+          colour: "#000000",
+          id: "1",
+          shortCode: "1",
+          title: "SubSubCategory 1"
+        },
+        {
+          code: "def",
+          colour: "#999999",
+          id: "2",
+          shortCode: "2",
+          title: "SubSubCategory 2"
+        },
+        {
+          code: "ghi",
+          colour: "#ffffff",
+          id: "3",
+          shortCode: "3",
+          title: "SubSubCategory 3"
+        }
+      ];
+      jest.spyOn(Storage.prototype, "getItem");
+      Storage.prototype.getItem = jest.fn().mockReturnValue(JSON.stringify(subSubCategories));
+
+      const newSubSubCategory = {
+        code: "mno",
+        colour: "#000000",
+        title: "SubSubCategory 4"
+      };
+      jest.spyOn(require("../UuidUtils"), "getRandomUuid").mockReturnValue("4");
+      save(StorageKeys.SUBSUBCATEGORY, newSubSubCategory);
+
+      expect(localStorage.setItem).toHaveBeenCalledWith(StorageKeys.SUBSUBCATEGORY, JSON.stringify([
+        {
+          code: "abc",
+          colour: "#000000",
+          id: "1",
+          shortCode: "1",
+          title: "SubSubCategory 1"
+        },
+        {
+          code: "def",
+          colour: "#999999",
+          id: "2",
+          shortCode: "2",
+          title: "SubSubCategory 2"
+        },
+        {
+          code: "ghi",
+          colour: "#ffffff",
+          id: "3",
+          shortCode: "3",
+          title: "SubSubCategory 3"
+        },
+        {
+          code: "mno",
+          colour: "#000000",
+          title: "SubSubCategory 4",
+          // eslint-disable-next-line sort-keys
+          id: "4",
+          shortCode: "4"
+        }
+      ]));
+    });
+
+  });
+
 });
