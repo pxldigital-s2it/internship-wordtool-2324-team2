@@ -6,7 +6,7 @@ import Category from "../../../types/Category";
 import { getCategoryStyleName, insertAndHighlight } from "../../../utils/TextInsertUtils";
 
 async function getInsertText(description: string, context: Word.RequestContext, category: Category, shortCode: string) {
-    let descriptionInsert = " (" + category.title + description + ") ";
+    let descriptionInsert = " (" + category.title + " - " + description + ") ";
     const searchResults = context.document.body.search(descriptionInsert);
 
     searchResults.load("items");
