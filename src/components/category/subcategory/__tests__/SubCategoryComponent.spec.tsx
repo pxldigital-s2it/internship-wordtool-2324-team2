@@ -7,9 +7,9 @@ import { categoryClassNames } from "../../maincategory/CategoryComponent.styles"
 import SubCategoryComponent from "../SubCategoryComponent";
 import { renderWithProviders } from "../../../../__tests__/utils/TestUtils";
 import { initialState } from "../../../../redux/store";
-import { insertAndHighlightText } from "../../../../taskpane/office-document";
+import { insertAndHighlightText } from "../SubCategoryComponent.utils";
 
-jest.mock("../../../../taskpane/office-document");
+jest.mock("../SubCategoryComponent.utils");
 
 describe("SubCategoryComponent Integration Test Suite", () => {
   const mockSubCategories: SubCategory[] = [

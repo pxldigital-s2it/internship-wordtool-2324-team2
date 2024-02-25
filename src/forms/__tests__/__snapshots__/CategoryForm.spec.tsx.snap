@@ -22,7 +22,7 @@ exports[`CategoryForm Test Suite initial render 1`] = `
             class="fui-TableBody ___1gw3ddd_19kkhse f1tp1avn"
           >
             <tr
-              class="fui-TableRow ___1o398xn_1gb0u4b f19n0e5 f1ewtqcl f1jazu75 f1xeqee6 fz36nt7 f9znhxp fqrak0z f1o2ludy f1kjnpwc fxmnebo f1witrsb f7tkmfy f1r2dosr f15ngxrw fjbbrdp f1t94bn6 feu1g3u f1uorfem fw60kww f1vxd6vx fg706s2 fnzw4c6 f1u0rzck f16xkysk f1bh3yvw fmi79ni f11fozsx fqlf3fd f9dpb3h f1yat0gj fw2muls f7nae3y fkbere7 fmtyzcc fa97sf3 fb6zhgp fyowp6c f9dii88 fz08sq8 f1afxoft flqq2yx f1b5xrmd f1831rx6 fd94n53 f1e0wld5"
+              class="fui-TableRow ___6zrt9o0_oltahk0 f19n0e5 f1ewtqcl f1jazu75 f1xeqee6 fz36nt7 f9znhxp fqrak0z f1o2ludy f1kjnpwc fxmnebo f1witrsb f7tkmfy f1r2dosr f15ngxrw fjbbrdp f1t94bn6 feu1g3u f1uorfem fw60kww f4xjyn1 ff1wgvm fiob0tu f1j6scgf f1x4h75k f1vxd6vx fg706s2 fnzw4c6 f1u0rzck f16xkysk f1bh3yvw fmi79ni f11fozsx fqlf3fd f9dpb3h f1yat0gj fw2muls f7nae3y fkbere7 fmtyzcc fa97sf3 fb6zhgp fyowp6c f9dii88 fz08sq8 f1afxoft flqq2yx f1b5xrmd f1831rx6 fd94n53 f1e0wld5"
             >
               <td
                 class="fui-TableCell ___18c4fhz_1qt9bvz f10pi13n f1nbblvp f1vdfbxk f1ov4xf1 f1f5gg8d fz36nt7 f9znhxp fqrak0z f1o2ludy f1kjnpwc fxmnebo f1witrsb f15pt5es fmrv4ls f1ft4266"
@@ -45,7 +45,7 @@ exports[`CategoryForm Test Suite initial render 1`] = `
               </td>
             </tr>
             <tr
-              class="fui-TableRow ___1o398xn_1gb0u4b f19n0e5 f1ewtqcl f1jazu75 f1xeqee6 fz36nt7 f9znhxp fqrak0z f1o2ludy f1kjnpwc fxmnebo f1witrsb f7tkmfy f1r2dosr f15ngxrw fjbbrdp f1t94bn6 feu1g3u f1uorfem fw60kww f1vxd6vx fg706s2 fnzw4c6 f1u0rzck f16xkysk f1bh3yvw fmi79ni f11fozsx fqlf3fd f9dpb3h f1yat0gj fw2muls f7nae3y fkbere7 fmtyzcc fa97sf3 fb6zhgp fyowp6c f9dii88 fz08sq8 f1afxoft flqq2yx f1b5xrmd f1831rx6 fd94n53 f1e0wld5"
+              class="fui-TableRow ___6zrt9o0_oltahk0 f19n0e5 f1ewtqcl f1jazu75 f1xeqee6 fz36nt7 f9znhxp fqrak0z f1o2ludy f1kjnpwc fxmnebo f1witrsb f7tkmfy f1r2dosr f15ngxrw fjbbrdp f1t94bn6 feu1g3u f1uorfem fw60kww f4xjyn1 ff1wgvm fiob0tu f1j6scgf f1x4h75k f1vxd6vx fg706s2 fnzw4c6 f1u0rzck f16xkysk f1bh3yvw fmi79ni f11fozsx fqlf3fd f9dpb3h f1yat0gj fw2muls f7nae3y fkbere7 fmtyzcc fa97sf3 fb6zhgp fyowp6c f9dii88 fz08sq8 f1afxoft flqq2yx f1b5xrmd f1831rx6 fd94n53 f1e0wld5"
             >
               <td
                 class="fui-TableCell ___18c4fhz_1qt9bvz f10pi13n f1nbblvp f1vdfbxk f1ov4xf1 f1f5gg8d fz36nt7 f9znhxp fqrak0z f1o2ludy f1kjnpwc fxmnebo f1witrsb f15pt5es fmrv4ls f1ft4266"

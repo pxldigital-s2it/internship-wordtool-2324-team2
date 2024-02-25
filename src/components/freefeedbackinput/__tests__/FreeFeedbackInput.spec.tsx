@@ -4,9 +4,9 @@ import { fireEvent, waitFor } from "@testing-library/react";
 import React from "react";
 import FreeFeedbackInput, { FreeFeedbackInputProps } from "../FreeFeedbackInput";
 import STRING_RESOURCES from "../Strings";
-import { insertFreeFeedback, insertAndHighlightText } from "../../../taskpane/office-document";
+import { insertFreeFeedback, insertFreeFeedbackAndHighlightText } from "../FreeFeedbackInput.utils";
 
-jest.mock("../../../taskpane/office-document");
+jest.mock("../FreeFeedbackInput.utils");
 
 describe('FreeFeedbackInput Integration Test Suite', () => {
     const freeFeedbackInputProps: FreeFeedbackInputProps = {
@@ -73,10 +73,8 @@ describe('FreeFeedbackInput Integration Test Suite', () => {
         fireEvent.click(getByTitle(STRING_RESOURCES.freefeedbackinput.button.title));
 
         await waitFor(() =>
-            expect(insertAndHighlightText).toHaveBeenCalledWith(
+            expect(insertFreeFeedbackAndHighlightText).toHaveBeenCalledWith(
                 "testId",
-                "testDescription",
-                undefined,
                 "Test feedback"
             )
         );

@@ -2,7 +2,7 @@ import { Textarea } from "@fluentui/react-components";
 import * as React from "react";
 import STRING_RESOURCES from "./Strings";
 import { useState } from "react";
-import { insertAndHighlightText, insertFreeFeedback } from "../../taskpane/office-document";
+import { insertFreeFeedback, insertFreeFeedbackAndHighlightText } from "./FreeFeedbackInput.utils";
 import { PrimaryButton } from "@fluentui/react/lib/Button";
 
 export interface FreeFeedbackInputProps {
@@ -10,15 +10,17 @@ export interface FreeFeedbackInputProps {
     description?: string
 }
 
-const FreeFeedbackInput: React.FC<FreeFeedbackInputProps> = ({ categoryId, description }) => {
+const FreeFeedbackInput: React.FC<FreeFeedbackInputProps> = ({ categoryId }) => {
     const [text, setText] = useState<string>("");
 
     const handleTextInsertion = async () => {
-        if (categoryId && description) {
-            await insertAndHighlightText(categoryId, description, undefined, text)
+        if (categoryId) {
+            await insertFreeFeedbackAndHighlightText(categoryId, text)
         } else {
             await insertFreeFeedback(text);
         }
+
+        setText("");
     };
 
     const handleTextChange = async (event: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -51,7 +53,6 @@ const FreeFeedbackInput: React.FC<FreeFeedbackInputProps> = ({ categoryId, descr
 
                                         // submit logic
                                         await handleTextInsertion();
-                                        setText("");
                                     } else if (e.key === "Escape") {
                                         e.preventDefault();
 

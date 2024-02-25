@@ -1,7 +1,7 @@
 /* eslint-disable */
 /* global Word console */
 
-import { getCategory } from "../middleware/modal/ModalMiddleware";
+/*import { getCategory } from "../middleware/modal/ModalMiddleware";
 import Category from "../types/Category";
 
 async function getCategoryStyleName(categoryId: string, styles: Word.StyleCollection, context: Word.RequestContext, category: Category) {
@@ -102,4 +102,4 @@ export const insertFreeFeedback = async (text: string) => {
     } catch (error) {
         console.log("Error: " + error);
     }
-};
+};*/
