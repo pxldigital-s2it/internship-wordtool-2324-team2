@@ -1,5 +1,5 @@
 import { OfficeMockObject } from "office-addin-mock";
-import { insertAndHighlightText } from "../SubCategoryComponent.utils";
+import { insertFreeFeedbackAndHighlightText } from "../FreeFeedbackInput.utils";
 
 const getOfficeMock = (originalStyle: string, mockReturnValue: string[], isEmpty: boolean, isNullObject: boolean) => {
     const contextMock = new OfficeMockObject({
@@ -109,10 +109,10 @@ const getOfficeMock = (originalStyle: string, mockReturnValue: string[], isEmpty
     };
 };
 
-describe("SubCategoryComponent.utils Test Suite", () => {
+describe("FreeFeedbackInput.utils Test Suite", () => {
 
     const ORIGINAL_STYLE = "ORIGINAL";
-    jest.spyOn(require("../../../../middleware/modal/ModalMiddleware"), "getCategory").mockImplementation(() => (
+    jest.spyOn(require("../../../middleware/modal/ModalMiddleware"), "getCategory").mockImplementation(() => (
         {
             code: "test",
             colour: "red",
@@ -122,7 +122,7 @@ describe("SubCategoryComponent.utils Test Suite", () => {
         }
     ));
 
-    describe("insertAndHighlightText", () => {
+    describe("insertFreeFeedbackAndHighlightText", () => {
 
         const _getOfficeMock = (mockReturnValue: string[], isEmpty: boolean, isNullObject: boolean = false) => getOfficeMock(ORIGINAL_STYLE, mockReturnValue, isEmpty, isNullObject);
 
@@ -130,7 +130,7 @@ describe("SubCategoryComponent.utils Test Suite", () => {
 
             const { contextMock, spyMap } = _getOfficeMock(["found"], true);
 
-            await insertAndHighlightText("categoryId", "description", "shortCode");
+            await insertFreeFeedbackAndHighlightText("categoryId", "freeFeedback");
 
             expect(spyMap.get("getSelection")).toHaveBeenCalledTimes(1);
             expect(spyMap.get("getStyles")).not.toHaveBeenCalled();
@@ -141,39 +141,37 @@ describe("SubCategoryComponent.utils Test Suite", () => {
         test("!isNullObject", async () => {
             const { contextMock, spyMap } = _getOfficeMock([], false, false);
 
-            await insertAndHighlightText("categoryId", "description", "shortCode");
+            await insertFreeFeedbackAndHighlightText("categoryId", "freeFeedback");
 
             expect(spyMap.get("getSelection")).toHaveBeenCalledTimes(1);
             expect(spyMap.get("getStyles")).toHaveBeenCalledTimes(1);
             expect(spyMap.get("addStyle")).not.toHaveBeenCalled();
-            expect(spyMap.get("insertText")).toHaveBeenCalledWith(" (Test Category - description) ", "After");
+            expect(spyMap.get("insertText")).toHaveBeenCalledWith(" (Test Category - freeFeedback) ", "After");
             expect(contextMock.context.document.range.style).toBe("categoryIdStyle");
         });
 
         test("isNullObject", async () => {
             const { contextMock, spyMap } = _getOfficeMock([], false, true);
 
-            await insertAndHighlightText("categoryId", "description", "shortCode");
+            await insertFreeFeedbackAndHighlightText("categoryId", "freeFeedback");
 
             expect(spyMap.get("getSelection")).toHaveBeenCalledTimes(1);
             expect(spyMap.get("getStyles")).toHaveBeenCalledTimes(1);
             expect(spyMap.get("addStyle")).toHaveBeenCalledWith("categoryIdStyle", "Character");
-            expect(spyMap.get("insertText")).toHaveBeenCalledWith(" (Test Category - description) ", "After");
+            expect(spyMap.get("insertText")).toHaveBeenCalledWith(" (Test Category - freeFeedback) ", "After");
             expect(contextMock.context.document.range.style).toBe("categoryIdStyle");
         });
 
-        test("searchResults.items?.length", async () => {
+        test("no freeFeedback provided", async () => {
             const { contextMock, spyMap } = _getOfficeMock(["found"], false);
 
-            await insertAndHighlightText("categoryId", "description", "shortCode");
+            await insertFreeFeedbackAndHighlightText("categoryId", undefined);
 
             expect(spyMap.get("getSelection")).toHaveBeenCalledTimes(1);
             expect(spyMap.get("getStyles")).toHaveBeenCalledTimes(1);
             expect(spyMap.get("addStyle")).not.toHaveBeenCalled();
-            expect(spyMap.get("insertText")).toHaveBeenCalledWith(" (test shortCode) ", "After");
+            expect(spyMap.get("insertText")).toHaveBeenCalledWith(" (Test Category) ", "After");
             expect(contextMock.context.document.range.style).toBe("categoryIdStyle");
         })
-
     });
-
 });
