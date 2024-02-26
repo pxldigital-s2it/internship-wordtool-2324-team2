@@ -42,6 +42,17 @@ export const deleteSubCategory = (subCategoryId: string) => {
     };
 }
 
+export const deleteSubSubCategory = (subSubCategoryId: string) => {
+    return async (dispatch: AppDispatch) => {
+        try {
+            deleteById(StorageKeys.SUBSUBCATEGORY, subSubCategoryId)
+            await dispatch(loadData())
+        } catch (error) {
+            console.error(error.message);
+        }
+    };
+}
+
 export const deleteCategory = (categoryId: string) => {
     return async (dispatch: AppDispatch) => {
         try {
