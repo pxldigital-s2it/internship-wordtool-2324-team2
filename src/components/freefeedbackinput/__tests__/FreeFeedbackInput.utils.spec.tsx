@@ -1,5 +1,5 @@
 import { OfficeMockObject } from "office-addin-mock";
-import { insertFreeFeedbackAndHighlightText } from "../FreeFeedbackInput.utils";
+import { insertFreeFeedback, insertFreeFeedbackAndHighlightText } from "../FreeFeedbackInput.utils";
 
 const getOfficeMock = (originalStyle: string, mockReturnValue: string[], isEmpty: boolean, isNullObject: boolean) => {
     const contextMock = new OfficeMockObject({
@@ -122,10 +122,9 @@ describe("FreeFeedbackInput.utils Test Suite", () => {
         }
     ));
 
+    const _getOfficeMock = (mockReturnValue: string[], isEmpty: boolean, isNullObject: boolean = false) => getOfficeMock(ORIGINAL_STYLE, mockReturnValue, isEmpty, isNullObject);
+
     describe("insertFreeFeedbackAndHighlightText", () => {
-
-        const _getOfficeMock = (mockReturnValue: string[], isEmpty: boolean, isNullObject: boolean = false) => getOfficeMock(ORIGINAL_STYLE, mockReturnValue, isEmpty, isNullObject);
-
         test("range.isEmpty", async () => {
 
             const { contextMock, spyMap } = _getOfficeMock(["found"], true);
@@ -172,6 +171,26 @@ describe("FreeFeedbackInput.utils Test Suite", () => {
             expect(spyMap.get("addStyle")).not.toHaveBeenCalled();
             expect(spyMap.get("insertText")).toHaveBeenCalledWith(" (Test Category) ", "After");
             expect(contextMock.context.document.range.style).toBe("categoryIdStyle");
-        })
+        });
+    });
+
+    describe("insertFreeFeedback", () => {
+        test("freeFeedback provided", async () => {
+            const { spyMap } = _getOfficeMock(["found"], false);
+
+            await insertFreeFeedback("Test feedback");
+
+            expect(spyMap.get("getSelection")).toHaveBeenCalledTimes(1);
+            expect(spyMap.get("insertText")).toHaveBeenCalledWith(" (Test feedback) ", "End");
+        });
+
+        test("no freeFeedback provided", async () => {
+            const { spyMap } = _getOfficeMock(["found"], false);
+
+            await insertFreeFeedback("");
+
+            expect(spyMap.get("getSelection")).not.toHaveBeenCalled();
+            expect(spyMap.get("insertText")).not.toHaveBeenCalled();
+        });
     });
 });

@@ -172,8 +172,6 @@ describe("SubCategoryComponent.utils Test Suite", () => {
             expect(spyMap.get("addStyle")).not.toHaveBeenCalled();
             expect(spyMap.get("insertText")).toHaveBeenCalledWith(" (test shortCode) ", "After");
             expect(contextMock.context.document.range.style).toBe("categoryIdStyle");
-        })
-
+        });
     });
-
 });
