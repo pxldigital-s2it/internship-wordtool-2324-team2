@@ -222,11 +222,6 @@ const SubCategoryComponent: React.FC<SubCategory> = ({ id, categoryId, descripti
             <tr onMouseEnter={() => setIsSubHovered(true)} onMouseLeave={() => setIsSubHovered(false)}
                 className={sectionClassNames.subSubCategoryRow} style={{ backgroundColor: backgroundColor + "1A" }}
                 key={subSubCategory.id}>
-              <td className={`${sectionClassNames.subSubCategoryFavoriteIcon}`} onClick={toggleFavorite}
-                  title={isFavorite ? "Uit Favorieten verwijderen" : "Aan Favorieten toevoegen"}>
-                <Icon iconName={isFavorite ? "FavoriteStarFill" : "FavoriteStar"}
-                      className={`${sectionClassNames.menuIcon} ${isFavorite && "isFavorite"} ${isSubHovered && "showIcon"}`} />
-              </td>
 
               {/*
                 Edit icon for subSubCategory
