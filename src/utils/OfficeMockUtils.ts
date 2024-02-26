@@ -1,4 +1,4 @@
-import {OfficeMockObject} from "office-addin-mock";
+import { OfficeMockObject } from "office-addin-mock";
 
 const getOfficeMock = (originalStyle: string, mockReturnValue: string[], isEmpty: boolean, isNullObject: boolean) => {
     const contextMock = new OfficeMockObject({
