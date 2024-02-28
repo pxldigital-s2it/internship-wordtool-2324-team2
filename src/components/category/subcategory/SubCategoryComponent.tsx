@@ -15,7 +15,7 @@ import { Icon } from "@fluentui/react";
 import * as React from "react";
 
 
-const SubCategoryComponent: React.FC<SubCategory> = ({ id, categoryId, description, isFavorite, backgroundColor, shortCode, subSubCategories }) => {
+const SubCategoryComponent: React.FC<SubCategory> = ({ id, categoryId, description, isFavorite, backgroundColor, shortCode, subSubCategories, url }) => {
   // For the icons
   const [isHovered, setIsHovered] = useState(false);
 
@@ -70,7 +70,7 @@ const SubCategoryComponent: React.FC<SubCategory> = ({ id, categoryId, descripti
   }, [dispatch, categoryId, description, id, isFavorite, isEditing]);
 
   const handleTextInsertion = useCallback(async () => {
-    await insertAndHighlightText(categoryId, description, shortCode);
+    await insertAndHighlightText(categoryId, description, shortCode, url);
   }, [categoryId, description]);
 
 
@@ -137,7 +137,7 @@ const SubCategoryComponent: React.FC<SubCategory> = ({ id, categoryId, descripti
       <td></td>
     </div>
       {subSubCategories && subSubCategories.map((subSubCategory) => (
-        <div key={subSubCategory.id} onClick={() => insertAndHighlightText(categoryId, description + " - " + subSubCategory.description, shortCode + "." + subSubCategory.shortCode)}> {shortCode + "." + subSubCategory.shortCode + " " + subSubCategory.description} </div>)) }
+        <div key={subSubCategory.id} onClick={() => insertAndHighlightText(categoryId, description + " - " + subSubCategory.description, shortCode + "." + subSubCategory.shortCode, subSubCategory.url)}> {shortCode + "." + subSubCategory.shortCode + " " + subSubCategory.description} </div>)) }
     </>
   );
 };
