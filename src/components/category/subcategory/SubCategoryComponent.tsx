@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useAppDispatch } from "../../../redux/hooks";
-import { insertAndHighlightText } from "../../../taskpane/office-document";
+import { insertAndHighlightText } from "./SubCategoryComponent.utils";
 import SubCategory from "../../../types/SubCategory";
 import {
   deleteSubCategory,

@@ -9,6 +9,7 @@ import { categoryContextMenu } from "../../../patterns/observer";
 import { useAppDispatch } from "../../../redux/hooks";
 import Category from "../../../types/Category";
 import { deleteCategory } from "../../../middleware/category/CategoryMiddleware";
+import FreeFeedbackInput from "../../freefeedbackinput/FreeFeedbackInput";
 
 const CategoryComponent: React.FC<Category> = ({ id, title, colour, subCategories, code }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -52,11 +53,15 @@ const CategoryComponent: React.FC<Category> = ({ id, title, colour, subCategorie
       </thead>
       <tbody>
       {isOpen && (
-        <tr className={categoryClassNames.categoryContent}>
-          {subCategories && subCategories.map((subCategory) => (
-            <SubCategoryComponent key={subCategory.id} {...subCategory} backgroundColor={colour} shortCode={subCategory.shortCode} />
-          ))}
-        </tr>
+          <tr className={categoryClassNames.categoryContent}>
+            {subCategories && subCategories.length > 0 ? (
+                subCategories.map((subCategory, index) => (
+                    <SubCategoryComponent key={subCategory.id} {...subCategory} backgroundColor={colour} shortCode={(index + 1).toString()} />
+                ))
+            ) : (
+                <FreeFeedbackInput categoryId={id} description={title} />
+            )}
+          </tr>
       )}
       </tbody>
     </table>

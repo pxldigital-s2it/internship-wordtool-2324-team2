@@ -2,13 +2,22 @@ import { renderWithProviders } from "../../../__tests__/utils/TestUtils";
 import { initialState } from "../../../redux/store";
 import { fireEvent, waitFor } from "@testing-library/react";
 import React from "react";
-import FreeFeedbackInput from "../FreeFeedbackInput";
+import FreeFeedbackInput, { FreeFeedbackInputProps } from "../FreeFeedbackInput";
 import STRING_RESOURCES from "../Strings";
-import { insertFreeFeedback } from "../../../taskpane/office-document";
+import { insertFreeFeedback, insertFreeFeedbackAndHighlightText } from "../FreeFeedbackInput.utils";
 
-jest.mock("../../../taskpane/office-document");
+jest.mock("../FreeFeedbackInput.utils");
 
 describe('FreeFeedbackInput Integration Test Suite', () => {
+    const freeFeedbackInputProps: FreeFeedbackInputProps = {
+        categoryId: "testId",
+        description: "testDescription"
+    };
+
+    const createComponentWithProps = (props: FreeFeedbackInputProps) => {
+        return <FreeFeedbackInput {...props} />;
+    };
+
     test('Initial render', () => {
         const { getByTitle, getByPlaceholderText } = renderWithProviders(<FreeFeedbackInput  />, { preloadedState: initialState });
 
@@ -54,5 +63,20 @@ describe('FreeFeedbackInput Integration Test Suite', () => {
         fireEvent.keyDown(freeInputTextarea, { charCode: 13, code: 13, key: "Escape" });
 
         expect(freeInputTextarea.textContent).toBe("");
+    });
+
+    test('FreeFeedbackInput onClick to insert text should call insertAndHighlightText when button is clicked and categoryId and description are provided', async () => {
+        const { getByTitle, getByPlaceholderText } = renderWithProviders(createComponentWithProps(freeFeedbackInputProps), { preloadedState: initialState });
+
+        fireEvent.change(getByPlaceholderText(STRING_RESOURCES.freefeedbackinput.textarea.placeholder), { target: { value: "Test feedback" } });
+
+        fireEvent.click(getByTitle(STRING_RESOURCES.freefeedbackinput.button.title));
+
+        await waitFor(() =>
+            expect(insertFreeFeedbackAndHighlightText).toHaveBeenCalledWith(
+                "testId",
+                "Test feedback"
+            )
+        );
     });
 });
