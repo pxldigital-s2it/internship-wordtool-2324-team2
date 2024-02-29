@@ -94,6 +94,13 @@ export const sectionClassNames = mergeStyleSets({
     transition: "opacity 0.4s ease-in-out",
     width: "100%"
   },
+  sectionTextHeader: {
+    fontSize: "15px", // slight padding for the text
+    width: "100%"
+  },
+  shortCode: {
+    fontSize: "14px"
+  },
   subSubCategoryDeleteIcon: {
     paddingRight: "16px",
     textAlign: "right",
@@ -134,9 +141,8 @@ export const sectionClassNames = mergeStyleSets({
     transition: "background-color 0.35s, transform 0.15s ease-in-out"
   },
   subSubCategoryShortCode: {
-    paddingLeft: "12px",
-    paddingRight: "4px",
-    textAlign: "center"
+    textAlign: "center",
+    width: "16px"
   },
   subSubCategoryTable: {
     borderCollapse: "collapse",

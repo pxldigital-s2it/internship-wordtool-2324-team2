@@ -3,47 +3,48 @@ import { IconButton } from "@fluentui/react/lib/Button";
 import * as React from "react";
 import { CategoryHeaderProps } from "./CategoryHeader.types";
 import { FC } from "react";
-import { getCategoryStyleName, getCategoryText, insertText } from "../../../utils/TextInsertUtils";
+import { sectionClassNames } from "../subcategory/SubCategoryComponent.styles";
 
 
-const CategoryHeader: FC<CategoryHeaderProps> = ({ alwaysInsertFullText, colour, id, code, isOpen, name, setIsOpen, sections }) => {
-  const handleInsertClick = async () => {
-    await getCategoryText(name, code, alwaysInsertFullText)
-      .then((result ) => getCategoryStyleName(id, colour)
-        .then((categoryStyleName ) => insertText(result, categoryStyleName)));
-  }
+const CategoryHeader: FC<CategoryHeaderProps> = ({ colour, id, code, isOpen, name, setIsOpen, sections }) => {
+
   return (
-      <div
+    <div
       id={`category-${id}`}
       className={categoryClassNames.categoryHeader}
-      style = {{
+      onClick={() => setIsOpen(!isOpen)}
+      style={{
         fontWeight: 500,
         height: "24px",
         width: "100%"
       }}
     >
-        {id != "favorites" ? <div
-          className={categoryClassNames.colorSquare}
-          style={{
-            backgroundColor: colour,
-            color: "black",
-            fontFamily: "Consolas",
-            fontSize: "12px",
-            fontWeight: 200,
-            textAlign: "center"
-          }}
-          onClick={handleInsertClick}
-        >
-          {code}
-        </div> : ""}
-        <IconButton
-          iconProps={{ iconName: isOpen ? "ChevronDown" : "ChevronRight" }}
+      {id != "favorites" ? <div
+        className={categoryClassNames.colorSquare}
+        style={{
+          backgroundColor: colour,
+          color: "black",
+          fontFamily: "Consolas",
+          fontSize: "12px",
+          fontWeight: 200,
+          textAlign: "center"
+        }}>
+        {code}
+      </div> : ""}
+      <IconButton
+        iconProps={{ iconName: isOpen ? "ChevronDown" : "ChevronRight" }}
         className={categoryClassNames.arrowIcon}
         onClick={() => setIsOpen(!isOpen)}
       />
-        <span onClick={() => setIsOpen(!isOpen)}>
-          {name} {sections && sections > 0 ? `(${sections})` : ""}</span>
-    </div>);
+      <div className={sectionClassNames.sectionTextHeader}>
+        <div className={sectionClassNames.descriptionTextContainerDiv}>
+          <div className={sectionClassNames.descriptionTextDiv} title={`${name} ` + `${sections && sections > 0 ? `(${sections})` : ""}`}>
+            {name} {sections && sections > 0 ? `(${sections})` : ""}
+          </div>
+        </div>
+      </div>
+</div>)
+  ;
 }
 
 export default CategoryHeader;
