@@ -225,9 +225,11 @@ const SubCategoryComponent: React.FC<SubCategory> = ({ id, categoryId, descripti
           {subSubCategories.map((subSubCategory, index) => (
             <tr onMouseEnter={() => setIsSubHovered(true)} onMouseLeave={() => setIsSubHovered(false)}
                 className={sectionClassNames.subSubCategoryRow} style={{ backgroundColor: backgroundColor + "1A" }}
-                key={subSubCategory.id}>
+                key={subSubCategory.id}
+                onClick={() => insertAndHighlightText(categoryId, description + " - " + subSubCategory.description, shortCode + "." + (index + 1))}>
 
-              {/*
+
+            {/*
                 Edit icon for subSubCategory
               */}
               <td className={`${sectionClassNames.subSubCategoryEditIcon}`}  onClick={() => handleSubEdit(subSubCategory.id, subSubCategory.description)}>
@@ -245,28 +247,31 @@ const SubCategoryComponent: React.FC<SubCategory> = ({ id, categoryId, descripti
               <td className={`${sectionClassNames.subSubCategoryDescription}`}>
                 {editingSubSubCategoryId === subSubCategory.id ? (
                   <>
-                  <textarea
-                    placeholder="Beschrijving"
-                    ref={subSubCategoryTextareaRef}
-                    style={{ fontFamily: "Segoe UI", width: "90%" }}
-                    value={editingSubSubCategoryDescription}
-                    onChange={(e) => setEditingSubSubCategoryDescription(e.target.value)}
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter" && !e.shiftKey) {
-                        e.preventDefault();
+                    <div><Icon iconName={"Comment"}></Icon> <b>Beschrijving</b></div>
+                    <textarea
+                      placeholder="Beschrijving"
+                      ref={subSubCategoryTextareaRef}
+                      style={{ fontFamily: "Segoe UI", width: "90%" }}
+                      value={editingSubSubCategoryDescription}
+                      onChange={(e) => setEditingSubSubCategoryDescription(e.target.value)}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter" && !e.shiftKey) {
+                          e.preventDefault();
 
-                        handleSubSaveEdit(subSubCategory.id);
-                      } else if (e.key === "Escape") {
-                        e.preventDefault();
+                          handleSubSaveEdit(subSubCategory.id);
+                        } else if (e.key === "Escape") {
+                          e.preventDefault();
 
-                        setEditingSubSubCategoryId(null);
-                        setEditingSubSubCategoryDescription('');
-                      }
+                          setEditingSubSubCategoryId(null);
+                          setEditingSubSubCategoryDescription("");
+                        }
 
-                    }}
-                    autoFocus
-                  />
+                      }}
+                      autoFocus
+                    />
 
+                    {/*URL icon*/}
+                    <div><Icon iconName={"Comment"}></Icon> <b>Hyperlink</b></div>
                     {/*
                       Hyperlink box
                     */}
@@ -278,17 +283,17 @@ const SubCategoryComponent: React.FC<SubCategory> = ({ id, categoryId, descripti
 
                     />
 
-                  {/*
+                    {/*
                     Save button
                   */}
                     <PrimaryButton onClick={() => handleSubSaveEdit(subSubCategory.id)}>Opslaan</PrimaryButton>
                     &nbsp;<Button onClick={() => {
-                      setEditingSubSubCategoryId(null);
-                      setEditingSubSubCategoryDescription('');
-                    }}>Annuleren</Button>
+                    setEditingSubSubCategoryId(null);
+                    setEditingSubSubCategoryDescription("");
+                  }}>Annuleren</Button>
                   </>
                 ) : (
-                <div onClick={() => handleSubEdit(subSubCategory.id, subSubCategory.description)}>
+                  <div onClick={() => isSubEditing ? handleSubEdit(subSubCategory.id, subSubCategory.description) : undefined}>
 
                   <div className={sectionClassNames.sectionText}>
                     <div className={sectionClassNames.descriptionTextContainerDiv}>
@@ -315,12 +320,15 @@ const SubCategoryComponent: React.FC<SubCategory> = ({ id, categoryId, descripti
       {isAddingSubSubCategory && (
         <tr>
           <td colSpan={6}>
-      <textarea
-        placeholder="Beschrijving"
-        value={newSubSubCategoryDescription}
-        onChange={(e) => setNewSubSubCategoryDescription(e.target.value)}
-        style={{ fontFamily: "Segoe UI", width: "90%" }}
-      />
+            <div><Icon iconName={"Comment"}></Icon> <b>Beschrijving</b></div>
+            <textarea
+              placeholder="Beschrijving"
+              value={newSubSubCategoryDescription}
+              onChange={(e) => setNewSubSubCategoryDescription(e.target.value)}
+              style={{ fontFamily: "Segoe UI", width: "90%" }}
+            />
+
+            <div><Icon iconName={"Link"}></Icon> <b>Hyperlink</b></div>
             <textarea
               placeholder="https://voorbeeld.com/"
               value={newSubSubCategoryURL}
