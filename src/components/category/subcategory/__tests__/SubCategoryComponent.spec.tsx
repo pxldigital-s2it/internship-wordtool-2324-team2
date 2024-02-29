@@ -35,13 +35,13 @@ describe("SubCategoryComponent Integration Test Suite", () => {
   };
   test("Initial render", () => {
     const { getByText } = renderWithProviders(<SubCategoryComponent
-      key={mockSubCategories[0].id} {...mockSubCategories[0]} />, { preloadedState: initialState });
+        key={mockSubCategories[0].id} {...mockSubCategories[0]} />, { preloadedState: initialState });
     expect(getByText(new RegExp(mockSubCategories[0].description, "i"))).toBeInTheDocument();
   });
 
   test("SubCategoryComponent renders within CategoryComponent", () => {
     const { getByText, queryByText, container } = renderWithProviders(
-      <CategoryComponent {...mockCategory} />, { preloadedState: initialState });
+        <CategoryComponent {...mockCategory} />, { preloadedState: initialState });
     const categoryTitleWithCount = `${mockCategory.title} (${mockSubCategories.length})`;
 
     // check if CategoryComponent renders correctly with title and subcategory count
@@ -77,14 +77,15 @@ describe("SubCategoryComponent Integration Test Suite", () => {
       test("should call insertAndHighlightText when span is clicked", async () => {
         const shortCode = "1";
         const { getByText } = renderWithProviders(<SubCategoryComponent
-          categoryId={mockCategory.id} {...mockSubCategories[0]} shortCode={shortCode}/>, { preloadedState: initialState });
+            categoryId={mockCategory.id} {...mockSubCategories[0]} shortCode={shortCode}/>, { preloadedState: initialState });
 
         fireEvent.click(getByText(new RegExp(mockSubCategories[0].description, "i")));
 
         expect(insertAndHighlightText).toHaveBeenCalledWith(
-          mockCategory.id,
-          mockSubCategories[0].description,
-          shortCode
+            mockCategory.id,
+            mockSubCategories[0].description,
+            shortCode,
+            undefined
         );
       });
     });
