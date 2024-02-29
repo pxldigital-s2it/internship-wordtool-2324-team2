@@ -148,5 +148,11 @@ export const sectionClassNames = mergeStyleSets({
     borderCollapse: "collapse",
     userSelect: "none",
     width: "100%"
+  },
+  urlIcon: {
+    color: "blue",
+    display: "inline-block",
+    fontSize: "16px",
+    paddingRight: "8px"
   }
 });
