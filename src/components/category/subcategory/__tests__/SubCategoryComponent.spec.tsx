@@ -7,9 +7,9 @@ import { categoryClassNames } from "../../maincategory/CategoryComponent.styles"
 import SubCategoryComponent from "../SubCategoryComponent";
 import { renderWithProviders } from "../../../../__tests__/utils/TestUtils";
 import { initialState } from "../../../../redux/store";
-import { insertAndHighlightText } from "../SubCategoryComponent.utils";
+import { getCategoryStyleName, getSubCategoryText } from "../../../../utils/TextInsertUtils";
 
-jest.mock("../SubCategoryComponent.utils");
+jest.mock("../../../../utils/TextInsertUtils")
 
 describe("SubCategoryComponent Integration Test Suite", () => {
   const mockSubCategories: SubCategory[] = [
@@ -78,15 +78,12 @@ describe("SubCategoryComponent Integration Test Suite", () => {
         const shortCode = "1";
         const { getByText } = renderWithProviders(<SubCategoryComponent
             categoryId={mockCategory.id} {...mockSubCategories[0]} shortCode={shortCode}/>, { preloadedState: initialState });
+        (getSubCategoryText as jest.Mock).mockResolvedValue(" (Test Category - SubCategory 1 Description) ");
+        (getCategoryStyleName as jest.Mock).mockResolvedValue("categoryIdStyle");
 
         fireEvent.click(getByText(new RegExp(mockSubCategories[0].description, "i")));
 
-        expect(insertAndHighlightText).toHaveBeenCalledWith(
-            mockCategory.id,
-            mockSubCategories[0].description,
-            shortCode,
-            undefined
-        );
+        expect(getSubCategoryText).toHaveBeenCalledWith("cat-1", "SubCategory 1 Description", "1", false);
       });
     });
   });

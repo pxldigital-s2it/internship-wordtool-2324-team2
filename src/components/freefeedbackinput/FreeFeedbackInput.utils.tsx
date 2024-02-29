@@ -33,7 +33,7 @@ export const insertFreeFeedbackAndHighlightText = async (categoryId: string, fre
 
                 await context.sync();
 
-                const categoryStyleName = await getCategoryStyleName(categoryId, styles, context, category);
+                const categoryStyleName = await getCategoryStyleName(categoryId, category.colour);
                 const descriptionInsert = await getInsertText(category, freeFeedback, url);
 
                 (url !== "" && descriptionInsert.includes(url)) ? insertAndHighlightWithUrl(range, descriptionInsert, categoryStyleName, url) :

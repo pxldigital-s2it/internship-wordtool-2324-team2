@@ -1,5 +1,5 @@
 import { insertFreeFeedback, insertFreeFeedbackAndHighlightText } from "../FreeFeedbackInput.utils";
-import getOfficeMock from "../../../utils/OfficeMockUtils";
+import getOfficeMock from "../../../__tests__/utils/OfficeMockUtils";
 
 describe("FreeFeedbackInput.utils Test Suite", () => {
 
@@ -35,7 +35,7 @@ describe("FreeFeedbackInput.utils Test Suite", () => {
             await insertFreeFeedbackAndHighlightText("categoryId", "freeFeedback", "");
 
             expect(spyMap.get("getSelection")).toHaveBeenCalledTimes(1);
-            expect(spyMap.get("getStyles")).toHaveBeenCalledTimes(1);
+            expect(spyMap.get("getStyles")).toHaveBeenCalledTimes(2);
             expect(spyMap.get("addStyle")).not.toHaveBeenCalled();
             expect(spyMap.get("insertText")).toHaveBeenCalledWith(" (Test Category - freeFeedback) ", "After");
             expect(contextMock.context.document.range.style).toBe("categoryIdStyle");
@@ -47,7 +47,7 @@ describe("FreeFeedbackInput.utils Test Suite", () => {
             await insertFreeFeedbackAndHighlightText("categoryId", "freeFeedback", "");
 
             expect(spyMap.get("getSelection")).toHaveBeenCalledTimes(1);
-            expect(spyMap.get("getStyles")).toHaveBeenCalledTimes(1);
+            expect(spyMap.get("getStyles")).toHaveBeenCalledTimes(2);
             expect(spyMap.get("addStyle")).toHaveBeenCalledWith("categoryIdStyle", "Character");
             expect(spyMap.get("insertText")).toHaveBeenCalledWith(" (Test Category - freeFeedback) ", "After");
             expect(contextMock.context.document.range.style).toBe("categoryIdStyle");
@@ -59,7 +59,7 @@ describe("FreeFeedbackInput.utils Test Suite", () => {
             await insertFreeFeedbackAndHighlightText("categoryId", undefined, "");
 
             expect(spyMap.get("getSelection")).toHaveBeenCalledTimes(1);
-            expect(spyMap.get("getStyles")).toHaveBeenCalledTimes(1);
+            expect(spyMap.get("getStyles")).toHaveBeenCalledTimes(2);
             expect(spyMap.get("addStyle")).not.toHaveBeenCalled();
             expect(spyMap.get("insertText")).toHaveBeenCalledWith(" (Test Category) ", "After");
             expect(contextMock.context.document.range.style).toBe("categoryIdStyle");
@@ -71,7 +71,7 @@ describe("FreeFeedbackInput.utils Test Suite", () => {
             await insertFreeFeedbackAndHighlightText("categoryId", undefined, "https://www.google.com");
 
             expect(spyMap.get("getSelection")).toHaveBeenCalledTimes(1);
-            expect(spyMap.get("getStyles")).toHaveBeenCalledTimes(1);
+            expect(spyMap.get("getStyles")).toHaveBeenCalledTimes(2);
             expect(spyMap.get("addStyle")).not.toHaveBeenCalled();
             expect(spyMap.get("insertText")).toHaveBeenCalledWith(" (Test Category ", "After");
             expect(spyMap.get("insertHtml")).toHaveBeenCalledWith(`<a href="https://www.google.com">https://www.google.com</a>`, "After");
@@ -85,7 +85,7 @@ describe("FreeFeedbackInput.utils Test Suite", () => {
             await insertFreeFeedbackAndHighlightText("categoryId", "freeFeedback", "https://www.google.com");
 
             expect(spyMap.get("getSelection")).toHaveBeenCalledTimes(1);
-            expect(spyMap.get("getStyles")).toHaveBeenCalledTimes(1);
+            expect(spyMap.get("getStyles")).toHaveBeenCalledTimes(2);
             expect(spyMap.get("addStyle")).not.toHaveBeenCalled();
             expect(spyMap.get("insertText")).toHaveBeenCalledWith(" (Test Category - freeFeedback ", "After");
             expect(spyMap.get("insertHtml")).toHaveBeenCalledWith(`<a href="https://www.google.com">https://www.google.com</a>`, "After");

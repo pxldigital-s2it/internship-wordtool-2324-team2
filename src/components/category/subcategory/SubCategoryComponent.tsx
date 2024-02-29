@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { useAppDispatch } from "../../../redux/hooks";
-import { insertAndHighlightText } from "./SubCategoryComponent.utils";
+import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import SubCategory from "../../../types/SubCategory";
 import {
   deleteSubCategory,
@@ -13,9 +12,17 @@ import {
 import { sectionClassNames } from "./SubCategoryComponent.styles";
 import { Icon } from "@fluentui/react";
 import * as React from "react";
+import { selectAlwaysInsertFullText } from "../../../redux/settings/settings.slice";
+import SubSubCategory from "../../../types/SubSubCategory";
+import {
+  getCategoryStyleName,
+  getSubCategoryText,
+  insertText,
+  insertTextWithUrl
+} from "../../../utils/TextInsertUtils";
 
 
-const SubCategoryComponent: React.FC<SubCategory> = ({ id, categoryId, description, isFavorite, backgroundColor, shortCode, subSubCategories, url }) => {
+const SubCategoryComponent: React.FC<SubCategory> = ({ id, categoryId, description, isFavorite, backgroundColor, shortCode, subSubCategories }) => {
   // For the icons
   const [isHovered, setIsHovered] = useState(false);
 
@@ -27,7 +34,10 @@ const SubCategoryComponent: React.FC<SubCategory> = ({ id, categoryId, descripti
   const [tempDescription, setTempDescription] = useState(description);
   const textareaRef = useRef(null);
 
+  const dispatch = useAppDispatch();
+  const alwaysInsertFullText = useAppSelector(selectAlwaysInsertFullText);
   // runs when the isEditing state changes
+
   useEffect(() => {
     if (textareaRef.current) {
       textareaRef.current.focus();
@@ -35,16 +45,14 @@ const SubCategoryComponent: React.FC<SubCategory> = ({ id, categoryId, descripti
       textareaRef.current.setSelectionRange(length, length);
     }
   }, [isEditing]);
-
   // Handle when fast edit textarea loses focus
   const handleBlur = () => {
     if (isEditing) {
       setIsEditing(false);
       setTempDescription(description);
     }
-  };
 
-  const dispatch = useAppDispatch();
+  };
 
   useEffect(() => {
     if (isFavorite) {
@@ -69,9 +77,20 @@ const SubCategoryComponent: React.FC<SubCategory> = ({ id, categoryId, descripti
     setIsEditing(!isEditing);
   }, [dispatch, categoryId, description, id, isFavorite, isEditing]);
 
-  const handleTextInsertion = useCallback(async () => {
-    await insertAndHighlightText(categoryId, description, shortCode, url);
-  }, [categoryId, description]);
+  const handleSubCategoryTextInsertion = async () => {
+    await getSubCategoryText(categoryId, description, shortCode, alwaysInsertFullText)
+      .then(result => getCategoryStyleName(categoryId, backgroundColor)
+      .then(categoryStyleName => insertText(result, categoryStyleName)));
+  }
+
+  const handleSubSubCategoryTextInsertion = async (subSubCategory: SubSubCategory) => {
+    const codeToInsert = shortCode + "." + subSubCategory.shortCode
+    await getSubCategoryText(categoryId, description + " - " + subSubCategory.description, codeToInsert, alwaysInsertFullText)
+      .then(result => getCategoryStyleName(categoryId, backgroundColor)
+      .then(categoryStyleName => {
+        subSubCategory.url !== "" ? insertText(result, categoryStyleName) : insertTextWithUrl(result, categoryStyleName, subSubCategory.url)
+      }));
+  }
 
 
   return (
@@ -97,7 +116,7 @@ const SubCategoryComponent: React.FC<SubCategory> = ({ id, categoryId, descripti
       <td onClick={handleEdit}>
         <Icon iconName="Edit" className={`${sectionClassNames.menuIcon} ${isHovered && "showIcon"}`} title="Wijzigen" />
       </td>
-      <td onClick={!isEditing ? handleTextInsertion : undefined}
+      <td onClick={!isEditing ? handleSubCategoryTextInsertion : undefined}
           style={{ width: "100%" }} className={sectionClassNames.sectionText}>
         {!isEditing ? (
           shortCode + ". " + description
@@ -137,7 +156,7 @@ const SubCategoryComponent: React.FC<SubCategory> = ({ id, categoryId, descripti
       <td></td>
     </div>
       {subSubCategories && subSubCategories.map((subSubCategory) => (
-        <div key={subSubCategory.id} onClick={() => insertAndHighlightText(categoryId, description + " - " + subSubCategory.description, shortCode + "." + subSubCategory.shortCode, subSubCategory.url)}> {shortCode + "." + subSubCategory.shortCode + " " + subSubCategory.description} </div>)) }
+        <div key={subSubCategory.id} onClick={() => handleSubSubCategoryTextInsertion(subSubCategory)}> {shortCode + "." + subSubCategory.shortCode + " " + subSubCategory.description} </div>)) }
     </>
   );
 };
