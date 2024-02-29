@@ -21,7 +21,7 @@ describe("FreeFeedbackInput.utils Test Suite", () => {
 
             const { contextMock, spyMap } = _getOfficeMock(["found"], true);
 
-            await insertFreeFeedbackAndHighlightText("categoryId", "freeFeedback");
+            await insertFreeFeedbackAndHighlightText("categoryId", "freeFeedback", "");
 
             expect(spyMap.get("getSelection")).toHaveBeenCalledTimes(1);
             expect(spyMap.get("getStyles")).not.toHaveBeenCalled();
@@ -32,7 +32,7 @@ describe("FreeFeedbackInput.utils Test Suite", () => {
         test("!isNullObject", async () => {
             const { contextMock, spyMap } = _getOfficeMock([], false, false);
 
-            await insertFreeFeedbackAndHighlightText("categoryId", "freeFeedback");
+            await insertFreeFeedbackAndHighlightText("categoryId", "freeFeedback", "");
 
             expect(spyMap.get("getSelection")).toHaveBeenCalledTimes(1);
             expect(spyMap.get("getStyles")).toHaveBeenCalledTimes(1);
@@ -44,7 +44,7 @@ describe("FreeFeedbackInput.utils Test Suite", () => {
         test("isNullObject", async () => {
             const { contextMock, spyMap } = _getOfficeMock([], false, true);
 
-            await insertFreeFeedbackAndHighlightText("categoryId", "freeFeedback");
+            await insertFreeFeedbackAndHighlightText("categoryId", "freeFeedback", "");
 
             expect(spyMap.get("getSelection")).toHaveBeenCalledTimes(1);
             expect(spyMap.get("getStyles")).toHaveBeenCalledTimes(1);
@@ -56,12 +56,40 @@ describe("FreeFeedbackInput.utils Test Suite", () => {
         test("no freeFeedback provided", async () => {
             const { contextMock, spyMap } = _getOfficeMock(["found"], false);
 
-            await insertFreeFeedbackAndHighlightText("categoryId", undefined);
+            await insertFreeFeedbackAndHighlightText("categoryId", undefined, "");
 
             expect(spyMap.get("getSelection")).toHaveBeenCalledTimes(1);
             expect(spyMap.get("getStyles")).toHaveBeenCalledTimes(1);
             expect(spyMap.get("addStyle")).not.toHaveBeenCalled();
             expect(spyMap.get("insertText")).toHaveBeenCalledWith(" (Test Category) ", "After");
+            expect(contextMock.context.document.range.style).toBe("categoryIdStyle");
+        });
+
+        test("with url", async () => {
+            const { contextMock, spyMap } = _getOfficeMock(["found"], false);
+
+            await insertFreeFeedbackAndHighlightText("categoryId", undefined, "https://www.google.com");
+
+            expect(spyMap.get("getSelection")).toHaveBeenCalledTimes(1);
+            expect(spyMap.get("getStyles")).toHaveBeenCalledTimes(1);
+            expect(spyMap.get("addStyle")).not.toHaveBeenCalled();
+            expect(spyMap.get("insertText")).toHaveBeenCalledWith(" (Test Category ", "After");
+            expect(spyMap.get("insertHtml")).toHaveBeenCalledWith(`<a href="https://www.google.com">https://www.google.com</a>`, "After");
+            expect(spyMap.get("insertText")).toHaveBeenCalledWith(") ", "After");
+            expect(contextMock.context.document.range.style).toBe("categoryIdStyle");
+        });
+
+        test("with url and freeFeedback", async () => {
+            const { contextMock, spyMap } = _getOfficeMock(["found"], false);
+
+            await insertFreeFeedbackAndHighlightText("categoryId", "freeFeedback", "https://www.google.com");
+
+            expect(spyMap.get("getSelection")).toHaveBeenCalledTimes(1);
+            expect(spyMap.get("getStyles")).toHaveBeenCalledTimes(1);
+            expect(spyMap.get("addStyle")).not.toHaveBeenCalled();
+            expect(spyMap.get("insertText")).toHaveBeenCalledWith(" (Test Category - freeFeedback ", "After");
+            expect(spyMap.get("insertHtml")).toHaveBeenCalledWith(`<a href="https://www.google.com">https://www.google.com</a>`, "After");
+            expect(spyMap.get("insertText")).toHaveBeenCalledWith(") ", "After");
             expect(contextMock.context.document.range.style).toBe("categoryIdStyle");
         });
     });
@@ -70,7 +98,7 @@ describe("FreeFeedbackInput.utils Test Suite", () => {
         test("freeFeedback provided", async () => {
             const { spyMap } = _getOfficeMock(["found"], false);
 
-            await insertFreeFeedback("Test feedback");
+            await insertFreeFeedback("Test feedback", "");
 
             expect(spyMap.get("getSelection")).toHaveBeenCalledTimes(1);
             expect(spyMap.get("insertText")).toHaveBeenCalledWith(" (Test feedback) ", "End");
@@ -79,10 +107,22 @@ describe("FreeFeedbackInput.utils Test Suite", () => {
         test("no freeFeedback provided", async () => {
             const { spyMap } = _getOfficeMock(["found"], false);
 
-            await insertFreeFeedback("");
+            await insertFreeFeedback("", "");
 
             expect(spyMap.get("getSelection")).not.toHaveBeenCalled();
             expect(spyMap.get("insertText")).not.toHaveBeenCalled();
+            expect(spyMap.get("insertHtml")).not.toHaveBeenCalled();
+        });
+
+        test("with url", async () => {
+            const { spyMap } = _getOfficeMock(["found"], false);
+
+            await insertFreeFeedback("Test feedback", "https://www.google.com");
+
+            expect(spyMap.get("getSelection")).toHaveBeenCalledTimes(1);
+            expect(spyMap.get("insertText")).toHaveBeenCalledWith(" (Test feedback ", "End");
+            expect(spyMap.get("insertHtml")).toHaveBeenCalledWith(`<a href="https://www.google.com">https://www.google.com</a>`, "End");
+            expect(spyMap.get("insertText")).toHaveBeenCalledWith(") ", "End");
         });
     });
 });

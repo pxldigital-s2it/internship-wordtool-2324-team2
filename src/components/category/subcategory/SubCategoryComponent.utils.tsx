@@ -3,10 +3,11 @@
 
 import { getCategory } from "../../../middleware/modal/ModalMiddleware";
 import Category from "../../../types/Category";
-import { getCategoryStyleName, insertAndHighlight } from "../../../utils/TextInsertUtils";
+import {getCategoryStyleName, insertAndHighlight, insertAndHighlightWithUrl} from "../../../utils/TextInsertUtils";
 
-async function getInsertText(description: string, context: Word.RequestContext, category: Category, shortCode: string) {
-    let descriptionInsert = " (" + category.title + " - " + description + ") ";
+async function getInsertText(description: string, context: Word.RequestContext, category: Category, shortCode: string, url: string ) {
+    // zoeken op het eerste deel omdat url er niet in kan staan om te zoeken
+    let descriptionInsert = " (" + category.title + " - " + description;
     const searchResults = context.document.body.search(descriptionInsert);
 
     searchResults.load("items");
@@ -14,12 +15,14 @@ async function getInsertText(description: string, context: Word.RequestContext, 
 
     if (searchResults.items?.length) {
         descriptionInsert = " (" + category.code + " " + shortCode + ") ";
+    } else {
+        descriptionInsert = descriptionInsert  + (url ? " " + url : "") + ") "
     }
 
     return descriptionInsert;
 }
 
-export const insertAndHighlightText = async (categoryId: string, description: string, shortCode: string) => {
+export const insertAndHighlightText = async (categoryId: string, description: string, shortCode: string, url: string) => {
     try {
         await Word.run(async (context) => {
             const range = context.document.getSelection();
@@ -39,9 +42,10 @@ export const insertAndHighlightText = async (categoryId: string, description: st
                 await context.sync();
 
                 const categoryStyleName = await getCategoryStyleName(categoryId, styles, context, category);
-                const descriptionInsert = await getInsertText(description, context, category, shortCode);
+                const descriptionInsert = await getInsertText(description, context, category, shortCode, url);
 
-                insertAndHighlight(range, descriptionInsert, categoryStyleName);
+                (url !== "" && descriptionInsert.includes(url)) ? insertAndHighlightWithUrl(range, descriptionInsert, categoryStyleName, url) :
+                    insertAndHighlight(range, descriptionInsert, categoryStyleName);
             }
 
             await context.sync();

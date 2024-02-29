@@ -22,7 +22,7 @@ describe("SubCategoryComponent.utils Test Suite", () => {
 
             const { contextMock, spyMap } = _getOfficeMock(["found"], true);
 
-            await insertAndHighlightText("categoryId", "description", "shortCode");
+            await insertAndHighlightText("categoryId", "description", "shortCode", "");
 
             expect(spyMap.get("getSelection")).toHaveBeenCalledTimes(1);
             expect(spyMap.get("getStyles")).not.toHaveBeenCalled();
@@ -33,7 +33,7 @@ describe("SubCategoryComponent.utils Test Suite", () => {
         test("!isNullObject", async () => {
             const { contextMock, spyMap } = _getOfficeMock([], false, false);
 
-            await insertAndHighlightText("categoryId", "description", "shortCode");
+            await insertAndHighlightText("categoryId", "description", "shortCode", "");
 
             expect(spyMap.get("getSelection")).toHaveBeenCalledTimes(1);
             expect(spyMap.get("getStyles")).toHaveBeenCalledTimes(1);
@@ -45,7 +45,7 @@ describe("SubCategoryComponent.utils Test Suite", () => {
         test("isNullObject", async () => {
             const { contextMock, spyMap } = _getOfficeMock([], false, true);
 
-            await insertAndHighlightText("categoryId", "description", "shortCode");
+            await insertAndHighlightText("categoryId", "description", "shortCode", "");
 
             expect(spyMap.get("getSelection")).toHaveBeenCalledTimes(1);
             expect(spyMap.get("getStyles")).toHaveBeenCalledTimes(1);
@@ -57,12 +57,39 @@ describe("SubCategoryComponent.utils Test Suite", () => {
         test("searchResults.items?.length", async () => {
             const { contextMock, spyMap } = _getOfficeMock(["found"], false);
 
-            await insertAndHighlightText("categoryId", "description", "shortCode");
+            await insertAndHighlightText("categoryId", "description", "shortCode", "");
 
             expect(spyMap.get("getSelection")).toHaveBeenCalledTimes(1);
             expect(spyMap.get("getStyles")).toHaveBeenCalledTimes(1);
             expect(spyMap.get("addStyle")).not.toHaveBeenCalled();
             expect(spyMap.get("insertText")).toHaveBeenCalledWith(" (test shortCode) ", "After");
+            expect(contextMock.context.document.range.style).toBe("categoryIdStyle");
+        });
+
+        test("with url", async () => {
+            const { contextMock, spyMap } = _getOfficeMock([], false);
+
+            await insertAndHighlightText("categoryId", "description", "shortCode", "https://www.google.com");
+
+            expect(spyMap.get("getSelection")).toHaveBeenCalledTimes(1);
+            expect(spyMap.get("getStyles")).toHaveBeenCalledTimes(1);
+            expect(spyMap.get("addStyle")).not.toHaveBeenCalled();
+            expect(spyMap.get("insertText")).toHaveBeenCalledWith(" (Test Category - description ", "After");
+            expect(spyMap.get("insertHtml")).toHaveBeenCalledWith(`<a href="https://www.google.com">https://www.google.com</a>`, "After");
+            expect(spyMap.get("insertText")).toHaveBeenCalledWith(") ", "After");
+            expect(contextMock.context.document.range.style).toBe("categoryIdStyle");
+        });
+
+        test("with url when it is not the first time", async () => {
+            const { contextMock, spyMap } = _getOfficeMock(["found"], false);
+
+            await insertAndHighlightText("categoryId", "description", "shortCode", "https://www.google.com");
+
+            expect(spyMap.get("getSelection")).toHaveBeenCalledTimes(1);
+            expect(spyMap.get("getStyles")).toHaveBeenCalledTimes(1);
+            expect(spyMap.get("addStyle")).not.toHaveBeenCalled();
+            expect(spyMap.get("insertText")).toHaveBeenCalledWith(" (test shortCode) ", "After");
+            expect(spyMap.get("insertHtml")).not.toHaveBeenCalled();
             expect(contextMock.context.document.range.style).toBe("categoryIdStyle");
         });
     });

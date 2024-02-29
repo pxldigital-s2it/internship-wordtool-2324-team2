@@ -37,6 +37,11 @@ const getOfficeMock = (originalStyle: string, mockReturnValue: string[], isEmpty
                 },
                 range: {
                     font: {},
+                    insertHtml: function(html: string, insertLocation: unknown) {
+                        this.html = html;
+                        this.insertLocation = insertLocation;
+                        return this;
+                    },
                     insertLocation: undefined,
                     insertText: function(text: string, insertLocation: unknown) {
                         this.text = text;
@@ -89,6 +94,9 @@ const getOfficeMock = (originalStyle: string, mockReturnValue: string[], isEmpty
     const originalInsertText = contextMock.context.document.range.insertText;
     const insertTextSpy = jest.spyOn(contextMock.context.document.range, "insertText");
     insertTextSpy.mockImplementation(originalInsertText);
+    const originalInsertHtml = contextMock.context.document.range.insertHtml;
+    const insertHtmlSpy = jest.spyOn(contextMock.context.document.range, "insertHtml");
+    insertHtmlSpy.mockImplementation(originalInsertHtml);
     const originalAddStyle = contextMock.context.document.addStyle;
     const addStyleSpy = jest.spyOn(contextMock.context.document, "addStyle");
     addStyleSpy.mockImplementation(originalAddStyle);
@@ -97,7 +105,8 @@ const getOfficeMock = (originalStyle: string, mockReturnValue: string[], isEmpty
         ["addStyle", addStyleSpy],
         ["getSelection", getSelectionSpy],
         ["getStyles", getStylesSpy],
-        ["insertText", insertTextSpy]
+        ["insertText", insertTextSpy],
+        ["insertHtml", insertHtmlSpy]
     ]);
 
 
