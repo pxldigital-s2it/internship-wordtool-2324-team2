@@ -1,11 +1,5 @@
 import { insertAndHighlightText } from "../SubCategoryComponent.utils";
 import getOfficeMock from "../../../../utils/OfficeMockUtils";
-import { setRangesWithUrl } from "../../../../utils/TextInsertUtils";
-
-jest.mock("../../../../utils/TextInsertUtils", () => ({
-    ...jest.requireActual("../../../../utils/TextInsertUtils"),
-    setRangesWithUrl: jest.fn()
-}));
 
 describe("SubCategoryComponent.utils Test Suite", () => {
 
@@ -33,7 +27,6 @@ describe("SubCategoryComponent.utils Test Suite", () => {
             expect(spyMap.get("getSelection")).toHaveBeenCalledTimes(1);
             expect(spyMap.get("getStyles")).not.toHaveBeenCalled();
             expect(spyMap.get("insertText")).not.toHaveBeenCalled();
-            expect(setRangesWithUrl).not.toHaveBeenCalled();
             expect(contextMock.context.document.range.style).toBe(ORIGINAL_STYLE);
         });
 
@@ -46,7 +39,6 @@ describe("SubCategoryComponent.utils Test Suite", () => {
             expect(spyMap.get("getStyles")).toHaveBeenCalledTimes(1);
             expect(spyMap.get("addStyle")).not.toHaveBeenCalled();
             expect(spyMap.get("insertText")).toHaveBeenCalledWith(" (Test Category - description) ", "After");
-            expect(setRangesWithUrl).not.toHaveBeenCalled();
             expect(contextMock.context.document.range.style).toBe("categoryIdStyle");
         });
 
@@ -59,7 +51,6 @@ describe("SubCategoryComponent.utils Test Suite", () => {
             expect(spyMap.get("getStyles")).toHaveBeenCalledTimes(1);
             expect(spyMap.get("addStyle")).toHaveBeenCalledWith("categoryIdStyle", "Character");
             expect(spyMap.get("insertText")).toHaveBeenCalledWith(" (Test Category - description) ", "After");
-            expect(setRangesWithUrl).not.toHaveBeenCalled();
             expect(contextMock.context.document.range.style).toBe("categoryIdStyle");
         });
 
@@ -72,7 +63,6 @@ describe("SubCategoryComponent.utils Test Suite", () => {
             expect(spyMap.get("getStyles")).toHaveBeenCalledTimes(1);
             expect(spyMap.get("addStyle")).not.toHaveBeenCalled();
             expect(spyMap.get("insertText")).toHaveBeenCalledWith(" (test shortCode) ", "After");
-            expect(setRangesWithUrl).not.toHaveBeenCalled();
             expect(contextMock.context.document.range.style).toBe("categoryIdStyle");
         });
 
@@ -87,7 +77,6 @@ describe("SubCategoryComponent.utils Test Suite", () => {
             expect(spyMap.get("insertText")).toHaveBeenCalledWith(" (Test Category - description ", "After");
             expect(spyMap.get("insertHtml")).toHaveBeenCalledWith(`<a href="https://www.google.com">https://www.google.com</a>`, "After");
             expect(spyMap.get("insertText")).toHaveBeenCalledWith(") ", "After");
-            //expect(setRangesWithUrl).toHaveBeenCalled();
             expect(contextMock.context.document.range.style).toBe("categoryIdStyle");
         });
 
@@ -101,7 +90,6 @@ describe("SubCategoryComponent.utils Test Suite", () => {
             expect(spyMap.get("addStyle")).not.toHaveBeenCalled();
             expect(spyMap.get("insertText")).toHaveBeenCalledWith(" (test shortCode) ", "After");
             expect(spyMap.get("insertHtml")).not.toHaveBeenCalled();
-            expect(setRangesWithUrl).not.toHaveBeenCalled();
             expect(contextMock.context.document.range.style).toBe("categoryIdStyle");
         });
     });

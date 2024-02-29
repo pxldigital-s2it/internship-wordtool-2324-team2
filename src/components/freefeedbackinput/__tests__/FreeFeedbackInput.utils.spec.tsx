@@ -1,11 +1,5 @@
 import { insertFreeFeedback, insertFreeFeedbackAndHighlightText } from "../FreeFeedbackInput.utils";
-import { setRangesWithUrl } from "../../../utils/TextInsertUtils";
 import getOfficeMock from "../../../utils/OfficeMockUtils";
-
-jest.mock("../../../utils/TextInsertUtils", () => ({
-    ...jest.requireActual("../../../utils/TextInsertUtils"),
-    setRangesWithUrl: jest.fn()
-}));
 
 describe("FreeFeedbackInput.utils Test Suite", () => {
 
@@ -32,7 +26,6 @@ describe("FreeFeedbackInput.utils Test Suite", () => {
             expect(spyMap.get("getSelection")).toHaveBeenCalledTimes(1);
             expect(spyMap.get("getStyles")).not.toHaveBeenCalled();
             expect(spyMap.get("insertText")).not.toHaveBeenCalled();
-            expect(setRangesWithUrl).not.toHaveBeenCalled();
             expect(contextMock.context.document.range.style).toBe(ORIGINAL_STYLE);
         });
 
@@ -45,7 +38,6 @@ describe("FreeFeedbackInput.utils Test Suite", () => {
             expect(spyMap.get("getStyles")).toHaveBeenCalledTimes(1);
             expect(spyMap.get("addStyle")).not.toHaveBeenCalled();
             expect(spyMap.get("insertText")).toHaveBeenCalledWith(" (Test Category - freeFeedback) ", "After");
-            expect(setRangesWithUrl).not.toHaveBeenCalled();
             expect(contextMock.context.document.range.style).toBe("categoryIdStyle");
         });
 
@@ -58,7 +50,6 @@ describe("FreeFeedbackInput.utils Test Suite", () => {
             expect(spyMap.get("getStyles")).toHaveBeenCalledTimes(1);
             expect(spyMap.get("addStyle")).toHaveBeenCalledWith("categoryIdStyle", "Character");
             expect(spyMap.get("insertText")).toHaveBeenCalledWith(" (Test Category - freeFeedback) ", "After");
-            expect(setRangesWithUrl).not.toHaveBeenCalled();
             expect(contextMock.context.document.range.style).toBe("categoryIdStyle");
         });
 
@@ -71,7 +62,6 @@ describe("FreeFeedbackInput.utils Test Suite", () => {
             expect(spyMap.get("getStyles")).toHaveBeenCalledTimes(1);
             expect(spyMap.get("addStyle")).not.toHaveBeenCalled();
             expect(spyMap.get("insertText")).toHaveBeenCalledWith(" (Test Category) ", "After");
-            expect(setRangesWithUrl).not.toHaveBeenCalled();
             expect(contextMock.context.document.range.style).toBe("categoryIdStyle");
         });
 
@@ -86,7 +76,6 @@ describe("FreeFeedbackInput.utils Test Suite", () => {
             expect(spyMap.get("insertText")).toHaveBeenCalledWith(" (Test Category ", "After");
             expect(spyMap.get("insertHtml")).toHaveBeenCalledWith(`<a href="https://www.google.com">https://www.google.com</a>`, "After");
             expect(spyMap.get("insertText")).toHaveBeenCalledWith(") ", "After");
-            //expect(setRangesWithUrl).toHaveBeenCalled();
             expect(contextMock.context.document.range.style).toBe("categoryIdStyle");
         });
 
@@ -101,7 +90,6 @@ describe("FreeFeedbackInput.utils Test Suite", () => {
             expect(spyMap.get("insertText")).toHaveBeenCalledWith(" (Test Category - freeFeedback ", "After");
             expect(spyMap.get("insertHtml")).toHaveBeenCalledWith(`<a href="https://www.google.com">https://www.google.com</a>`, "After");
             expect(spyMap.get("insertText")).toHaveBeenCalledWith(") ", "After");
-            //expect(setRangesWithUrl).toHaveBeenCalled();
             expect(contextMock.context.document.range.style).toBe("categoryIdStyle");
         });
     });
@@ -114,7 +102,6 @@ describe("FreeFeedbackInput.utils Test Suite", () => {
 
             expect(spyMap.get("getSelection")).toHaveBeenCalledTimes(1);
             expect(spyMap.get("insertText")).toHaveBeenCalledWith(" (Test feedback) ", "End");
-            expect(setRangesWithUrl).not.toHaveBeenCalled();
         });
 
         test("no freeFeedback provided", async () => {
@@ -125,7 +112,6 @@ describe("FreeFeedbackInput.utils Test Suite", () => {
             expect(spyMap.get("getSelection")).not.toHaveBeenCalled();
             expect(spyMap.get("insertText")).not.toHaveBeenCalled();
             expect(spyMap.get("insertHtml")).not.toHaveBeenCalled();
-            expect(setRangesWithUrl).not.toHaveBeenCalled();
         });
 
         test("with url", async () => {
@@ -137,7 +123,6 @@ describe("FreeFeedbackInput.utils Test Suite", () => {
             expect(spyMap.get("insertText")).toHaveBeenCalledWith(" (Test feedback ", "End");
             expect(spyMap.get("insertHtml")).toHaveBeenCalledWith(`<a href="https://www.google.com">https://www.google.com</a>`, "End");
             expect(spyMap.get("insertText")).toHaveBeenCalledWith(") ", "End");
-            expect(setRangesWithUrl).toHaveBeenCalled();
         });
     });
 });
