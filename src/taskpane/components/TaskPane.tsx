@@ -1,11 +1,14 @@
 import * as React from "react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { mergeStyleSets } from "@fluentui/react/lib/Styling";
 import { AddButton, CategoryComponent, Modal } from "../../components";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { selectData, selectIsLoading } from "../../redux/category/category.slice";
 import { loadData } from "../../middleware/category/CategoryMiddleware";
 import FreeFeedbackInput from "../../components/freefeedbackinput/FreeFeedbackInput";
+import { Toggle } from "@fluentui/react";
+import { ContrastWarning } from "../../components/colourpicker/ContrastWarning";
+import { selectAlwaysInsertFullText, toggleAlwaysInsertFullText } from "../../redux/settings/settings.slice";
 import { SettingsPanel } from "../../components/settingspanel/SettingsPanel";
 import {
   selectFavoritesHiding,
@@ -71,6 +74,10 @@ const TaskPane: React.FC = () => {
     };
   });
 
+  const setAlwaysInsertFullText = () => {
+    dispatch(toggleAlwaysInsertFullText());
+  }
+
 // only add favorites to special category if hoisting is enabled
   if (favoritesHoisting) {
     favoritesCategory.subCategories = categories.reduce((acc, category) => {
@@ -94,6 +101,7 @@ const TaskPane: React.FC = () => {
         <SettingsPanel />
       </div>
       <Modal />
+      <ContrastWarning />
       {isLoading ? (
         <div>Aan het laden...</div>
       ) : (

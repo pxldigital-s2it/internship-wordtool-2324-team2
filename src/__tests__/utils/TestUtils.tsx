@@ -4,6 +4,7 @@ import React, { PropsWithChildren } from "react";
 import { Provider } from "react-redux";
 import modalReducer from "../../redux/modal/modal.slice";
 import categoryReducer from "../../redux/category/category.slice";
+import contrastWarningAlertReducer from "../../redux/contrastwarningalert/contrastwarningalert.slice";
 import settingsReducer from "../../redux/settings/settings.slice";
 import { render, renderHook, RenderOptions } from "@testing-library/react";
 
@@ -13,6 +14,11 @@ export const callAndCheckDispatchCalls = async (callback: (dispatch: AppDispatch
     categories: [],
     error: null,
     isLoading: false
+  },
+  contrastWarningAlert: {
+    confirmBeingHandled: false,
+    disabled: false,
+    open: false
   },
   modal: {
     category: undefined,
@@ -49,6 +55,7 @@ const configureTestStore = (initialState?: Partial<RootState>) => configureStore
   preloadedState: initialState,
   reducer: {
     category: categoryReducer,
+    contrastWarningAlert: contrastWarningAlertReducer,
     modal: modalReducer,
     settings: settingsReducer
   }

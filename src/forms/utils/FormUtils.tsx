@@ -1,12 +1,12 @@
-import {Input, Label, TableCell, TableRow, Text, Textarea} from "@fluentui/react-components";
+import { Input, Label, TableCell, TableRow, Text, Textarea } from "@fluentui/react-components";
 import * as React from "react";
-import {MutableRefObject} from "react";
+import { MutableRefObject } from "react";
 import Category from "../../types/Category";
 import SubCategory from "../../types/SubCategory";
-import {isCategory} from "../../types/IsType";
+import { isCategory } from "../../types/IsType";
 import FieldType from "../../types/FieldType";
-import {ColourPickerComponent} from "../../components";
-import {DisplayableCategory} from "./FormUtils.types";
+import { ColourPickerComponent } from "../../components";
+import { DisplayableCategory } from "./FormUtils.types";
 
 export const formatData = (data: Category | SubCategory, categoryTitle?: string) => {
   if (isCategory(data)) {

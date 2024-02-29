@@ -1,4 +1,4 @@
-import {MutableRefObject, useState} from "react";
+import { MutableRefObject } from "react";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { selectCategory, selectCreate, selectSubCategory } from "../redux/modal/modal.slice";
 import { saveCategory, saveSubCategory, updateCategory, updateSubCategory } from "../middleware/modal/ModalMiddleware";
@@ -7,10 +7,10 @@ import { isCategory, isSubCategory } from "../types/IsType";
 import { selectColour } from "../redux/category/category.slice";
 import { isLowContrast } from "../utils/ContrastUtils";
 import { getColorObject } from "../utils/ColorUtils";
-import { ContrastWarning } from "../components/colourpicker/ContrastWarning";
+import { openContrastWarningAlert } from "../middleware/contrastwarningalert/ContrastWarningAlertMiddleware";
 
 
-const useCategory = (setShowDialog) => {
+const useCategory = () => {
 
     const dispatch = useAppDispatch();
 
@@ -22,11 +22,14 @@ const useCategory = (setShowDialog) => {
     const data = subCategory ? subCategory : category;
 
     const handleSubmit = async (formRef: MutableRefObject<HTMLFormElement>) => {
-        const colorObject = getColorObject(colour);
-        if (isLowContrast(colorObject)) {
-          setShowDialog(true);
-          return;
+        if (colour) {
+            const colorObject = getColorObject(colour);
+            if (isLowContrast(colorObject)) {
+                dispatch(openContrastWarningAlert());
+                return;
+            }
         }
+        
       await saveData(formRef);
     };
     
@@ -57,7 +60,7 @@ const useCategory = (setShowDialog) => {
         }
     };
 
-    return {categoryTitle: category?.title, data, handleSubmit, saveData };
+    return { categoryTitle: category?.title, data, handleSubmit, saveData };
 }
 
 export default useCategory;

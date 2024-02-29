@@ -17,7 +17,8 @@ import { formatData, getFormField, readFormField, renderRow } from "./utils/Form
 import useCategory from "../hooks/useCategory";
 import { DisplayableCategory } from "./utils/FormUtils.types";
 import { closeModal } from "../middleware/modal/ModalMiddleware";
-import {ContrastWarning} from "../components/colourpicker/ContrastWarning";
+import { selectConfirmBeingHandled } from "../redux/contrastwarningalert/contrastwarningalert.slice";
+import { closeContrastWarningAlert } from "../middleware/contrastwarningalert/ContrastWarningAlertMiddleware";
 
 const useStyles = makeStyles({
   content: {
@@ -28,23 +29,22 @@ const useStyles = makeStyles({
 });
 
 const CategoryForm = (): Nullable<ReactElement> => {
-
+  const dispatch = useAppDispatch();
+  const alertConfirmBeingHandled = useAppSelector(selectConfirmBeingHandled);
+  
   const [disabled, setDisabled] = useState(true);
 
   const styles = useStyles();
 
-  const dispatch = useAppDispatch();
-
   const title = useAppSelector(selectTitle);
   const formRef = useRef<HTMLFormElement>(null);
-  const [ showDialog, setShowDialog ] = useState(false);
-  const { categoryTitle, data, handleSubmit, saveData } = useCategory(setShowDialog);
+  const { categoryTitle, data, handleSubmit, saveData } = useCategory();
 
   const validate = () => {
     let disabled = false;
     if (data) {
       Object.keys(data).forEach(key => {
-        if (getFormField(formRef, key) && !readFormField(formRef, key)) {
+        if ((getFormField(formRef, key) && !readFormField(formRef, key))) {
           disabled = true;
         }
       });
@@ -56,6 +56,14 @@ const CategoryForm = (): Nullable<ReactElement> => {
   useEffect(() => {
     validate();
   }, []);
+  
+  useEffect(() => {
+    if (alertConfirmBeingHandled) {
+      saveData(formRef).then(() => {
+        dispatch(closeContrastWarningAlert());
+      });
+    }
+  }, [alertConfirmBeingHandled]);
 
   // TODO: Close should reset form
   const handleClose = () => dispatch(closeModal());
@@ -63,14 +71,15 @@ const CategoryForm = (): Nullable<ReactElement> => {
   if (!data) {
     return null;
   }
-
+  
+  
   return (
     <form ref={formRef} onChange={validate}>
       <DialogBody>
         <DialogTitle action={null}
                      style={{ textDecoration: "underline" }}>{ title }</DialogTitle>
         <DialogContent className={styles.content}>
-          <Table>
+              <Table>
             <TableBody>
               {formatData(data, categoryTitle).map((data: DisplayableCategory) => renderRow(data))}
             </TableBody>
@@ -78,16 +87,13 @@ const CategoryForm = (): Nullable<ReactElement> => {
         </DialogContent>
         <DialogActions>
           <DialogTrigger disableButtonEnhancement>
-            <Button appearance="secondary" onClick={handleClose}>Sluiten</Button>
+              <Button appearance="secondary" onClick={handleClose}>Sluiten</Button>
           </DialogTrigger>
           <Button appearance="primary" onClick={() => handleSubmit(formRef)} disabled={disabled}>
             Bevestigen
           </Button>
         </DialogActions>
       </DialogBody>
-      {showDialog && (
-        <ContrastWarning saveData={() => saveData(formRef) } showDialog={showDialog} setShowDialog={setShowDialog}/>
-          )}
     </form>
   );
 };

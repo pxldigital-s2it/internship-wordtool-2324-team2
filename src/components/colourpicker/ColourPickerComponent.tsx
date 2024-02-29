@@ -57,7 +57,7 @@ const ColourPickerComponent = () => {
                     </div>
                 </>
             ) : (
-                <div onClick={() => setOpen(true)}>
+                <div onClick={() =>  setOpen(true)}>
                     <ColourSquare colour={colour}/>
                     <div style={{ color: "red" }}>
                         <p>{contrastWarning}</p>

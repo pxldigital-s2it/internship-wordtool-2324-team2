@@ -1,50 +1,44 @@
 ﻿import * as React from 'react';
-import { Dialog, DialogType, DialogFooter } from '@fluentui/react/lib/Dialog';
-import { PrimaryButton, DefaultButton } from '@fluentui/react/lib/Button';
-import { ContextualMenu } from '@fluentui/react/lib/ContextualMenu';
-import { useBoolean } from '@fluentui/react-hooks';
+import {
+    Button,
+    Dialog,
+    DialogActions,
+    DialogBody,
+    DialogContent, DialogSurface,
+    DialogTitle
+} from '@fluentui/react-components';
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { selectDisabled, selectOpen, setConfirmBeingHandled, setDisabled } from "../../redux/contrastwarningalert/contrastwarningalert.slice";
+import { closeContrastWarningAlert } from "../../middleware/contrastwarningalert/ContrastWarningAlertMiddleware";
 
-
-const dragOptions = {
-    moveMenuItemText: 'Move',
-    closeMenuItemText: 'Close',
-    menu: ContextualMenu,
-};
-const modalPropsStyles = { main: { maxWidth: 450, zIndex: 2147483647 } };
-const dialogContentProps = {
-    type: DialogType.normal,
-    title: 'Contrast waarschuwing',
-    subText: 'Deze kleur heeft een slecht contrast met zwart. Wil je deze toch gebruiken?',
-};
-
-export const ContrastWarning: React.FunctionComponent<{saveData: () => void, showDialog, setShowDialog}> = ( {saveData, showDialog, setShowDialog}) => {
-    const toggleDialogVisibility = () => {
-        setShowDialog(!showDialog);
+export const ContrastWarning: React.FunctionComponent = () => {
+    const dispatch = useAppDispatch();
+    const open = useAppSelector(selectOpen);
+    const disabled = useAppSelector(selectDisabled);
+    
+    const closeAlert = () => {
+        dispatch(closeContrastWarningAlert());
     }
     
-    const [isDraggable, { toggle: toggleIsDraggable }] = useBoolean(false);
-    const modalProps = React.useMemo(
-        () => ({
-            isBlocking: true,
-            styles: modalPropsStyles,
-            dragOptions: isDraggable ? dragOptions : undefined,
-        }),
-        [isDraggable],
-    );
-
+    const handleConfirm = () => {
+        dispatch(setDisabled(true));
+        dispatch(setConfirmBeingHandled(true));
+    }
+    
     return (
-        <>
-            <Dialog
-                hidden={!showDialog}
-                onDismiss={toggleDialogVisibility}
-                dialogContentProps={dialogContentProps}
-                modalProps={modalProps}
-            >
-                <DialogFooter>
-                    <PrimaryButton onClick={saveData} text="Ja" />
-                    <DefaultButton onClick={toggleDialogVisibility} text="Nee" />
-                </DialogFooter>
-            </Dialog>
-        </>
+        <Dialog modalType="alert" open={open}>
+            <DialogSurface aria-describedby={undefined}>
+                <DialogBody >
+                    <DialogTitle action={null}>Contrast waarschuwing</DialogTitle>
+                    <DialogContent>
+                        Deze kleur heeft een slecht contrast met zwart. Wil je deze toch gebruiken?
+                    </DialogContent>
+                    <DialogActions>
+                        <Button appearance="primary" disabled={disabled} onClick={handleConfirm}>Ja</Button>
+                        <Button appearance="secondary" disabled={disabled} onClick={closeAlert}>Nee</Button>
+                    </DialogActions>
+                </DialogBody>
+            </DialogSurface>
+        </Dialog>
     );
 };
