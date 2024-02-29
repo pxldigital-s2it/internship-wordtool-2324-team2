@@ -1,7 +1,6 @@
 import { insertFreeFeedback, insertFreeFeedbackAndHighlightText } from "../FreeFeedbackInput.utils";
 import { setRangesWithUrl } from "../../../utils/TextInsertUtils";
 import getOfficeMock from "../../../utils/OfficeMockUtils";
-import {waitFor} from "@testing-library/react";
 
 jest.mock("../../../utils/TextInsertUtils", () => ({
     ...jest.requireActual("../../../utils/TextInsertUtils"),
