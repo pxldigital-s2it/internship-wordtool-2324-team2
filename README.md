@@ -1,2 +1,2 @@
 # internship-wordtool-2324-team2
-[![Workflow for CI to run tests and upload coverage to Codecov]
+[![Workflow for CI to run tests and upload coverage to Codecov](https://github.com/pxldigital-s2it/internship-wordtool-2324-team2/actions/workflows/check-pullrequest.yaml/badge.svg)](https://github.com/pxldigital-s2it/internship-wordtool-2324-team2/actions/workflows/check-pullrequest.yaml)
