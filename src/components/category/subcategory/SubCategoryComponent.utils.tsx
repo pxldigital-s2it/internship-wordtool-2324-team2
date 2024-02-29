@@ -46,7 +46,8 @@ export const insertAndHighlightText = async (categoryId: string, description: st
                 const categoryStyleName = await getCategoryStyleName(categoryId, styles, context, category);
                 const descriptionInsert = await getInsertText(description, context, category, shortCode, url);
 
-                descriptionInsert.includes(url) ? insertAndHighlightWithUrl(range, descriptionInsert, categoryStyleName, url) : insertAndHighlight(range, descriptionInsert, categoryStyleName);
+                descriptionInsert.includes(url) ? insertAndHighlightWithUrl(range, descriptionInsert, categoryStyleName, url) :
+                    insertAndHighlight(range, descriptionInsert, categoryStyleName);
             }
 
             await context.sync();

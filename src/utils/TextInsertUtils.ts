@@ -42,10 +42,14 @@ export const insertAndHighlightWithUrl = (range: Word.Range, descriptionInsert: 
 
     range.style = categoryStyleName;
 
-    insertedRangeStart.font.color = "red";
-    insertedRangeStart.font.highlightColor = "white";
-    insertedRangeUrl.font.color = "blue";
-    insertedRangeUrl.font.highlightColor = "white";
-    insertedRangeEnd.font.color = "red";
-    insertedRangeEnd.font.highlightColor = "white";
+    setRangesWithUrl(insertedRangeStart, insertedRangeUrl, insertedRangeEnd);
+}
+
+export const setRangesWithUrl = (startRange: Word.Range, urlRange: Word.Range, endRange: Word.Range) => {
+    startRange.font.color = "red";
+    startRange.font.highlightColor = "white";
+    urlRange.font.color = "blue";
+    urlRange.font.highlightColor = "white";
+    endRange.font.color = "red";
+    endRange.font.highlightColor = "white";
 }
