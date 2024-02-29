@@ -308,7 +308,7 @@ const SubCategoryComponent: React.FC<SubCategory> = ({
             <tr onMouseEnter={() => setIsSubSubHovered(true)} onMouseLeave={() => setIsSubSubHovered(false)}
                 className={sectionClassNames.subSubCategoryRow} style={{ backgroundColor: backgroundColor + "1A" }}
                 key={subSubCategory.id}
-                onClick={() => insertAndHighlightText(categoryId, description + " - " + subSubCategory.description, shortCode + "." + (index + 1))}>
+                onClick={() => insertAndHighlightText(categoryId, description + " - " + subSubCategory.description, shortCode + "." + (index + 1), url)}>
 
 
               {/*
