@@ -68,6 +68,7 @@ export const getCategoryStyleName = async (categoryId: string, colour: string) =
 
     return categoryStyleName;
 };
+
 async function getRange(context: Word.RequestContext) {
     const range = context.document.getSelection();
     range.load("text");
@@ -111,8 +112,7 @@ export const insertAndHighlight = (range: Word.Range, descriptionInsert: string,
 export const insertAndHighlightWithUrl = (range: Word.Range, descriptionInsert: string, categoryStyleName: string, url: string) => {
     const html = `<a href="${url}">${url}</a>`;
 
-    const thirdToLastIndex = descriptionInsert.length - url.length - 3;
-    const descriptionInsertStart = descriptionInsert.slice(0, thirdToLastIndex) + " ";
+    const descriptionInsertStart = descriptionInsert.slice(0, descriptionInsert.indexOf(") ")) + " - ";
 
     const insertedRangeStart = range.insertText(descriptionInsertStart, Word.InsertLocation.after);
     const insertedRangeUrl = insertedRangeStart.insertHtml(html, Word.InsertLocation.after);

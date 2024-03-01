@@ -32,7 +32,7 @@ describe('FreeFeedbackInput Integration Test Suite', () => {
 
         fireEvent.click(getByTitle(STRING_RESOURCES.freefeedbackinput.button.title));
 
-        expect(insertFreeFeedback).toHaveBeenCalledWith("Test feedback", "");
+        expect(insertFreeFeedback).toHaveBeenCalledWith("Test feedback");
     });
 
     test('FreeFeedbackInput key down enter to insert text should call insertFreeFeedback', async () => {
@@ -44,7 +44,7 @@ describe('FreeFeedbackInput Integration Test Suite', () => {
 
         fireEvent.keyDown(freeInputTextarea, { charCode: 13, code: 13, key: "Enter" });
 
-        expect(insertFreeFeedback).toHaveBeenCalledWith("Test feedback", "");
+        expect(insertFreeFeedback).toHaveBeenCalledWith("Test feedback");
 
         (insertFreeFeedback as jest.Mock).mockResolvedValue(true);
 
@@ -75,8 +75,7 @@ describe('FreeFeedbackInput Integration Test Suite', () => {
         await waitFor(() =>
             expect(insertFreeFeedbackAndHighlightText).toHaveBeenCalledWith(
                 "testId",
-                "Test feedback",
-                ""
+                "Test feedback"
             )
         );
     });

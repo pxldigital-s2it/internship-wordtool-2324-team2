@@ -169,7 +169,7 @@ describe("TextInsertUtils Test Utils", () => {
       await insertTextWithUrl(" (Spelling) ", "cat1Style", "www.test.be");
 
       expect(insertTextSpy).toHaveBeenCalledTimes(2);
-      expect(insertTextSpy.mock.calls[0][0]).toBe(" (Spelling ");
+      expect(insertTextSpy.mock.calls[0][0]).toBe(" (Spelling - ");
       expect(insertTextSpy.mock.calls[1][0]).toBe(") ");
       expect(insertHtmlSpy).toHaveBeenCalledWith("<a href=\"www.test.be\">www.test.be</a>", "After");
       expect(contextMock.context.document.range.style).toBe("cat1Style");
