@@ -8,7 +8,6 @@ interface SubCategory {
   backgroundColor?: Nullable<string>;
   shortCode?: string;
   subSubCategories?: SubSubCategory[];
-  url?: string;
 }
 
 export default SubCategory;
