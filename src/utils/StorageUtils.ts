@@ -48,13 +48,31 @@ export const write = (key: string, value: any) => {
 // @ts-ignore
 const isSubOrSubSubCategory = (key: string) => [StorageKeys.SUBCATEGORY, StorageKeys.SUBSUBCATEGORY].includes(key);
 
+/*
+  * Calculate the next short code for a subcategory or subsubcategory
+  * if it's a subcategory, it should be the next number after the last subcategory with the same category id
+  * if it's a subsubcategory, it should be the next number after the last subsubcategory with the same subcategory id
+ */
+const calculateNextShortCode = (key: string, value: SubCategory | SubSubCategory, parsed: (SubCategory | SubSubCategory)[]) => {
+  if (key === StorageKeys.SUBCATEGORY) {
+    const lastSubCategory = parsed.filter((item: SubCategory) => item.categoryId === (value as SubCategory).categoryId).sort((a, b) => parseInt(b.shortCode) - parseInt(a.shortCode))[0];
+    return lastSubCategory ? `${parseInt(lastSubCategory.shortCode) + 1}` : "1";
+  }
+  if (key === StorageKeys.SUBSUBCATEGORY) {
+    const lastSubSubCategory = parsed.filter((item: SubSubCategory) => item.subCategoryId === (value as SubSubCategory).subCategoryId).sort((a, b) => parseInt(b.shortCode) - parseInt(a.shortCode))[0];
+    return lastSubSubCategory ? `${parseInt(lastSubSubCategory.shortCode) + 1}` : "1";
+  }
+
+  return "";
+}
+
 export const save = (key: string, value: any) => {
   const parsed = getAll(key);
   if (!parsed || (parsed && !parsed.find((item: Category | SubCategory | SubSubCategory) => equals(item, value)))) {
     value.id = !value.id ? getRandomUuid() : value.id;
 
-    if (isSubOrSubSubCategory(key)) {
-      value.shortCode = `${parsed ? parsed.length + 1 : 1}`;
+    if (isSubOrSubSubCategory(key) && !value.shortCode) {
+      value.shortCode = calculateNextShortCode(key, value, parsed)
     }
 
     write(key, [...(parsed ? parsed : []), value]);

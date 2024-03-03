@@ -1,19 +1,18 @@
 import * as React from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { useAppDispatch } from "../../../redux/hooks";
-import { insertAndHighlightText } from "./SubCategoryComponent.utils";
+import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import SubCategory from "../../../types/SubCategory";
 import {
   deleteSubCategory,
-  deleteSubSubCategory,
   getCategoryDataById,
   updateSubCategoryIsFavorite
 } from "../../../middleware/category/CategoryMiddleware";
-import { saveSubSubCategory, updateSubCategory, updateSubSubCategory } from "../../../middleware/modal/ModalMiddleware";
+import { updateSubCategory } from "../../../middleware/modal/ModalMiddleware";
 import { sectionClassNames } from "./SubCategoryComponent.styles";
 import { Icon } from "@fluentui/react";
-import { PrimaryButton } from "@fluentui/react/lib/Button";
-import { Button } from "@fluentui/react-components";
+import SubSubCategoryComponent from "../subsubcategory/SubSubCategoryComponent";
+import { getCategoryStyleName, getSubCategoryText, insertText } from "../../../utils/TextInsertUtils";
+import { selectAlwaysInsertFullText } from "../../../redux/settings/settings.slice";
 
 
 const SubCategoryComponent: React.FC<SubCategory> = ({
@@ -23,10 +22,10 @@ const SubCategoryComponent: React.FC<SubCategory> = ({
                                                        isFavorite,
                                                        backgroundColor,
                                                        shortCode,
-                                                       subSubCategories,
-                                                       url
+                                                       subSubCategories
                                                      }) => {
   const dispatch = useAppDispatch();
+  const alwaysInsertFullText = useAppSelector(selectAlwaysInsertFullText);
 
   /*
   * SubCategory
@@ -83,112 +82,55 @@ const SubCategoryComponent: React.FC<SubCategory> = ({
   }, [dispatch, categoryId, description, id, isFavorite, isEditing]);
 
 
-  /*
-  * SubSubCategory
-  * */
-  const [isSubSubHovered, setIsSubSubHovered] = useState(false);
-
-  // state variable to track the ID of the sub-sub-category being edited
-  const [editingSubSubCategoryId, setIsEditingSubSubCategoryId] = useState<string | null>(null);
-  const [editingSubSubCategoryDescription, setIsEditingSubSubCategoryDescription] = useState("");
-
-
   const [isAddingSubSubCategory, setIsAddingSubSubCategory] = useState(false);
-  const [newSubSubCategoryDescription, setNewSubSubCategoryDescription] = useState("");
-  const [newSubSubCategoryURL, setNewSubSubCategoryURL] = useState("");
 
-  const [isSubEditing, setIsEditingSubSubCategory] = useState(false);
-  const subSubCategoryTextareaRef = useRef(null);
-  const newSubSubCategoryTextareaRef = useRef(null);
 
-  const handleAddSubSubCategoryClick = useCallback(() => {
+  const handleAddSubSubCategoryClick = () => {
     setIsAddingSubSubCategory(true);
-    setNewSubSubCategoryDescription("");
-    setNewSubSubCategoryURL("");
-  }, []);
-  // runs when the isEditing state changes
-  useEffect(() => {
-    if (subSubCategoryTextareaRef.current) {
-      subSubCategoryTextareaRef.current.focus();
-      const length = subSubCategoryTextareaRef.current.value.length;
-      subSubCategoryTextareaRef.current.setSelectionRange(length, length);
-    }
-
-    if (newSubSubCategoryTextareaRef.current) {
-      newSubSubCategoryTextareaRef.current.focus();
-      const length = newSubSubCategoryTextareaRef.current.value.length;
-      newSubSubCategoryTextareaRef.current.setSelectionRange(length, length);
-    }
-  }, [isSubEditing]);
-
-  const handleSubSubDelete = useCallback((subSubCategoryId) => {
-    // Dispatch the delete action with the specific subSubCategoryId
-    dispatch(deleteSubSubCategory(subSubCategoryId));
-  }, [dispatch]);
-
-  const handleSubSubEdit = (subSubCategoryId: string, currentDescription: string) => {
-    setIsEditingSubSubCategory(!isSubEditing);
-    setIsEditingSubSubCategoryId(subSubCategoryId);
-    setIsEditingSubSubCategoryDescription(currentDescription);
   };
 
-  const handleSubSaveEdit = (subSubCategoryId: string) => {
-    // Dispatch the update action with the subSubCategoryId and the new description.
-    if (editingSubSubCategoryDescription.trim() !== "") {
-      dispatch(updateSubSubCategory(subSubCategoryId, { description: editingSubSubCategoryDescription.trim() }));
-    }
-
-    // Reset the editing state after saving.
-    setIsEditingSubSubCategoryId(null);
-    setIsEditingSubSubCategoryDescription("");
-  };
-
-  const handleTextInsertion = useCallback(async () => {
-    await insertAndHighlightText(categoryId, description, shortCode, url);
-  }, [categoryId, description]);
-
-  const handleSaveNewSubSubCategory = useCallback(() => {
-    const newSubSubCategory = {
-      description: newSubSubCategoryDescription.trim().length > 0 && newSubSubCategoryDescription || "Nieuwe ondertitel",
-      id: Math.random().toString(36).substring(7),
-      subCategoryId: id,
-      url: newSubSubCategoryURL
-    };
-
-    dispatch(saveSubSubCategory(newSubSubCategory));
-
-    // Reset the state to hide the textareas
-    setIsAddingSubSubCategory(false);
-    setNewSubSubCategoryDescription("");
-    setNewSubSubCategoryURL("");
-  }, [dispatch, newSubSubCategoryDescription, newSubSubCategoryURL, id]);
-
+  const handleTextInsertion = async () => {
+    await getSubCategoryText(categoryId, description, shortCode, alwaysInsertFullText)
+      .then(result => getCategoryStyleName(categoryId, backgroundColor)
+        .then(categoryStyleName => insertText(result, categoryStyleName)));
+  }
 
   return (
     <>
-      <div style={{
-        width: "100%"
-      }} onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}
-           className={sectionClassNames.section}>
+      <tr
+        style={{
+          width: "100%"
+        }}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        className={sectionClassNames.section}
+      >
         <td style={{ paddingRight: "6px" }}>
           <div style={{ width: "16px" }}>
-            <div style={{
-              backgroundColor: categoryDetails.colour || backgroundColor,
-              height: isHovered ? "38px" : "32px",
-              marginTop: "-1px",
-              width: isHovered ? "16px" : "1px"
-            }} className={sectionClassNames.activeRowColorBlock}
-            title={shortCode + ". " + description}>&nbsp;</div>
+            <div
+              style={{
+                backgroundColor: categoryDetails.colour || backgroundColor,
+                height: isHovered ? "38px" : "32px",
+                marginTop: "-1px",
+                width: isHovered ? "16px" : "1px"
+              }}
+              className={sectionClassNames.activeRowColorBlock}
+              title={shortCode + ". " + description}
+            >&nbsp;
+            </div>
           </div>
         </td>
+        {/*// TODO: FAVORITE ICON + FUNCTIONALITY*/}
         <td onClick={toggleFavorite} title={isFavorite ? "Uit Favorieten verwijderen" : "Aan Favorieten toevoegen"}>
           <Icon iconName={isFavorite ? "FavoriteStarFill" : "FavoriteStar"}
                 className={`${sectionClassNames.menuIcon} ${isFavorite && "isFavorite"} ${isHovered && "showIcon"}`} />
         </td>
+        {/*// TODO: EDIT ICON + FUNCIONALITY*/}
         <td onClick={handleEdit}>
           <Icon iconName="Edit" className={`${sectionClassNames.menuIcon} ${isHovered && "showIcon"}`}
                 title="Wijzigen" />
         </td>
+        {/*// TODO: ADD ICON + FUNCTIONALITY*/}
         <td>
           <Icon iconName="CircleAddition" className={`${sectionClassNames.menuIcon} ${isHovered && "showIcon"}`}
                 onClick={handleAddSubSubCategoryClick} title="Toevoegen" />
@@ -197,227 +139,62 @@ const SubCategoryComponent: React.FC<SubCategory> = ({
             style={{ width: "100%" }} className={sectionClassNames.sectionText}>
           <div className={sectionClassNames.descriptionTextContainerDiv}>
             <div className={sectionClassNames.descriptionTextDiv} title={description}>
-              {!isEditing ? (
-                shortCode + ". " + description
-              ) : (
-                <textarea
-                  // This ref is for moving the caret to the last char when taking focus for quick edit
-                  ref={textareaRef}
-                  style={{ fontFamily: "Segoe UI", width: "90%" }}
-                  value={tempDescription}
-                  onChange={(e) => setTempDescription(e.target.value)}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter" && !e.shiftKey) {
-                      e.preventDefault();
+              {!isEditing
+                ? (shortCode + ". " + description) :
+                (<textarea
+                    // This ref is for moving the caret to the last char when taking focus for quick edit
+                    ref={textareaRef}
+                    style={{ fontFamily: "Segoe UI", width: "90%" }}
+                    value={tempDescription}
+                    onChange={(e) => setTempDescription(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" && !e.shiftKey) {
+                        e.preventDefault();
 
-                      // submit logic
-                      setIsEditing(false);
-                      dispatch(updateSubCategory(id, { description: tempDescription }));
-                    } else if (e.key === "Escape") {
-                      e.preventDefault();
+                        // submit logic
+                        setIsEditing(false);
+                        dispatch(updateSubCategory(id, { description: tempDescription }));
+                      } else if (e.key === "Escape") {
+                        e.preventDefault();
 
-                      // cancel logic
-                      setIsEditing(false);
-                      setTempDescription(description);
-                    }
+                        // cancel logic
+                        setIsEditing(false);
+                        setTempDescription(description);
+                      }
 
-                    // shift enter for a new line is handled by default
-                  }}
-                  onBlur={handleBlur}
-                  autoFocus
-                />
-              )}
+                      // shift enter for a new line is handled by default
+                    }}
+                    onBlur={handleBlur}
+                    autoFocus
+                  />
+                )}
             </div>
           </div>
         </td>
+        {/*// TODO: DELETE ICON + FUNCTIONALITY*/}
         <td onClick={handleDelete}>
           <Icon iconName="Delete" className={`${sectionClassNames.menuIcon} ${isHovered && "showIcon"}`}
                 title="Verwijderen" />
         </td>
         <td></td>
-      </div>
-
-
-      {/*
-        SubSubCategory
-      */}
-      {subSubCategories &&
-        <table className={sectionClassNames.subSubCategoryTable}>
-          <tbody>
-          {isAddingSubSubCategory && (
-            <tr onMouseEnter={() => setIsSubSubHovered(true)} onMouseLeave={() => setIsSubSubHovered(false)}
-                className={sectionClassNames.subSubCategoryRow} style={{ backgroundColor: backgroundColor + "1A" }}>
-
-              <td>
-                <Icon iconName="Add" className={`${sectionClassNames.menuIcon} showIcon`}
-                      title="Nieuwe ondertitel" />
-              </td>
-              <td></td>
-              <td colSpan={4}>
-                <div><Icon iconName={"Comment"}></Icon> <b>Beschrijving</b></div>
-                <textarea
-                  ref={newSubSubCategoryTextareaRef}
-                  placeholder="Beschrijving"
-                  value={newSubSubCategoryDescription}
-                  onChange={(e) => setNewSubSubCategoryDescription(e.target.value)}
-                  style={{ fontFamily: "Segoe UI", width: "90%" }}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter" && !e.shiftKey) {
-                      e.preventDefault();
-
-                      handleSaveNewSubSubCategory();
-                    } else if (e.key === "Escape") {
-                      e.preventDefault();
-
-                      setIsAddingSubSubCategory(false);
-                      setNewSubSubCategoryDescription("");
-                      setNewSubSubCategoryURL("");
-                    }
-                  }}
-                  autoFocus
-                />
-
-                <div><Icon iconName={"Link"}></Icon> <b>Hyperlink</b></div>
-                <textarea
-                  placeholder="https://voorbeeld.com/"
-                  value={newSubSubCategoryURL}
-                  onChange={(e) => setNewSubSubCategoryURL(e.target.value)}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter" && !e.shiftKey) {
-                      e.preventDefault();
-
-                      handleSaveNewSubSubCategory();
-                    } else if (e.key === "Escape") {
-                      e.preventDefault();
-
-                      setIsAddingSubSubCategory(false);
-                      setNewSubSubCategoryDescription("");
-                      setNewSubSubCategoryURL("");
-                    }
-                  }}
-                  style={{ fontFamily: "Segoe UI", width: "90%" }}
-                />
-                <PrimaryButton onClick={handleSaveNewSubSubCategory}>Opslaan</PrimaryButton>
-                &nbsp;
-                <Button onClick={() => setIsAddingSubSubCategory(false)}>Annuleren</Button>
-              </td>
-            </tr>
-          )}
-
-          {subSubCategories.map((subSubCategory, index) => (
-            <tr onMouseEnter={() => setIsSubSubHovered(true)} onMouseLeave={() => setIsSubSubHovered(false)}
-                className={sectionClassNames.subSubCategoryRow} style={{ backgroundColor: backgroundColor + "1A" }}
-                key={subSubCategory.id}
-                onClick={() => insertAndHighlightText(categoryId, description + " - " + subSubCategory.description, shortCode + "." + (index + 1), url)}>
-
-
-              {/*
-                Edit icon for subSubCategory
-              */}
-              <td className={`${sectionClassNames.subSubCategoryEditIcon}`}
-                  onClick={() => handleSubSubEdit(subSubCategory.id, subSubCategory.description)}>
-                <Icon iconName="Edit" className={`${sectionClassNames.menuIcon} ${isSubSubHovered && "showIcon"}`}
-                      title="Wijzigen" />
-              </td>
-
-              {/*
-                shortCode for subSubCategory
-              */}
-              <td className={`${sectionClassNames.subSubCategoryShortCode}`}>{shortCode + "." + (index + 1)}</td>
-              {/*
-                Editable description for subSubCategory
-              */}
-              <td className={`${sectionClassNames.subSubCategoryDescription}`}>
-
-                {editingSubSubCategoryId === subSubCategory.id ? (
-                  <>
-                    <div><Icon iconName={"Comment"}></Icon> <b>Beschrijving</b></div>
-                    <textarea
-                      placeholder="Beschrijving"
-                      ref={subSubCategoryTextareaRef}
-                      style={{ fontFamily: "Segoe UI", width: "90%" }}
-                      value={editingSubSubCategoryDescription}
-                      onChange={(e) => setIsEditingSubSubCategoryDescription(e.target.value)}
-                      onKeyDown={(e) => {
-                        if (e.key === "Enter" && !e.shiftKey) {
-                          e.preventDefault();
-
-                          handleSubSaveEdit(subSubCategory.id);
-                        } else if (e.key === "Escape") {
-                          e.preventDefault();
-
-                          setIsEditingSubSubCategoryId(null);
-                          setIsEditingSubSubCategoryDescription("");
-                        }
-
-                      }}
-                      autoFocus
-                    />
-
-                    {/*URL icon*/}
-                    <div><Icon iconName={"Link"}></Icon> <b>Hyperlink</b></div>
-                    {/*
-                      Hyperlink box
-                    */}
-                    <textarea
-                      placeholder="https://voorbeeld.com/"
-                      style={{ fontFamily: "Segoe UI", width: "90%" }}
-                      value={subSubCategory.url}
-                      onChange={(e) => dispatch(updateSubSubCategory(subSubCategory.id, { url: e.target.value }))}
-                      onKeyDown={(e) => {
-                        if (e.key === "Enter" && !e.shiftKey) {
-                          e.preventDefault();
-
-                          handleSubSaveEdit(subSubCategory.id);
-                        } else if (e.key === "Escape") {
-                          e.preventDefault();
-
-                          setIsEditingSubSubCategoryId(null);
-                          setIsEditingSubSubCategoryDescription("");
-                        }
-
-                      }}
-                    />
-
-                    {/*
-                    Save button
-                  */}
-                    <PrimaryButton onClick={() => handleSubSaveEdit(subSubCategory.id)}>Opslaan</PrimaryButton>
-                    &nbsp;<Button onClick={() => {
-                    setIsEditingSubSubCategoryId(null);
-                    setIsEditingSubSubCategoryDescription("");
-                  }}>Annuleren</Button>
-                  </>
-                ) : (
-                  <div
-                    onClick={() => isSubEditing ? handleSubSubEdit(subSubCategory.id, subSubCategory.description) : undefined}>
-
-                    <div className={sectionClassNames.sectionText}>
-                      <div className={sectionClassNames.descriptionTextContainerDiv}>
-                        <div className={sectionClassNames.descriptionTextDiv} title={subSubCategory.description}>
-                          {subSubCategory.url && (subSubCategory.url.trim() == "" ? "" :
-                            <div className={sectionClassNames.urlIcon} title={`${subSubCategory.url}`}><Icon
-                              iconName={"Link"}></Icon></div>)}
-                          {subSubCategory.description}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </td>
-
-              {/*
-                Delete icon for subSubCategory
-              */}
-              <td className={`${sectionClassNames.subSubCategoryDeleteIcon} `}
-                  onClick={() => handleSubSubDelete(subSubCategory.id)}>
-                <Icon iconName="Delete" className={`${sectionClassNames.menuIcon} ${isSubSubHovered && "showIcon"}`}
-                      title="Verwijderen" />
-              </td>
-            </tr>))}
-          </tbody>
-        </table>
-      }
+      </tr>
+      <tr>
+        {
+          (subSubCategories && subSubCategories.length > 0 || isAddingSubSubCategory) &&
+          <td colSpan={6}>
+            <SubSubCategoryComponent
+              subCategoryId={id}
+              subSubCategories={subSubCategories}
+              isAddingSubSubCategory={isAddingSubSubCategory}
+              backgroundColor={backgroundColor}
+              setIsAddingSubSubCategory={setIsAddingSubSubCategory}
+              categoryId={categoryId}
+              description={description}
+              shortCode={shortCode}
+            />
+          </td>
+        }
+      </tr>
     </>
   );
 };

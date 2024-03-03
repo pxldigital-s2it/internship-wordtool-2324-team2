@@ -3,17 +3,20 @@ import { IconButton } from "@fluentui/react/lib/Button";
 import * as React from "react";
 import { CategoryHeaderProps } from "./CategoryHeader.types";
 import { FC } from "react";
-import { sectionClassNames } from "../subcategory/SubCategoryComponent.styles";
+import { getCategoryStyleName, getCategoryText, insertText } from "../../../utils/TextInsertUtils";
 
 
-const CategoryHeader: FC<CategoryHeaderProps> = ({ colour, id, code, isOpen, name, setIsOpen, sections }) => {
-
+const CategoryHeader: FC<CategoryHeaderProps> = ({ alwaysInsertFullText, colour, id, code, isOpen, name, setIsOpen, sections }) => {
+  const handleInsertClick = async () => {
+    await getCategoryText(name, code, alwaysInsertFullText)
+      .then((result ) => getCategoryStyleName(id, colour)
+        .then((categoryStyleName ) => insertText(result, categoryStyleName)));
+  }
   return (
     <div
       id={`category-${id}`}
       className={categoryClassNames.categoryHeader}
-      onClick={() => setIsOpen(!isOpen)}
-      style={{
+      style = {{
         fontWeight: 500,
         height: "24px",
         width: "100%"
@@ -28,7 +31,9 @@ const CategoryHeader: FC<CategoryHeaderProps> = ({ colour, id, code, isOpen, nam
           fontSize: "12px",
           fontWeight: 200,
           textAlign: "center"
-        }}>
+        }}
+        onClick={handleInsertClick}
+      >
         {code}
       </div> : ""}
       <IconButton
@@ -36,15 +41,9 @@ const CategoryHeader: FC<CategoryHeaderProps> = ({ colour, id, code, isOpen, nam
         className={categoryClassNames.arrowIcon}
         onClick={() => setIsOpen(!isOpen)}
       />
-      <div className={sectionClassNames.sectionTextHeader}>
-        <div className={sectionClassNames.descriptionTextContainerDiv}>
-          <div className={sectionClassNames.descriptionTextDiv} title={`${name} ` + `${sections && sections > 0 ? `(${sections})` : ""}`}>
-            {name} {sections && sections > 0 ? `(${sections})` : ""}
-          </div>
-        </div>
-      </div>
-</div>)
-  ;
+      <span onClick={() => setIsOpen(!isOpen)}>
+          {name} {sections && sections > 0 ? `(${sections})` : ""}</span>
+    </div>);
 }
 
 export default CategoryHeader;

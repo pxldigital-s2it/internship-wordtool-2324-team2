@@ -20,10 +20,13 @@ const CategoryComponent: React.FC<Category> = ({ id, title, colour, subCategorie
   return (
     <table style={{
       backgroundColor: colour + "1A",
+      borderCollapse: "collapse",
       tableLayout: "fixed",
       width: "100%"
     }}>
       <thead>
+      </thead>
+      <tbody>
       <tr>
         <ContextMenu trigger={<CategoryHeader colour={colour} id={id} code={code} isOpen={isOpen} setIsOpen={setIsOpen}
                                               sections={subCategories.length}
@@ -52,8 +55,6 @@ const CategoryComponent: React.FC<Category> = ({ id, title, colour, subCategorie
                      }
         />
       </tr>
-      </thead>
-      <tbody>
       {isOpen && (
           <tr className={categoryClassNames.categoryContent}>
             {subCategories && subCategories.length > 0 ? (
