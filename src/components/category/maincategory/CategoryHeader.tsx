@@ -3,15 +3,19 @@ import { IconButton } from "@fluentui/react/lib/Button";
 import * as React from "react";
 import { CategoryHeaderProps } from "./CategoryHeader.types";
 import { FC } from "react";
+import { getCategoryStyleName, getCategoryText, insertText } from "../../../utils/TextInsertUtils";
 
 
-const CategoryHeader: FC<CategoryHeaderProps> = ({ colour, id, code, isOpen, name, setIsOpen, sections }) => {
-
+const CategoryHeader: FC<CategoryHeaderProps> = ({ alwaysInsertFullText, colour, id, code, isOpen, name, setIsOpen, sections }) => {
+  const handleInsertClick = async () => {
+    await getCategoryText(name, code, alwaysInsertFullText)
+      .then((result ) => getCategoryStyleName(id, colour)
+        .then((categoryStyleName ) => insertText(result, categoryStyleName)));
+  }
   return (
       <div
       id={`category-${id}`}
       className={categoryClassNames.categoryHeader}
-      onClick={() => setIsOpen(!isOpen)}
       style = {{
         fontWeight: 500,
         height: "24px",
@@ -27,7 +31,9 @@ const CategoryHeader: FC<CategoryHeaderProps> = ({ colour, id, code, isOpen, nam
             fontSize: "12px",
             fontWeight: 200,
             textAlign: "center"
-          }}>
+          }}
+          onClick={handleInsertClick}
+        >
           {code}
         </div> : ""}
         <IconButton
@@ -35,7 +41,8 @@ const CategoryHeader: FC<CategoryHeaderProps> = ({ colour, id, code, isOpen, nam
         className={categoryClassNames.arrowIcon}
         onClick={() => setIsOpen(!isOpen)}
       />
-      {name} {sections && sections > 0 ? `(${sections})` : ""}
+        <span onClick={() => setIsOpen(!isOpen)}>
+          {name} {sections && sections > 0 ? `(${sections})` : ""}</span>
     </div>);
 }
 

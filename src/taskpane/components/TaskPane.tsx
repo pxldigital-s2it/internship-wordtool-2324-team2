@@ -7,6 +7,7 @@ import { selectData, selectIsLoading } from "../../redux/category/category.slice
 import { loadData } from "../../middleware/category/CategoryMiddleware";
 import FreeFeedbackInput from "../../components/freefeedbackinput/FreeFeedbackInput";
 import { Toggle } from "@fluentui/react";
+import { selectAlwaysInsertFullText, toggleAlwaysInsertFullText } from "../../redux/settings/settings.slice";
 
 const taskPaneClassNames = mergeStyleSets({
   fixedInputBox: {
@@ -44,6 +45,7 @@ const TaskPane: React.FC = () => {
 
   const categories = useAppSelector(selectData) || []; // Ensure categories is always an array
   const isLoading = useAppSelector(selectIsLoading);
+  const alwaysInsertFullText = useAppSelector(selectAlwaysInsertFullText);
 
   useEffect(() => {
     dispatch(loadData());
@@ -67,6 +69,10 @@ const TaskPane: React.FC = () => {
       subCategories: filteredSubCategories
     };
   });
+
+  const setAlwaysInsertFullText = () => {
+    dispatch(toggleAlwaysInsertFullText());
+  }
 
 // only add favorites to special category if hoisting is enabled
   if (favoritesHoistingEnabled) {
@@ -92,7 +98,7 @@ const TaskPane: React.FC = () => {
           label="Favorieten apart bovenaan tonen"
           checked={favoritesHoistingEnabled}
           onChange={() => setFavoritesHoistingEnabled(!favoritesHoistingEnabled)}
-          style={{ margin: '10px'  }}
+          style={{ margin: '10px' }}
         />
       </div>
       <div style={{ paddingLeft: '16px' }}>
@@ -100,6 +106,14 @@ const TaskPane: React.FC = () => {
           label="Favorieten ook verbergen uit eigen categorie"
           checked={favoritesHidingEnabled}
           onChange={() => setFavoritesHidingEnabled(!favoritesHidingEnabled)}
+          style={{ margin: '10px' }}
+        />
+      </div>
+      <div style={{ paddingLeft: '16px' }}>
+        <Toggle
+          label="Favorieten altijd als volledige tekst invoegen"
+          checked={alwaysInsertFullText}
+          onChange={setAlwaysInsertFullText}
           style={{ margin: '10px' }}
         />
       </div>

@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction } from "react";
 
 export interface CategoryHeaderProps {
+  alwaysInsertFullText: boolean
   colour: string
   id: string
   isOpen: boolean

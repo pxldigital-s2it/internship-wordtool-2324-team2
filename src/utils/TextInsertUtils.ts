@@ -1,29 +1,108 @@
 /* eslint-disable */
 /* global Word console */
 
-import Category from "../types/Category";
+import { getCategory } from "../middleware/modal/ModalMiddleware";
 
-export const getCategoryStyleName = async (categoryId: string, styles: Word.StyleCollection, context: Word.RequestContext, category: Category) => {
-    const regex = /[^a-zA-Z0-9]/g; // regex to get special characters
-    const categoryStyleName = categoryId.replace(regex, "") + "Style";
-    let categoryStyle = styles.getByNameOrNullObject(categoryStyleName);
-    categoryStyle.load("isNullObject");
-
-    await context.sync();
-
-    if (categoryStyle.isNullObject) {
-        categoryStyle = context.document.addStyle(categoryStyleName, "Character");
-        categoryStyle.font.color = "black";
-        categoryStyle.shading.backgroundPatternColor = category.colour;
-
-        await context.sync();
+export const getCategoryText = async (title: string, shortTitle: string, alwaysInsertFullText: boolean) => {
+    let result = ` (${title}) `;
+    if (!alwaysInsertFullText) {
+        await Word.run(async (context) => {
+            const searchResults = await findMatchingTextInDocument(context, result);
+            if (searchResults.items?.length) {
+                result = ` (${shortTitle}) `;
+            }
+        });
     }
 
-    return categoryStyleName;
+    return result;
 }
 
+export const getSubCategoryText = async (categoryId: string, title: string, shortTitle: string, alwaysInsertFullText: boolean) => {
+    const category = await getCategory(categoryId);
+    let result = ` (${category.title} - ${title}) `;
+
+    if (!alwaysInsertFullText) {
+        await Word.run(async (context) => {
+            const searchResults = await findMatchingTextInDocument(context, result);
+            if (searchResults.items?.length) {
+                result = ` (${category.code} ${shortTitle}) `;
+            }
+        });
+    }
+
+    return result;
+};
+
+const findMatchingTextInDocument = async (context: Word.RequestContext, insertText: string) => {
+    const searchResults = context.document.body.search(insertText);
+    searchResults.load("items");
+    await context.sync();
+
+    return searchResults;
+}
+
+export const getCategoryStyleName = async (categoryId: string, colour: string) => {
+    const regex = /[^a-zA-Z0-9]/g; // regex to get special characters
+    const categoryStyleName = categoryId.replace(regex, "") + "Style";
+
+    await Word.run(async (context) => {
+        const styles = context.document.getStyles();
+        styles.load("getByNameOrNullObject");
+        await context.sync();
+
+
+        let categoryStyle = styles.getByNameOrNullObject(categoryStyleName);
+        categoryStyle.load("isNullObject");
+        await context.sync();
+
+        if (categoryStyle.isNullObject) {
+            categoryStyle = context.document.addStyle(categoryStyleName, "Character");
+            categoryStyle.font.color = "black";
+            categoryStyle.shading.backgroundPatternColor = colour;
+
+            await context.sync();
+        }
+
+        context.trackedObjects.add(categoryStyle);
+    });
+
+    return categoryStyleName;
+};
+
+async function getRange(context: Word.RequestContext) {
+    const range = context.document.getSelection();
+    range.load("text");
+    range.load("isEmpty");
+    range.load("style");
+    await context.sync();
+
+    return range;
+}
+
+export const insertText = async (text: string, categoryStyle: string) => {
+    await Word.run(async (context) => {
+        const range = await getRange(context);
+        if (!(range.isEmpty)) {
+            insertAndHighlight(range, text, categoryStyle);
+        }
+
+        await context.sync();
+    });
+};
+
+export const insertTextWithUrl = async (text: string, categoryStyle: string, url: string) => {
+    await Word.run(async (context) => {
+        const range = await getRange(context);
+        if (!(range.isEmpty)) {
+            insertAndHighlightWithUrl(range, text, categoryStyle, url);
+        }
+
+        await context.sync();
+    });
+};
+
 export const insertAndHighlight = (range: Word.Range, descriptionInsert: string, categoryStyleName: string) => {
-    const insertedRange = range.insertText(descriptionInsert, Word.InsertLocation.after);
+    const insertedRange = range.insertText(descriptionInsert, "After");
     range.style = categoryStyleName;
 
     insertedRange.font.color = "red";
@@ -33,8 +112,7 @@ export const insertAndHighlight = (range: Word.Range, descriptionInsert: string,
 export const insertAndHighlightWithUrl = (range: Word.Range, descriptionInsert: string, categoryStyleName: string, url: string) => {
     const html = `<a href="${url}">${url}</a>`;
 
-    const thirdToLastIndex = descriptionInsert.length - url.length - 3;
-    const descriptionInsertStart = descriptionInsert.slice(0, thirdToLastIndex) + " ";
+    const descriptionInsertStart = descriptionInsert.slice(0, descriptionInsert.indexOf(") ")) + " - ";
 
     const insertedRangeStart = range.insertText(descriptionInsertStart, Word.InsertLocation.after);
     const insertedRangeUrl = insertedRangeStart.insertHtml(html, Word.InsertLocation.after);

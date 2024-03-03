@@ -6,14 +6,16 @@ import { ContextMenu } from "../../index";
 import CategoryHeader from "./CategoryHeader";
 import { openCreateSubCategoryModal, openUpdateCategoryModal } from "../../../middleware/modal/ModalMiddleware";
 import { categoryContextMenu } from "../../../patterns/observer";
-import { useAppDispatch } from "../../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import Category from "../../../types/Category";
 import { deleteCategory } from "../../../middleware/category/CategoryMiddleware";
 import FreeFeedbackInput from "../../freefeedbackinput/FreeFeedbackInput";
+import { selectAlwaysInsertFullText } from "../../../redux/settings/settings.slice";
 
 const CategoryComponent: React.FC<Category> = ({ id, title, colour, subCategories, code }) => {
   const [isOpen, setIsOpen] = useState(false);
   const dispatch = useAppDispatch();
+  const alwaysInsertFullText = useAppSelector(selectAlwaysInsertFullText);
 
   return (
     <table style={{
@@ -25,7 +27,7 @@ const CategoryComponent: React.FC<Category> = ({ id, title, colour, subCategorie
       <tr>
         <ContextMenu trigger={<CategoryHeader colour={colour} id={id} code={code} isOpen={isOpen} setIsOpen={setIsOpen}
                                               sections={subCategories.length}
-                                              name={id == "favorites" ? `${code} ${title}` : `${title}`} />}
+                                              name={id == "favorites" ? `${code} ${title}` : `${title}`} alwaysInsertFullText={alwaysInsertFullText}/>}
                      menuItems={
                        [
                          {

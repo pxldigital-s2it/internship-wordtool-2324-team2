@@ -12,13 +12,12 @@ export interface FreeFeedbackInputProps {
 
 const FreeFeedbackInput: React.FC<FreeFeedbackInputProps> = ({ categoryId }) => {
     const [text, setText] = useState<string>("");
-    const [url] = useState<string>("");
 
     const handleTextInsertion = async () => {
         if (categoryId) {
-            await insertFreeFeedbackAndHighlightText(categoryId, text, url)
+            await insertFreeFeedbackAndHighlightText(categoryId, text)
         } else {
-            await insertFreeFeedback(text, url);
+            await insertFreeFeedback(text);
         }
 
         setText("");

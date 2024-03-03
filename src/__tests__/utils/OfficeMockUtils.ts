@@ -72,6 +72,11 @@ const getOfficeMock = (originalStyle: string, mockReturnValue: string[], isEmpty
                         return this;
                     }
                 }
+            },
+            trackedObjects: {
+                add: function() {
+                    return this;
+                }
             }
         },
         // Mock the Word.run function.
@@ -100,16 +105,18 @@ const getOfficeMock = (originalStyle: string, mockReturnValue: string[], isEmpty
     const originalAddStyle = contextMock.context.document.addStyle;
     const addStyleSpy = jest.spyOn(contextMock.context.document, "addStyle");
     addStyleSpy.mockImplementation(originalAddStyle);
+    const originalAddTrackedObject = contextMock.context.trackedObjects.add;
+    const addTrackedObjectSpy = jest.spyOn(contextMock.context.trackedObjects, "add");
+    addTrackedObjectSpy.mockImplementation(originalAddTrackedObject);
 
     const spyMap = new Map([
         ["addStyle", addStyleSpy],
         ["getSelection", getSelectionSpy],
         ["getStyles", getStylesSpy],
         ["insertText", insertTextSpy],
-        ["insertHtml", insertHtmlSpy]
+        ["insertHtml", insertHtmlSpy],
+        ["addTrackedObject", addTrackedObjectSpy]
     ]);
-
-
 
     return {
         contextMock,
