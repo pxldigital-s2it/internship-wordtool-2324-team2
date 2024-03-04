@@ -93,5 +93,52 @@ export const sectionClassNames = mergeStyleSets({
     paddingLeft: "20px",
     transition: "opacity 0.6s ease-in-out",
     width: "100%"
+  },
+  subSubCategoryDeleteIcon: {
+    paddingRight: "16px",
+    textAlign: "right",
+    width: "16px"
+  },
+  subSubCategoryDescription: {
+    textAlign: "left"
+  },
+  subSubCategoryEditIcon: {
+    textAlign: "center",
+    width: "16px"
+  },
+  subSubCategoryFavoriteIcon: {
+    paddingLeft: "14px",
+    textAlign: "center",
+    width: "16px"
+  },
+  subSubCategoryRow: {
+    borderBottom: "1px solid #ffcccc",
+    color: "#323130",
+    cursor: "pointer",
+    fontSize: "14px",
+    padding: "10px 20px",
+    selectors: {
+      ":hover": {
+        backgroundColor: "#ffe5e5",
+        boxShadow: "2px 2px 5px rgba(0,0,0,0.1)",
+        transform: "translateX(10px)"
+      },
+      ":hover .showIcon": {
+        opacity: 1 // Icons become visible when the row is hovered
+      },
+      ":last-child": {
+        borderBottom: "none"
+      }
+    },
+    transition: "background-color 0.35s, transform 0.15s ease-in-out"
+  },
+  subSubCategoryShortCode: {
+    paddingLeft: "10px",
+    textAlign: "center"
+  },
+  subSubCategoryTable: {
+    borderCollapse: "collapse",
+    userSelect: "none",
+    width: "100%"
   }
 });

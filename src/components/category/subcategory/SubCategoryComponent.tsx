@@ -13,31 +13,32 @@ import { sectionClassNames } from "./SubCategoryComponent.styles";
 import { Icon } from "@fluentui/react";
 import * as React from "react";
 import { selectAlwaysInsertFullText } from "../../../redux/settings/settings.slice";
-import SubSubCategory from "../../../types/SubSubCategory";
 import {
   getCategoryStyleName,
   getSubCategoryText,
   insertText,
   insertTextWithUrl
 } from "../../../utils/TextInsertUtils";
+import SubSubCategory from "../../../types/SubSubCategory";
 
 
 const SubCategoryComponent: React.FC<SubCategory> = ({ id, categoryId, description, isFavorite, backgroundColor, shortCode, subSubCategories }) => {
   // For the icons
   const [isHovered, setIsHovered] = useState(false);
+  const [isSubHovered, setIsSubHovered] = useState(false);
 
   // For the favorites' category details
   const [categoryDetails, setCategoryDetails] = useState({ code: "", colour: "" });
 
   // For fast edit
   const [isEditing, setIsEditing] = useState(false);
+  const [isSubEditing, setIsSubEditing] = useState(false);
   const [tempDescription, setTempDescription] = useState(description);
   const textareaRef = useRef(null);
 
   const dispatch = useAppDispatch();
   const alwaysInsertFullText = useAppSelector(selectAlwaysInsertFullText);
   // runs when the isEditing state changes
-
   useEffect(() => {
     if (textareaRef.current) {
       textareaRef.current.focus();
@@ -45,13 +46,13 @@ const SubCategoryComponent: React.FC<SubCategory> = ({ id, categoryId, descripti
       textareaRef.current.setSelectionRange(length, length);
     }
   }, [isEditing]);
+
   // Handle when fast edit textarea loses focus
   const handleBlur = () => {
     if (isEditing) {
       setIsEditing(false);
       setTempDescription(description);
     }
-
   };
 
   useEffect(() => {
@@ -91,6 +92,13 @@ const SubCategoryComponent: React.FC<SubCategory> = ({ id, categoryId, descripti
         subSubCategory.url !== "" ? insertText(result, categoryStyleName) : insertTextWithUrl(result, categoryStyleName, subSubCategory.url)
       }));
   }
+  const handleSubDelete = useCallback(() => {
+    // dispatch(deleteSubCategory(id));
+  }, [dispatch, id]);
+
+  const handleSubEdit = useCallback(() => {
+    setIsSubEditing(!isSubEditing);
+  }, [dispatch, categoryId, description, id, isFavorite, isSubEditing]);
 
 
   return (
@@ -155,8 +163,36 @@ const SubCategoryComponent: React.FC<SubCategory> = ({ id, categoryId, descripti
       </td>
       <td></td>
     </div>
-      {subSubCategories && subSubCategories.map((subSubCategory) => (
-        <div key={subSubCategory.id} onClick={() => handleSubSubCategoryTextInsertion(subSubCategory)}> {shortCode + "." + subSubCategory.shortCode + " " + subSubCategory.description} </div>)) }
+      {subSubCategories &&
+        <table className={sectionClassNames.subSubCategoryTable}>
+          <tbody>
+          {subSubCategories.map((subSubCategory, index) => (
+            <tr onMouseEnter={() => setIsSubHovered(true)} onMouseLeave={() => setIsSubHovered(false)}
+                className={sectionClassNames.subSubCategoryRow} style={{ backgroundColor: backgroundColor + "1A" }}
+                key={subSubCategory.id}>
+              <td className={`${sectionClassNames.subSubCategoryFavoriteIcon}`} onClick={toggleFavorite}
+                  title={isFavorite ? "Uit Favorieten verwijderen" : "Aan Favorieten toevoegen"}>
+                <Icon iconName={isFavorite ? "FavoriteStarFill" : "FavoriteStar"}
+                      className={`${sectionClassNames.menuIcon} ${isFavorite && "isFavorite"} ${isSubHovered && "showIcon"}`} />
+              </td>
+              <td className={`${sectionClassNames.subSubCategoryEditIcon}`}  onClick={handleSubEdit}>
+                <Icon iconName="Edit" className={`${sectionClassNames.menuIcon} ${isSubHovered && "showIcon"}`}
+                      title="Wijzigen" />
+              </td>
+              <td className={`${sectionClassNames.subSubCategoryShortCode}`}>{shortCode + "." + (index + 1)}</td>
+              <td
+                className={`${sectionClassNames.subSubCategoryDescription}`}
+                onClick={() => handleSubSubCategoryTextInsertion(subSubCategory)}>{shortCode + "." + subSubCategory.shortCode + " " + subSubCategory.description}
+              </td>
+
+              <td className={`${sectionClassNames.subSubCategoryDeleteIcon} `} onClick={handleSubDelete}>
+                <Icon iconName="Delete" className={`${sectionClassNames.menuIcon} ${isSubHovered && "showIcon"}`}
+                      title="Verwijderen" />
+              </td>
+            </tr>))}
+          </tbody>
+        </table>
+      }
     </>
   );
 };

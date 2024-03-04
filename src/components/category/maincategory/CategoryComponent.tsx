@@ -57,8 +57,8 @@ const CategoryComponent: React.FC<Category> = ({ id, title, colour, subCategorie
       {isOpen && (
           <tr className={categoryClassNames.categoryContent}>
             {subCategories && subCategories.length > 0 ? (
-                subCategories.map((subCategory, index) => (
-                    <SubCategoryComponent key={subCategory.id} {...subCategory} backgroundColor={colour} shortCode={(index + 1).toString()} />
+                subCategories.map((subCategory) => (
+                    <SubCategoryComponent key={subCategory.id} {...subCategory} backgroundColor={colour} shortCode={subCategory.shortCode} />
                 ))
             ) : (
                 <FreeFeedbackInput categoryId={id} description={title} />
