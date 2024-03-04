@@ -42,3 +42,5 @@ export const ContrastWarning: React.FunctionComponent = () => {
         </Dialog>
     );
 };
+
+export default ContrastWarning;

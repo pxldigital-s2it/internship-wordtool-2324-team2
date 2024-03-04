@@ -69,18 +69,4 @@ describe("CategoryForm Test Suite", () => {
         expect(mockDispatch).toHaveBeenCalledTimes(1);
         expect(mockDispatch.mock.calls[0][0].type).toEqual("closeModal");
     });
-
-
-    // test("If low contrast when click submit then show contrast warning popup", async() => {
-    //     setupUseCategoryMock({ categoryId: "testCategoryId", colour: "#000000", description: "test", isFavorite: false });
-    //     const { baseElement, debug, getByText } = renderWithProviders(<CategoryForm/>, { preloadedState: initialState });
-    //
-    //     fireEvent.click(getByText("Bevestigen"));
-    //     await waitFor(() => { debug(baseElement)
-    //         expect(baseElement.querySelector("div#fluent-default-layer-host")).toBeVisible()
-    //         const warningPopup = getByText("Deze kleur heeft een slecht contrast met zwart. Wil je deze toch gebruiken?");})
-    //     //const warningPopup = getByText("Deze kleur heeft een slecht contrast met zwart. Wil je deze toch gebruiken?");
-    //     //expect(warningPopup).toBeVisible();
-    // });
-
 });

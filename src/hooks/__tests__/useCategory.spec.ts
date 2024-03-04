@@ -1,4 +1,8 @@
-import { addFormSupport, addStorageMockSupport, renderHookWithProviders } from "../../__tests__/utils/TestUtils";
+import {
+    addFormSupport,
+    addStorageMockSupport,
+    renderHookWithProviders
+} from "../../__tests__/utils/TestUtils";
 import useCategory from "../useCategory";
 import { initialState as STATE } from "../../redux/store";
 import { useRef } from "react";
@@ -23,6 +27,30 @@ describe("useCategory Test Suite", () => {
             ...STATE.modal,
             category: { code: "123", colour: "#FFFFFF", id: "123", title: "123" },
             subCategory: { categoryId: "123", description: "123", isFavorite: false }
+        }
+    };
+
+    const stateWithCategoryWithHighContrast = {
+        ...STATE,
+        category: {
+            ...STATE.category,
+            colour: "#FFFFFF"
+        },
+        modal: {
+            ...STATE.modal,
+            category: { code: "123", colour: "#FFFFFF", id: "123", title: "123" }
+        }
+    };
+    
+    const stateWithCategoryWithLowContrast = {
+        ...STATE,
+        category: {
+            ...STATE.category,
+            colour: "#000000"
+        },
+        modal: {
+            ...STATE.modal,
+            category: { code: "123", colour: "#000000", id: "123", title: "123" }
         }
     };
 
@@ -198,6 +226,67 @@ describe("useCategory Test Suite", () => {
             });
         });
 
-    });
+        test("If low contrast when handle submit then show contrast warning popup", async() => {
+            //await
+            act(() => {
+                const { unmount } = renderHookWithProviders(async () => {
+                    const result = useCategory();
 
+                    const form = addFormSupport(new Map([
+                        ["code-input", "testCode"]
+                    ]));
+                    const ref = useRef<HTMLFormElement>(form);
+
+                    const mockDispatch = jest.fn();
+                    jest.spyOn(require("../../redux/hooks"), "useAppDispatch").mockImplementation(() => mockDispatch);
+                    jest.spyOn(require("../../middleware/contrastwarningalert/ContrastWarningAlertMiddleware"), "openContrastWarningAlert").mockImplementation(() => ({ type: "openContrastWarningAlert" }));
+
+                    await result.handleSubmit(ref);
+                    
+                    expect(mockDispatch).toHaveBeenCalledTimes(1);
+                    expect(mockDispatch.mock.calls[0][0].type).toEqual("openContrastWarningAlert");
+                }, {
+                    preloadedState: {
+                        ...stateWithCategoryWithLowContrast,
+                        modal: {
+                            ...stateWithCategoryWithLowContrast.modal,
+                            create: false
+                        }
+                    }
+                });
+                _unmount = unmount;
+            });
+        });
+
+        test("If high contrast when handle submit then show contrast warning popup", async() => {
+            //await
+            act(() => {
+                const { unmount } = renderHookWithProviders(async () => {
+                    const result = useCategory();
+
+                    const form = addFormSupport(new Map([
+                        ["code-input", "testCode"]
+                    ]));
+                    const ref = useRef<HTMLFormElement>(form);
+
+                    const mockDispatch = jest.fn();
+                    jest.spyOn(require("../../redux/hooks"), "useAppDispatch").mockImplementation(() => mockDispatch);
+                    jest.spyOn(require("../../middleware/contrastwarningalert/ContrastWarningAlertMiddleware"), "openContrastWarningAlert").mockImplementation(() => ({ type: "openContrastWarningAlert" }));
+
+                    await result.handleSubmit(ref);
+
+                    expect(mockDispatch).toHaveBeenCalledTimes(0);
+                }, {
+                    preloadedState: {
+                        ...stateWithCategoryWithHighContrast,
+                        modal: {
+                            ...stateWithCategoryWithHighContrast.modal,
+                            create: false
+                        }
+                    }
+                });
+                _unmount = unmount;
+            });
+        });
+    });
 });
