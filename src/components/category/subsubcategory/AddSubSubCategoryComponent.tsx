@@ -81,7 +81,7 @@ const AddSubSubCategoryComponent: React.FC<AddSubSubCategoryComponentProps> = ({
 
         <IconWithText icon={"Link"} text={"Hyperlink"} />
         <EditableTextArea
-          placeholder="https://voorbeeld.com/"
+          placeholder="https://www.voorbeeld.com"
           value={newUrl}
           onChange={setNewUrl}
           onEnter={handleSave}

@@ -47,7 +47,7 @@ const EditSubSubCategoryComponent: React.FC<
     <IconWithText icon={"Comment"} text={"Beschrijving"} />
     <EditableTextArea
       ref={textareaRef}
-      placeholder={"beschrijving"}
+      placeholder={"Beschrijving"}
       value={description}
       onChange={setDescription}
       onEnter={handleEditSave}

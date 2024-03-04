@@ -9,10 +9,11 @@ import {
 } from "../../../middleware/category/CategoryMiddleware";
 import { updateSubCategory } from "../../../middleware/modal/ModalMiddleware";
 import { sectionClassNames } from "./SubCategoryComponent.styles";
-import { Icon } from "@fluentui/react";
 import SubSubCategoryComponent from "../subsubcategory/SubSubCategoryComponent";
 import { getCategoryStyleName, getSubCategoryText, insertText } from "../../../utils/TextInsertUtils";
 import { selectAlwaysInsertFullText } from "../../../redux/settings/settings.slice";
+import TableButton from "../../buttons/TableButton";
+import EditableTextArea from "../../input/EditableTextArea";
 
 
 const SubCategoryComponent: React.FC<SubCategory> = ({
@@ -120,62 +121,64 @@ const SubCategoryComponent: React.FC<SubCategory> = ({
             </div>
           </div>
         </td>
-        {/*// TODO: FAVORITE ICON + FUNCTIONALITY*/}
-        <td onClick={toggleFavorite} title={isFavorite ? "Uit Favorieten verwijderen" : "Aan Favorieten toevoegen"}>
-          <Icon iconName={isFavorite ? "FavoriteStarFill" : "FavoriteStar"}
-                className={`${sectionClassNames.menuIcon} ${isFavorite && "isFavorite"} ${isHovered && "showIcon"}`} />
-        </td>
-        {/*// TODO: EDIT ICON + FUNCIONALITY*/}
-        <td onClick={handleEdit}>
-          <Icon iconName="Edit" className={`${sectionClassNames.menuIcon} ${isHovered && "showIcon"}`}
-                title="Wijzigen" />
-        </td>
-        {/*// TODO: ADD ICON + FUNCTIONALITY*/}
-        <td>
-          <Icon iconName="CircleAddition" className={`${sectionClassNames.menuIcon} ${isHovered && "showIcon"}`}
-                onClick={handleAddSubSubCategoryClick} title="Toevoegen" />
-        </td>
+        <TableButton
+          tdClassName={""}
+          clickHandler={toggleFavorite}
+          iconName={isFavorite ? "FavoriteStarFill" : "FavoriteStar"}
+          iconClassName={sectionClassNames.menuIcon}
+          iconTitle={isFavorite ? "Uit Favorieten verwijderen" : "Aan Favorieten toevoegen"}
+          showIconCondition={isHovered}
+        />
+        <TableButton
+          tdClassName={""}
+          clickHandler={handleEdit}
+          iconName={"Edit"}
+          iconClassName={sectionClassNames.menuIcon}
+          iconTitle={"Wijzigen"}
+          showIconCondition={isHovered}
+        />
+        <TableButton
+          tdClassName={""}
+          clickHandler={handleAddSubSubCategoryClick}
+          iconName={"CircleAddition"}
+          iconClassName={sectionClassNames.menuIcon}
+          iconTitle={"Toevoegen"}
+          showIconCondition={isHovered}
+        />
         <td onClick={!isEditing ? handleTextInsertion : undefined}
             style={{ width: "100%" }} className={sectionClassNames.sectionText}>
           <div className={sectionClassNames.descriptionTextContainerDiv}>
             <div className={sectionClassNames.descriptionTextDiv} title={description}>
               {!isEditing
                 ? (shortCode + ". " + description) :
-                (<textarea
-                    // This ref is for moving the caret to the last char when taking focus for quick edit
+                (
+                  <EditableTextArea
                     ref={textareaRef}
-                    style={{ fontFamily: "Segoe UI", width: "90%" }}
+                    placeholder={""}
                     value={tempDescription}
-                    onChange={(e) => setTempDescription(e.target.value)}
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter" && !e.shiftKey) {
-                        e.preventDefault();
-
-                        // submit logic
-                        setIsEditing(false);
-                        dispatch(updateSubCategory(id, { description: tempDescription }));
-                      } else if (e.key === "Escape") {
-                        e.preventDefault();
-
-                        // cancel logic
-                        setIsEditing(false);
-                        setTempDescription(description);
-                      }
-
-                      // shift enter for a new line is handled by default
+                                    onChange={setTempDescription}
+                    onEnter={() => {
+                      setIsEditing(false);
+                      dispatch(updateSubCategory(id, { description: tempDescription }));
                     }}
-                    onBlur={handleBlur}
-                    autoFocus
+                    onEscape={() => {
+                      setIsEditing(false);
+                      setTempDescription(description);
+                  }}
+                  onBlur={handleBlur}
                   />
                 )}
             </div>
           </div>
         </td>
-        {/*// TODO: DELETE ICON + FUNCTIONALITY*/}
-        <td onClick={handleDelete}>
-          <Icon iconName="Delete" className={`${sectionClassNames.menuIcon} ${isHovered && "showIcon"}`}
-                title="Verwijderen" />
-        </td>
+        <TableButton
+          tdClassName={""}
+          clickHandler={handleDelete}
+          iconName={"Delete"}
+          iconClassName={sectionClassNames.menuIcon}
+          iconTitle={"Verwijderen"}
+          showIconCondition={isHovered}
+        />
         <td></td>
       </tr>
       <tr>

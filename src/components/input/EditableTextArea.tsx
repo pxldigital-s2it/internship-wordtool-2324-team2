@@ -1,7 +1,16 @@
 import * as React from "react";
 import { Dispatch, SetStateAction } from "react";
 
-const EditableTextArea: React.FC<{placeholder: string, value: string, onChange: Dispatch<SetStateAction<string>>, onEnter: () => void, onEscape: () => void, ref?:React.LegacyRef<HTMLTextAreaElement>}> = ({ placeholder, value, onChange, onEnter, onEscape, ref }) => {
+interface EditableTextAreaProps {
+  placeholder: string,
+  value: string,
+  onChange: Dispatch<SetStateAction<string>>,
+  onEnter: () => void,
+  onEscape: () => void,
+  onBlur?: () => void
+}
+
+const EditableTextArea= React.forwardRef<HTMLTextAreaElement, EditableTextAreaProps>(({ placeholder, value, onChange, onEnter, onEscape, onBlur }, ref) => {
   return (<textarea
     ref={ref}
     placeholder={placeholder}
@@ -17,8 +26,11 @@ const EditableTextArea: React.FC<{placeholder: string, value: string, onChange: 
         onEscape();
       }
     }}
+    onBlur={onBlur}
     autoFocus
   />);
-};
+});
+
+EditableTextArea.displayName = "EditableTextArea";
 
 export default EditableTextArea;
