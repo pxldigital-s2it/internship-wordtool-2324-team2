@@ -3,16 +3,13 @@ import AddSubSubCategoryComponent from "../AddSubSubCategoryComponent";
 import { renderWithProviders } from "../../../../__tests__/utils/TestUtils";
 import { initialState } from "../../../../redux/store";
 import { fireEvent } from "@testing-library/react";
-import { sectionClassNames } from "../../subcategory/SubCategoryComponent.styles";
 
 describe("AddSubSubComponent Test Suite", () => {
-  const setIsHovered = jest.fn();
   const setIsAddingSubSubCategory = jest.fn();
 
   const DEFAULT_PROPS = {
     backgroundColor: "#FFFFFF",
     setIsAddingSubSubCategory,
-    setIsHovered,
     subCategoryId: "subcat-1"
   };
   const createComponent = (props = DEFAULT_PROPS) => (<AddSubSubCategoryComponent {...props} />);
@@ -21,20 +18,10 @@ describe("AddSubSubComponent Test Suite", () => {
     const { queryByPlaceholderText, queryByText } = renderWithProviders(createComponent(), { preloadedState: initialState });
 
     expect(queryByPlaceholderText("Beschrijving")).not.toBeNull();
-    expect(queryByPlaceholderText("https://voorbeeld.com/")).not.toBeNull();
+    expect(queryByPlaceholderText("https://www.voorbeeld.com")).not.toBeNull();
 
     expect(queryByText("Opslaan")).not.toBeNull();
     expect(queryByText("Annuleren")).not.toBeNull();
-  });
-
-  test("Hovering over the row calls setIsHovered", () => {
-    const { container } = renderWithProviders(createComponent(), { preloadedState: initialState });
-
-    fireEvent.mouseEnter(container.querySelector(`.${sectionClassNames.subSubCategoryRow}`));
-    expect(setIsHovered).toHaveBeenCalledWith(true);
-
-    fireEvent.mouseLeave(container.querySelector(`.${sectionClassNames.subSubCategoryRow}`));
-    expect(setIsHovered).toHaveBeenCalledWith(false);
   });
 
   test("Clicking on the cancel button calls setIsAddingSubSubCategory", () => {
@@ -83,7 +70,7 @@ describe("AddSubSubComponent Test Suite", () => {
     const newDescription = "Nieuwe beschrijving";
     const newUrl = "https://www.nieuweurl.com/";
     fireEvent.change(getByPlaceholderText("Beschrijving"), { target: { value: newDescription } });
-    fireEvent.change(getByPlaceholderText("https://voorbeeld.com/"), { target: { value: newUrl } });
+    fireEvent.change(getByPlaceholderText("https://www.voorbeeld.com"), { target: { value: newUrl } });
     getByText("Opslaan").click();
 
     expect(dispatchMock.mock.calls[0][0].type).toBe(type);

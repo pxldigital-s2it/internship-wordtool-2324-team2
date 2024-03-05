@@ -1,6 +1,6 @@
 import { sectionClassNames } from "../subcategory/SubCategoryComponent.styles";
 import * as React from "react";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction } from "react";
 import AddSubSubCategoryComponent from "./AddSubSubCategoryComponent";
 import SubSubCategory from "../../../types/SubSubCategory";
 import SubSubCategoryRow from "./SubSubCategoryRow";
@@ -24,7 +24,6 @@ const SubSubCategoryComponent: React.FC<{
         description,
         shortCode
       }) => {
-  const [isHovered, setIsHovered] = useState(false);
 
   return (
     <table className={sectionClassNames.subSubCategoryTable}>
@@ -32,7 +31,6 @@ const SubSubCategoryComponent: React.FC<{
       {
         isAddingSubSubCategory &&
         <AddSubSubCategoryComponent
-          setIsHovered={setIsHovered}
           backgroundColor={backgroundColor}
           setIsAddingSubSubCategory={setIsAddingSubSubCategory}
           subCategoryId={subCategoryId}
@@ -42,8 +40,6 @@ const SubSubCategoryComponent: React.FC<{
       {subSubCategories.map((subSubCategory) =>
         (<SubSubCategoryRow subSubCategory={subSubCategory}
                             key={subSubCategory.id}
-                            isHovered={isHovered}
-                            setIsHovered={setIsHovered}
                             backgroundColor={backgroundColor}
                             shortCode={shortCode}
                             categoryId={categoryId}

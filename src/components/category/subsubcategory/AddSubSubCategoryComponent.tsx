@@ -10,13 +10,12 @@ import { saveSubSubCategory } from "../../../middleware/modal/ModalMiddleware";
 import { useAppDispatch } from "../../../redux/hooks";
 
 interface AddSubSubCategoryComponentProps {
-  setIsHovered: Dispatch<SetStateAction<boolean>>;
   backgroundColor: string;
   setIsAddingSubSubCategory:  Dispatch<SetStateAction<boolean>>;
   subCategoryId: string;
 }
 
-const AddSubSubCategoryComponent: React.FC<AddSubSubCategoryComponentProps> = ({ setIsHovered, backgroundColor, setIsAddingSubSubCategory, subCategoryId }) => {
+const AddSubSubCategoryComponent: React.FC<AddSubSubCategoryComponentProps> = ({ backgroundColor, setIsAddingSubSubCategory, subCategoryId }) => {
 
   const newTextareaRef = useRef(null);
   const [newDescription, setNewDescription] = useState("");
@@ -24,7 +23,6 @@ const AddSubSubCategoryComponent: React.FC<AddSubSubCategoryComponentProps> = ({
 
   const dispatch = useAppDispatch();
 
-  // runs when the isEditing state changes
   useEffect(() => {
     if (newTextareaRef.current) {
       newTextareaRef.current.focus();
@@ -50,8 +48,6 @@ const AddSubSubCategoryComponent: React.FC<AddSubSubCategoryComponentProps> = ({
   };
 
   return (<tr
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
       className={sectionClassNames.subSubCategoryRow}
       style={{ backgroundColor: backgroundColor + "1A" }}
     >
@@ -68,8 +64,8 @@ const AddSubSubCategoryComponent: React.FC<AddSubSubCategoryComponentProps> = ({
       <td />
 
       <td colSpan={4}>
-        <IconWithText icon={"Comment"} text={"Beschrijving"} />
 
+        <IconWithText icon={"Comment"} text={"Beschrijving"} />
         <EditableTextArea
           ref={newTextareaRef}
           placeholder="Beschrijving"

@@ -17,15 +17,14 @@ import { selectAlwaysInsertFullText } from "../../../redux/settings/settings.sli
 
 interface SubSubCategoryRowProps {
   subSubCategory: SubSubCategory,
-  isHovered: boolean,
-  setIsHovered: React.Dispatch<React.SetStateAction<boolean>>,
   backgroundColor: string,
   shortCode: string,
   categoryId: string,
   description: string
 }
 
-const SubSubCategoryRow: React.FC<SubSubCategoryRowProps> = ({ subSubCategory, isHovered, setIsHovered, backgroundColor, shortCode, categoryId, description }) => {
+const SubSubCategoryRow: React.FC<SubSubCategoryRowProps> = ({ subSubCategory, backgroundColor, shortCode, categoryId, description }) => {
+  const [isHovered, setIsHovered] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
 
