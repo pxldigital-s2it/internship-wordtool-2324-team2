@@ -38,7 +38,7 @@ export const SettingsPanel: React.FunctionComponent = () => {
                 <SettingsToggle label={STRING_RESOURCES.settings.labels.favoritesHoisting} checked={favoritesHoisting} onChange={setFavoritesHoisting} />
                 <SettingsToggle label={STRING_RESOURCES.settings.labels.favoritesHiding} checked={favoritesHiding} onChange={setFavoritesHiding} />
                 <SettingsToggle label={STRING_RESOURCES.settings.labels.alwaysInsertFullText} checked={alwaysInsertFullText} onChange={setAlwaysInsertFullText} />
-                <DefaultButton onClick={dismissPanel}>Cancel</DefaultButton>
+                <DefaultButton onClick={dismissPanel}>{STRING_RESOURCES.settings.buttons.cancelText}</DefaultButton>
             </div>
         ),
         [dismissPanel, favoritesHoisting, favoritesHiding, alwaysInsertFullText],
@@ -46,7 +46,7 @@ export const SettingsPanel: React.FunctionComponent = () => {
 
     return (
         <div>
-            <DefaultButton onClick={openPanel} iconProps={{ iconName: 'Settings' }} aria-label={STRING_RESOURCES.settings.buttons.ariaLabel} />
+            <DefaultButton onClick={openPanel} iconProps={{ iconName: 'Settings' }} aria-label={STRING_RESOURCES.settings.buttons.settingsText} />
             <Panel
                 isOpen={isOpen}
                 onDismiss={dismissPanel}

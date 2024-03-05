@@ -1,7 +1,8 @@
 const strings = {
     settings: {
         buttons: {
-            ariaLabel: "Settings"
+            cancelText: "Cancel",
+            settingsText: "Settings"
         },
         labels: {
             alwaysInsertFullText: "Altijd de volledige omschrijving invoegen",
