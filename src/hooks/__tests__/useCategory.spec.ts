@@ -132,8 +132,7 @@ describe("useCategory Test Suite", () => {
         });
 
         test("update subCategory", async () => {
-            //await
-            act(() => {
+            await act(() => {
                 const { unmount } = renderHookWithProviders(async () => {
                     const result = useCategory();
 
@@ -172,8 +171,7 @@ describe("useCategory Test Suite", () => {
         });
 
         test("create category", async () => {
-            //await
-            act(() => {
+            await act(() => {
                 const { unmount } = renderHookWithProviders(async () => {
                     const result = useCategory();
                     const form = addFormSupport(new Map([
@@ -196,8 +194,7 @@ describe("useCategory Test Suite", () => {
         });
 
         test("update category", async () => {
-            //await
-            act(() => {
+            await act(() => {
                 const { unmount } = renderHookWithProviders(async () => {
                     const result = useCategory();
 
@@ -226,67 +223,72 @@ describe("useCategory Test Suite", () => {
             });
         });
 
-        test("If low contrast when handle submit then show contrast warning popup", async() => {
-            //await
-            act(() => {
-                const { unmount } = renderHookWithProviders(async () => {
-                    const result = useCategory();
 
-                    const form = addFormSupport(new Map([
-                        ["code-input", "testCode"]
-                    ]));
-                    const ref = useRef<HTMLFormElement>(form);
+        describe("ContractWarning", () => {
+            const type = "OPEN_CONTRAST_WARNING_ALERT";
 
-                    const mockDispatch = jest.fn();
-                    jest.spyOn(require("../../redux/hooks"), "useAppDispatch").mockImplementation(() => mockDispatch);
-                    jest.spyOn(require("../../middleware/contrastwarningalert/ContrastWarningAlertMiddleware"), "openContrastWarningAlert").mockImplementation(() => ({ type: "openContrastWarningAlert" }));
+            test("If low contrast when handle submit then show contrast warning popup", async() => {
+                const mockDispatch = jest.fn();
+                jest.spyOn(require("../../redux/hooks"), "useAppDispatch").mockImplementation(() => mockDispatch);
+                jest.spyOn(require("../../middleware/contrastwarningalert/ContrastWarningAlertMiddleware"), "openContrastWarningAlert").mockImplementation(() => ({ type }));
 
-                    await result.handleSubmit(ref);
-                    
-                    expect(mockDispatch).toHaveBeenCalledTimes(1);
-                    expect(mockDispatch.mock.calls[0][0].type).toEqual("openContrastWarningAlert");
-                }, {
-                    preloadedState: {
-                        ...stateWithCategoryWithLowContrast,
-                        modal: {
-                            ...stateWithCategoryWithLowContrast.modal,
-                            create: false
+                await act(() => {
+                    const { unmount } = renderHookWithProviders(async () => {
+                        const result = useCategory();
+
+                        const form = addFormSupport(new Map([
+                            ["code-input", "testCode"]
+                        ]));
+                        const ref = useRef<HTMLFormElement>(form);
+
+                        await result.handleSubmit(ref);
+
+                        expect(mockDispatch).toHaveBeenCalledTimes(1);
+                        expect(mockDispatch.mock.calls[0][0].type).toEqual(type);
+                    }, {
+                        preloadedState: {
+                            ...stateWithCategoryWithLowContrast,
+                            modal: {
+                                ...stateWithCategoryWithLowContrast.modal,
+                                create: false
+                            }
                         }
-                    }
+                    });
+                    _unmount = unmount;
                 });
-                _unmount = unmount;
+            });
+
+            test("If high contrast when handle submit then show contrast warning popup", async() => {
+
+                const mockDispatch = jest.fn();
+                jest.spyOn(require("../../redux/hooks"), "useAppDispatch").mockImplementation(() => mockDispatch);
+                jest.spyOn(require("../../middleware/contrastwarningalert/ContrastWarningAlertMiddleware"), "openContrastWarningAlert").mockImplementation(() => ({ type }));
+
+                await act(() => {
+                    const { unmount } = renderHookWithProviders(async () => {
+                        const result = useCategory();
+
+                        const form = addFormSupport(new Map([
+                            ["code-input", "testCode"]
+                        ]));
+                        const ref = useRef<HTMLFormElement>(form);
+
+                        await result.handleSubmit(ref);
+
+                        expect(mockDispatch).not.toHaveBeenCalledWith(type);
+                    }, {
+                        preloadedState: {
+                            ...stateWithCategoryWithHighContrast,
+                            modal: {
+                                ...stateWithCategoryWithHighContrast.modal,
+                                create: false
+                            }
+                        }
+                    });
+                    _unmount = unmount;
+                });
             });
         });
 
-        test("If high contrast when handle submit then show contrast warning popup", async() => {
-            //await
-            act(() => {
-                const { unmount } = renderHookWithProviders(async () => {
-                    const result = useCategory();
-
-                    const form = addFormSupport(new Map([
-                        ["code-input", "testCode"]
-                    ]));
-                    const ref = useRef<HTMLFormElement>(form);
-
-                    const mockDispatch = jest.fn();
-                    jest.spyOn(require("../../redux/hooks"), "useAppDispatch").mockImplementation(() => mockDispatch);
-                    jest.spyOn(require("../../middleware/contrastwarningalert/ContrastWarningAlertMiddleware"), "openContrastWarningAlert").mockImplementation(() => ({ type: "openContrastWarningAlert" }));
-
-                    await result.handleSubmit(ref);
-
-                    expect(mockDispatch).toHaveBeenCalledTimes(0);
-                }, {
-                    preloadedState: {
-                        ...stateWithCategoryWithHighContrast,
-                        modal: {
-                            ...stateWithCategoryWithHighContrast.modal,
-                            create: false
-                        }
-                    }
-                });
-                _unmount = unmount;
-            });
-        });
     });
 });

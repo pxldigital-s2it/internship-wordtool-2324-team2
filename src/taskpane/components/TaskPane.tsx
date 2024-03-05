@@ -1,19 +1,17 @@
 import * as React from "react";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { mergeStyleSets } from "@fluentui/react/lib/Styling";
 import { AddButton, CategoryComponent, Modal } from "../../components";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { selectData, selectIsLoading } from "../../redux/category/category.slice";
 import { loadData } from "../../middleware/category/CategoryMiddleware";
 import FreeFeedbackInput from "../../components/freefeedbackinput/FreeFeedbackInput";
-import { Toggle } from "@fluentui/react";
 import { ContrastWarning } from "../../components/colourpicker/ContrastWarning";
-import { selectAlwaysInsertFullText, toggleAlwaysInsertFullText } from "../../redux/settings/settings.slice";
-import { SettingsPanel } from "../../components/settingspanel/SettingsPanel";
 import {
   selectFavoritesHiding,
   selectFavoritesHoisting
 } from "../../redux/settings/settings.slice";
+import { SettingsPanel } from "../../components/settingspanel/SettingsPanel";
 
 const taskPaneClassNames = mergeStyleSets({
   fixedInputBox: {
@@ -73,10 +71,6 @@ const TaskPane: React.FC = () => {
       subCategories: filteredSubCategories
     };
   });
-
-  const setAlwaysInsertFullText = () => {
-    dispatch(toggleAlwaysInsertFullText());
-  }
 
 // only add favorites to special category if hoisting is enabled
   if (favoritesHoisting) {
