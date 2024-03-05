@@ -5,10 +5,8 @@ import { initialState } from "../../../../redux/store";
 import { fireEvent } from "@testing-library/react";
 
 describe("EditSubSubCategoryComponent Test Suite", () => {
-  const setEditingId = jest.fn();
   const setIsEditing = jest.fn();
   const DEFAULT_PROPS = {
-    setEditingId,
     setIsEditing,
     subSubCategory: {
       description: "description",
@@ -35,7 +33,6 @@ describe("EditSubSubCategoryComponent Test Suite", () => {
 
     getByText("Annuleren").click();
 
-    expect(setEditingId).toHaveBeenCalledWith(null);
     expect(setIsEditing).toHaveBeenCalledWith(false);
   });
 
@@ -58,7 +55,6 @@ describe("EditSubSubCategoryComponent Test Suite", () => {
       description: "description",
       url: "url"
     });
-    expect(setEditingId).toHaveBeenCalledWith(null);
     expect(setIsEditing).toHaveBeenCalledWith(false);
   });
 
@@ -86,7 +82,6 @@ describe("EditSubSubCategoryComponent Test Suite", () => {
       description: newDescription,
       url: newUrl
     });
-    expect(setEditingId).toHaveBeenCalledWith(null);
     expect(setIsEditing).toHaveBeenCalledWith(false);
   });
 

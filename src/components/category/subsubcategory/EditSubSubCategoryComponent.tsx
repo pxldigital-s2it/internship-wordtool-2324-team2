@@ -10,10 +10,9 @@ import SubSubCategory from "../../../types/SubSubCategory";
 
 const EditSubSubCategoryComponent: React.FC<
   {
-    setEditingId: Dispatch<SetStateAction<string>>,
     setIsEditing: Dispatch<SetStateAction<boolean>>,
     subSubCategory: SubSubCategory
-  }> = ({ setEditingId, setIsEditing, subSubCategory }) => {
+  }> = ({  setIsEditing, subSubCategory }) => {
   const [description, setDescription] = useState(subSubCategory.description);
   const [url, setUrl] = useState(subSubCategory.url);
 
@@ -39,7 +38,6 @@ const EditSubSubCategoryComponent: React.FC<
   };
 
   const resetEdit = () => {
-    setEditingId(null);
     setIsEditing(false);
   };
 

@@ -16,25 +16,23 @@ import {
 import { selectAlwaysInsertFullText } from "../../../redux/settings/settings.slice";
 
 interface SubSubCategoryRowProps {
-  subSubCategory: SubSubCategory,
   backgroundColor: string,
-  shortCode: string,
   categoryId: string,
-  description: string
+  description: string,
+  shortCode: string,
+  subSubCategory: SubSubCategory
 }
 
 const SubSubCategoryRow: React.FC<SubSubCategoryRowProps> = ({ subSubCategory, backgroundColor, shortCode, categoryId, description }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
-  const [editingId, setEditingId] = useState<string | null>(null);
 
   const dispatch = useAppDispatch();
 
   const alwaysInsertFullText = useAppSelector(selectAlwaysInsertFullText);
 
-  const handleEdit = (subSubCategory: SubSubCategory) => {
-    setIsEditing(!isEditing);
-    setEditingId(subSubCategory.id);
+  const handleEdit = () => {
+    setIsEditing(prevIsEditing => !prevIsEditing);
   };
 
   const handleDelete = () => {
@@ -58,7 +56,7 @@ const SubSubCategoryRow: React.FC<SubSubCategoryRowProps> = ({ subSubCategory, b
   >
     <TableButton
       tdClassName={sectionClassNames.subSubCategoryEditIcon}
-      clickHandler={() => handleEdit(subSubCategory)}
+      clickHandler={handleEdit}
       iconName={"Edit"} iconClassName={sectionClassNames.menuIcon}
       iconTitle={"Wijzigen"}
       showIconCondition={isHovered}
@@ -66,9 +64,8 @@ const SubSubCategoryRow: React.FC<SubSubCategoryRowProps> = ({ subSubCategory, b
     <td className={`${sectionClassNames.subSubCategoryShortCode}`}>{shortCode + "." + subSubCategory.shortCode}</td>
     <td className={`${sectionClassNames.subSubCategoryDescription}`}>
 
-      {isEditing && editingId === subSubCategory.id ? (
+      {isEditing ? (
         <EditSubSubCategoryComponent
-          setEditingId={setEditingId}
           setIsEditing={setIsEditing}
           subSubCategory={subSubCategory}
         />
