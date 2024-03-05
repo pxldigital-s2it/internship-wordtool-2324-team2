@@ -1,13 +1,16 @@
 import * as React from "react";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { mergeStyleSets } from "@fluentui/react/lib/Styling";
 import { AddButton, CategoryComponent, Modal } from "../../components";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { selectData, selectIsLoading } from "../../redux/category/category.slice";
 import { loadData } from "../../middleware/category/CategoryMiddleware";
 import FreeFeedbackInput from "../../components/freefeedbackinput/FreeFeedbackInput";
-import { Toggle } from "@fluentui/react";
-import { selectAlwaysInsertFullText, toggleAlwaysInsertFullText } from "../../redux/settings/settings.slice";
+import { SettingsPanel } from "../../components/settingspanel/SettingsPanel";
+import {
+  selectFavoritesHiding,
+  selectFavoritesHoisting
+} from "../../redux/settings/settings.slice";
 
 const taskPaneClassNames = mergeStyleSets({
   fixedInputBox: {
@@ -40,12 +43,10 @@ const taskPaneClassNames = mergeStyleSets({
 
 const TaskPane: React.FC = () => {
   const dispatch = useAppDispatch();
-  const [favoritesHoistingEnabled, setFavoritesHoistingEnabled] = useState(true);
-  const [favoritesHidingEnabled, setFavoritesHidingEnabled] = useState(true);
-
+  const favoritesHoisting = useAppSelector(selectFavoritesHoisting);
+  const favoritesHiding = useAppSelector(selectFavoritesHiding);
   const categories = useAppSelector(selectData) || []; // Ensure categories is always an array
   const isLoading = useAppSelector(selectIsLoading);
-  const alwaysInsertFullText = useAppSelector(selectAlwaysInsertFullText);
 
   useEffect(() => {
     dispatch(loadData());
@@ -60,8 +61,8 @@ const TaskPane: React.FC = () => {
   };
 
   const processedCategories = categories.map(category => {
-    const filteredSubCategories = favoritesHoistingEnabled
-      ? category.subCategories.filter(sub => !favoritesHidingEnabled || !sub.isFavorite)
+    const filteredSubCategories = favoritesHoisting
+      ? category.subCategories.filter(sub => !favoritesHiding || !sub.isFavorite)
       : category.subCategories;
 
     return {
@@ -70,12 +71,8 @@ const TaskPane: React.FC = () => {
     };
   });
 
-  const setAlwaysInsertFullText = () => {
-    dispatch(toggleAlwaysInsertFullText());
-  }
-
 // only add favorites to special category if hoisting is enabled
-  if (favoritesHoistingEnabled) {
+  if (favoritesHoisting) {
     favoritesCategory.subCategories = categories.reduce((acc, category) => {
       const favSubCategories = category.subCategories.filter(sub => sub.isFavorite);
       return [...acc, ...favSubCategories];
@@ -93,29 +90,8 @@ const TaskPane: React.FC = () => {
       <div className={taskPaneClassNames.fixedInputBox}>
         <FreeFeedbackInput />
       </div>
-      <div style={{ paddingLeft: '16px' }}>
-        <Toggle
-          label="Favorieten apart bovenaan tonen"
-          checked={favoritesHoistingEnabled}
-          onChange={() => setFavoritesHoistingEnabled(!favoritesHoistingEnabled)}
-          style={{ margin: '10px' }}
-        />
-      </div>
-      <div style={{ paddingLeft: '16px' }}>
-        <Toggle
-          label="Favorieten ook verbergen uit eigen categorie"
-          checked={favoritesHidingEnabled}
-          onChange={() => setFavoritesHidingEnabled(!favoritesHidingEnabled)}
-          style={{ margin: '10px' }}
-        />
-      </div>
-      <div style={{ paddingLeft: '16px' }}>
-        <Toggle
-          label="Favorieten altijd als volledige tekst invoegen"
-          checked={alwaysInsertFullText}
-          onChange={setAlwaysInsertFullText}
-          style={{ margin: '10px' }}
-        />
+      <div>
+        <SettingsPanel />
       </div>
       <Modal />
       {isLoading ? (

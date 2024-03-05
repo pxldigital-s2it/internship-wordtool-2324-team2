@@ -23,7 +23,9 @@ export const callAndCheckDispatchCalls = async (callback: (dispatch: AppDispatch
     title: ""
   },
   settings: {
-    alwaysInsertFullText: false
+    alwaysInsertFullText: false,
+    favoritesHiding: false,
+    favoritesHoisting: false
   }
 }) => {
   const getState = () => state;
