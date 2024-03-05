@@ -46,7 +46,7 @@ export const SettingsPanel: React.FunctionComponent = () => {
 
     return (
         <div>
-            <DefaultButton onClick={openPanel} iconProps={{ iconName: 'Settings' }} />
+            <DefaultButton onClick={openPanel} iconProps={{ iconName: 'Settings' }} aria-label={STRING_RESOURCES.settings.buttons.ariaLabel} />
             <Panel
                 isOpen={isOpen}
                 onDismiss={dismissPanel}

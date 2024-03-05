@@ -4,8 +4,8 @@ import { RootState } from "../store";
 
 export const initialState: SettingsState = {
   alwaysInsertFullText: false,
-  favoritesHoisting: false,
-  favoritesHiding: false
+  favoritesHiding: false,
+  favoritesHoisting: false
 }
 
 export const settingsSlice = createSlice({
@@ -15,11 +15,11 @@ export const settingsSlice = createSlice({
     toggleAlwaysInsertFullText: (state) => {
       state.alwaysInsertFullText = !state.alwaysInsertFullText;
     },
-    toggleFavoritesHoisting: (state) => {
-      state.favoritesHoisting = !state.favoritesHoisting;
-    },
     toggleFavoritesHiding: (state) => {
       state.favoritesHiding = !state.favoritesHiding;
+    },
+    toggleFavoritesHoisting: (state) => {
+      state.favoritesHoisting = !state.favoritesHoisting;
     }
   }
 });

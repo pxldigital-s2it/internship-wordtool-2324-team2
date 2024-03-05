@@ -1,9 +1,12 @@
 const strings = {
     settings: {
+        buttons: {
+            ariaLabel: "Settings"
+        },
         labels: {
-            favoritesHoisting: "Favorieten apart bovenaan tonen",
+            alwaysInsertFullText: "Altijd de volledige omschrijving invoegen",
             favoritesHiding: "Favorieten ook verbergen uit eigen categorie",
-            alwaysInsertFullText: "Altijd de volledige omschrijving invoegen"
+            favoritesHoisting: "Favorieten apart bovenaan tonen"
         }
     }
 };
