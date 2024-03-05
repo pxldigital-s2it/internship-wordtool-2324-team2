@@ -5,7 +5,7 @@ export const sectionClassNames = mergeStyleSets({
     boxShadow: "black -1px 0px 1px -1px",
     height: "0px",
     top: 0,
-    transition: "width 0.2s ease-in-out",
+    transition: "width 0.17s ease-in-out",
     width: "0px"
   },
   contextMenuIcon: {
@@ -42,7 +42,7 @@ export const sectionClassNames = mergeStyleSets({
     },
     textAlign: "center",
     transform: "scale(1.15)",
-    transition: "opacity 0.15s ease-in-out, color 0.3s, transform 0.08s ease-in-out",
+    transition: "opacity 0.15s ease-in-out, color 0.25s, transform 0.08s ease-in-out",
     verticalAlign: "middle"
   },
   section: {
@@ -65,7 +65,7 @@ export const sectionClassNames = mergeStyleSets({
       ":hover": {
         backgroundColor: "#eaeaea",
         transform: "scale(1.02)", // slight scale up on hover,
-        transition: "transform 0.15s ease-in-out, backgroundColor 0.35s"
+        transition: "transform 0.15s ease-in-out, backgroundColor 0.32s"
       },
       ":hover .showIcon": {
         opacity: 1 // Icons become visible when the row is hovered
@@ -91,7 +91,68 @@ export const sectionClassNames = mergeStyleSets({
     fontSize: "14px", // slight padding for the text
     padding: "4px 0",
     paddingLeft: "20px",
-    transition: "opacity 0.6s ease-in-out",
+    transition: "opacity 0.4s ease-in-out",
     width: "100%"
+  },
+  sectionTextHeader: {
+    fontSize: "15px", // slight padding for the text
+    width: "100%"
+  },
+  shortCode: {
+    fontSize: "14px"
+  },
+  subSubCategoryDeleteIcon: {
+    paddingRight: "16px",
+    textAlign: "right",
+    width: "16px"
+  },
+  subSubCategoryDescription: {
+    paddingLeft: "4px",
+    textAlign: "left"
+  },
+  subSubCategoryEditIcon: {
+    textAlign: "center",
+    width: "16px"
+  },
+  subSubCategoryFavoriteIcon: {
+    paddingLeft: "14px",
+    textAlign: "center",
+    width: "16px"
+  },
+  subSubCategoryRow: {
+    borderBottom: "1px solid #ffcccc",
+    color: "#323130",
+    cursor: "pointer",
+    fontSize: "14px",
+    padding: "10px 20px",
+    selectors: {
+      ":hover": {
+        backgroundColor: "#ffe5e5",
+        boxShadow: "2px 2px 5px rgba(0,0,0,0.1)",
+        transform: "translateX(10px)"
+      },
+      ":hover .showIcon": {
+        opacity: 1 // Icons become visible when the row is hovered
+      },
+      ":last-child": {
+        borderBottom: "none"
+      }
+    },
+    transition: "background-color 0.35s, transform 0.15s ease-in-out"
+  },
+  subSubCategoryShortCode: {
+    textAlign: "center",
+    width: "16px"
+  },
+  subSubCategoryTable: {
+    borderCollapse: "collapse",
+    userSelect: "none",
+    width: "100%"
+  },
+  urlIcon: {
+    color: "blue",
+    display: "inline-block",
+    fontSize: "16px",
+    paddingRight: "8px"
   }
 });

@@ -13,7 +13,7 @@ const CategoryHeader: FC<CategoryHeaderProps> = ({ alwaysInsertFullText, colour,
         .then((categoryStyleName ) => insertText(result, categoryStyleName)));
   }
   return (
-      <div
+    <div
       id={`category-${id}`}
       className={categoryClassNames.categoryHeader}
       style = {{
@@ -22,26 +22,26 @@ const CategoryHeader: FC<CategoryHeaderProps> = ({ alwaysInsertFullText, colour,
         width: "100%"
       }}
     >
-        {id != "favorites" ? <div
-          className={categoryClassNames.colorSquare}
-          style={{
-            backgroundColor: colour,
-            color: "black",
-            fontFamily: "Consolas",
-            fontSize: "12px",
-            fontWeight: 200,
-            textAlign: "center"
-          }}
-          onClick={handleInsertClick}
-        >
-          {code}
-        </div> : ""}
-        <IconButton
-          iconProps={{ iconName: isOpen ? "ChevronDown" : "ChevronRight" }}
+      {id != "favorites" ? <div
+        className={categoryClassNames.colorSquare}
+        style={{
+          backgroundColor: colour,
+          color: "black",
+          fontFamily: "Consolas",
+          fontSize: "12px",
+          fontWeight: 200,
+          textAlign: "center"
+        }}
+        onClick={handleInsertClick}
+      >
+        {code}
+      </div> : ""}
+      <IconButton
+        iconProps={{ iconName: isOpen ? "ChevronDown" : "ChevronRight" }}
         className={categoryClassNames.arrowIcon}
         onClick={() => setIsOpen(!isOpen)}
       />
-        <span onClick={() => setIsOpen(!isOpen)}>
+      <span onClick={() => setIsOpen(!isOpen)}>
           {name} {sections && sections > 0 ? `(${sections})` : ""}</span>
     </div>);
 }

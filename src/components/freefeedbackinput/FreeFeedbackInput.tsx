@@ -53,6 +53,7 @@ const FreeFeedbackInput: React.FC<FreeFeedbackInputProps> = ({ categoryId }) => 
 
                                         // submit logic
                                         await handleTextInsertion();
+                                        setText("");
                                     } else if (e.key === "Escape") {
                                         e.preventDefault();
 
