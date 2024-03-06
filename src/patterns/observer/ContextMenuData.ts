@@ -4,58 +4,58 @@ import LabelKey from "../../types/LabelKey";
 
 class ContextMenuData implements Observable {
 
-  private _observers: Observer[];
-  private _changed: boolean = false;
-  private _labels: Map<LabelKey, string>;
+    private _observers: Observer[];
+    private _changed: boolean = false;
+    private _labels: Map<LabelKey, string>;
 
-  constructor() {
-    this._observers = [];
-    this._labels = new Map<LabelKey, string>();
-  }
-
-  addObserver(observer: Observer): void {
-    this._observers.push(observer);
-  }
-
-  deleteObserver(observer: Observer): void {
-    const i = this._observers.indexOf(observer);
-    if (i >= 0) {
-      this._observers.splice(i, 1);
+    constructor() {
+        this._observers = [];
+        this._labels = new Map<LabelKey, string>();
     }
-  }
 
-  notifyObservers(): void {
-    for (let i = 0; i < this._observers.length; i++) {
-      const observer = this._observers.at(i);
-      observer.update(this);
+    addObserver(observer: Observer): void {
+        this._observers.push(observer);
     }
-  }
 
-  labelsChanged(): void {
-    this.setChanged();
-    this.notifyObservers();
-    this.setChanged();
-  }
+    deleteObserver(observer: Observer): void {
+        const i = this._observers.indexOf(observer);
+        if (i >= 0) {
+            this._observers.splice(i, 1);
+        }
+    }
 
-  setChanged(): void {
-    this._changed = !this._changed;
-  }
+    notifyObservers(): void {
+        for (let i = 0; i < this._observers.length; i++) {
+            const observer = this._observers.at(i);
+            observer.update(this);
+        }
+    }
 
-  setLabels(labels: Map<LabelKey, string>): void {
-    this._labels = labels;
-  }
+    labelsChanged(): void {
+        this.setChanged();
+        this.notifyObservers();
+        this.setChanged();
+    }
 
-  setLabel(key: LabelKey, label: string): void {
-    this._labels.set(key, label);
-  }
+    setChanged(): void {
+        this._changed = !this._changed;
+    }
 
-  getLabels(): Map<LabelKey, string> {
-    return this._labels;
-  }
+    setLabels(labels: Map<LabelKey, string>): void {
+        this._labels = labels;
+    }
 
-  getLabel(key: LabelKey): string {
-    return this._labels.get(key);
-  }
+    setLabel(key: LabelKey, label: string): void {
+        this._labels.set(key, label);
+    }
+
+    getLabels(): Map<LabelKey, string> {
+        return this._labels;
+    }
+
+    getLabel(key: LabelKey): string {
+        return this._labels.get(key);
+    }
 
 }
 

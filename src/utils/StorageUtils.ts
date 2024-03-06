@@ -8,41 +8,41 @@ import SubSubCategory from "../types/SubSubCategory";
 
 
 const equals = (a: Category | SubCategory | SubSubCategory, b: Category | SubCategory | SubSubCategory) => {
-  if (isCategory(a) && isCategory(b)) {
-    return a.id === b.id
-      && a.title === b.title
-      && a.colour === b.colour
-      && a.code === b.code
-      && arrayEquals(a.subCategories, b.subCategories);
-  } else if (isSubCategory(a) && isSubCategory(b)) {
-    return a.id === b.id
-      && a.categoryId === b.categoryId
-      && a.description === b.description;
-  } else if (isSubSubCategory(a) && isSubSubCategory(b)) {
-    return a.id === b.id
-      && a.subCategoryId === b.subCategoryId
-      && a.description === b.description;
-  }
+    if (isCategory(a) && isCategory(b)) {
+        return a.id === b.id
+            && a.title === b.title
+            && a.colour === b.colour
+            && a.code === b.code
+            && arrayEquals(a.subCategories, b.subCategories);
+    } else if (isSubCategory(a) && isSubCategory(b)) {
+        return a.id === b.id
+            && a.categoryId === b.categoryId
+            && a.description === b.description;
+    } else if (isSubSubCategory(a) && isSubSubCategory(b)) {
+        return a.id === b.id
+            && a.subCategoryId === b.subCategoryId
+            && a.description === b.description;
+    }
 
-  return false;
+    return false;
 };
 
 const arrayEquals = (a: Category[] | SubCategory[], b: Category[] | SubCategory[]) => {
-  if (a?.length !== b?.length) {
-    return false;
-  }
-
-  for (let i = 0; i < a?.length; ++i) {
-    if (!equals(a[i], b[i])) {
-      return false;
+    if (a?.length !== b?.length) {
+        return false;
     }
-  }
 
-  return true;
+    for (let i = 0; i < a?.length; ++i) {
+        if (!equals(a[i], b[i])) {
+            return false;
+        }
+    }
+
+    return true;
 };
 
 export const write = (key: string, value: any) => {
-  localStorage.setItem(key, JSON.stringify(value));
+    localStorage.setItem(key, JSON.stringify(value));
 };
 
 // @ts-ignore
@@ -54,212 +54,220 @@ const isSubOrSubSubCategory = (key: string) => [StorageKeys.SUBCATEGORY, Storage
   * if it's a subsubcategory, it should be the next number after the last subsubcategory with the same subcategory id
  */
 const calculateNextShortCode = (key: string, value: SubCategory | SubSubCategory, parsed: (SubCategory | SubSubCategory)[]) => {
-  if (key === StorageKeys.SUBCATEGORY) {
-    const lastSubCategory = parsed.filter((item: SubCategory) => item.categoryId === (value as SubCategory).categoryId).sort((a, b) => parseInt(b.shortCode) - parseInt(a.shortCode))[0];
-    return lastSubCategory ? `${parseInt(lastSubCategory.shortCode) + 1}` : "1";
-  }
-  if (key === StorageKeys.SUBSUBCATEGORY) {
-    const lastSubSubCategory = parsed.filter((item: SubSubCategory) => item.subCategoryId === (value as SubSubCategory).subCategoryId).sort((a, b) => parseInt(b.shortCode) - parseInt(a.shortCode))[0];
-    return lastSubSubCategory ? `${parseInt(lastSubSubCategory.shortCode) + 1}` : "1";
-  }
+    if (key === StorageKeys.SUBCATEGORY) {
+        const lastSubCategory = parsed.filter((item: SubCategory) => item.categoryId === (value as SubCategory).categoryId).sort((a, b) => parseInt(b.shortCode) - parseInt(a.shortCode))[0];
+        return lastSubCategory ? `${parseInt(lastSubCategory.shortCode) + 1}` : "1";
+    }
+    if (key === StorageKeys.SUBSUBCATEGORY) {
+        const lastSubSubCategory = parsed.filter((item: SubSubCategory) => item.subCategoryId === (value as SubSubCategory).subCategoryId).sort((a, b) => parseInt(b.shortCode) - parseInt(a.shortCode))[0];
+        return lastSubSubCategory ? `${parseInt(lastSubSubCategory.shortCode) + 1}` : "1";
+    }
 
-  return "";
+    return "";
 }
 
 export const save = (key: string, value: any) => {
-  const parsed = getAll(key);
-  if (!parsed || (parsed && !parsed.find((item: Category | SubCategory | SubSubCategory) => equals(item, value)))) {
-    value.id = !value.id ? getRandomUuid() : value.id;
+    const parsed = getAll(key);
+    if (!parsed || (parsed && !parsed.find((item: Category | SubCategory | SubSubCategory) => equals(item, value)))) {
+        value.id = !value.id ? getRandomUuid() : value.id;
 
-    if (isSubOrSubSubCategory(key) && !value.shortCode) {
-      value.shortCode = calculateNextShortCode(key, value, parsed)
+        if (isSubOrSubSubCategory(key) && !value.shortCode) {
+            value.shortCode = calculateNextShortCode(key, value, parsed)
+        }
+
+        write(key, [...(parsed ? parsed : []), value]);
     }
-
-    write(key, [...(parsed ? parsed : []), value]);
-  }
 };
 
 export const getAll = (key: string) => {
-  const items = localStorage.getItem(key);
+    const items = localStorage.getItem(key);
 
-  return items !== null ? JSON.parse(items) : [];
+    return items !== null ? JSON.parse(items) : [];
 };
 
 export const getById = (key: string, id: string) => {
-  const items = getAll(key);
+    const items = getAll(key);
 
-  return items.find((item: Category | SubCategory | SubSubCategory) => item.id === id);
+    return items.find((item: Category | SubCategory | SubSubCategory) => item.id === id);
 };
 
 export const update = (key: string, id: string, value: any) => {
-  const updated = getAll(key).map((item: Category | SubCategory | SubSubCategory) => {
-    if (item.id === id) {
-      return {
-        ...item,
-        ...value
-      };
-    }
+    const updated = getAll(key).map((item: Category | SubCategory | SubSubCategory) => {
+        if (item.id === id) {
+            return {
+                ...item,
+                ...value
+            };
+        }
 
-    return item;
-  });
+        return item;
+    });
 
-  write(key, updated);
+    write(key, updated);
 };
 
 const reArrangeShortcodes = (key: string, id: string, updated: (Category | SubCategory | SubSubCategory)[]) => {
-  if (isSubOrSubSubCategory(key)) {
-    const toDelete = getById(key, id);
-    updated = updated.map((item: SubCategory | SubSubCategory) => {
-      if (parseInt(item.shortCode) > parseInt(toDelete.shortCode)) {
-        item.shortCode = `${parseInt(item.shortCode) - 1}`;
-      }
+    if (isSubOrSubSubCategory(key)) {
+        const toDelete = getById(key, id);
+        updated = updated.map((item: SubCategory | SubSubCategory) => {
+            if (parseInt(item.shortCode) > parseInt(toDelete.shortCode)) {
+                item.shortCode = `${parseInt(item.shortCode) - 1}`;
+            }
 
-      return item;
-    });
-  }
+            return item;
+        });
+    }
 
-  return updated;
+    return updated;
 }
 
 export const deleteById = (key: string, id: string) => {
-  let all = getAll(key);
-  let updated = all.filter((item: Category | SubCategory | SubSubCategory) => item.id !== id);
+    let all = getAll(key);
+    let updated = all.filter((item: Category | SubCategory | SubSubCategory) => item.id !== id);
 
-  updated = reArrangeShortcodes(key, id, updated);
+    updated = reArrangeShortcodes(key, id, updated);
 
-  if (!arrayEquals(all, updated)) {
-    write(key, updated);
-  }
+    if (!arrayEquals(all, updated)) {
+        write(key, updated);
+    }
 };
 
 export const loadInitialStorage = (data: {
-  categories: Category[],
-  subCategories: SubCategory[],
-  subSubCategories: SubSubCategory[]
+    categories: Category[],
+    subCategories: SubCategory[],
+    subSubCategories: SubSubCategory[]
 }) => {
-  const initialCategories = getAll(StorageKeys.CATEGORY);
-  if (!initialCategories || initialCategories.length === 0) {
-    data.categories.forEach(category => {
-      save(StorageKeys.CATEGORY, category);
-    });
-  }
+    const initialCategories = getAll(StorageKeys.CATEGORY);
+    if (!initialCategories || initialCategories.length === 0) {
+        data.categories.forEach(category => {
+            save(StorageKeys.CATEGORY, category);
+        });
+    }
 
-  const initialSubCategories = getAll(StorageKeys.SUBCATEGORY);
-  if (!initialSubCategories || initialSubCategories.length === 0) {
-    data.subCategories.forEach(subCategory => {
-      save(StorageKeys.SUBCATEGORY, subCategory);
-    });
-  }
+    const initialSubCategories = getAll(StorageKeys.SUBCATEGORY);
+    if (!initialSubCategories || initialSubCategories.length === 0) {
+        data.subCategories.forEach(subCategory => {
+            save(StorageKeys.SUBCATEGORY, subCategory);
+        });
+    }
 
-  const initialSubSubCategories = getAll(StorageKeys.SUBSUBCATEGORY);
-  if (!initialSubSubCategories || initialSubSubCategories.length === 0) {
-    data.subSubCategories.forEach(subSubCategory => {
-      save(StorageKeys.SUBSUBCATEGORY, subSubCategory);
-    });
-  }
+    const initialSubSubCategories = getAll(StorageKeys.SUBSUBCATEGORY);
+    if (!initialSubSubCategories || initialSubSubCategories.length === 0) {
+        data.subSubCategories.forEach(subSubCategory => {
+            save(StorageKeys.SUBSUBCATEGORY, subSubCategory);
+        });
+    }
 };
 
 export class StoragePersistStrategy implements PersistStrategy {
 
-  save(key: string, value: any): void {
-    save(key, value);
-  }
+    save(key: string, value: any): void {
+        save(key, value);
+    }
 
-  getAll(key: string): any {
-    return getAll(key);
-  }
+    getAll(key: string): any {
+        return getAll(key);
+    }
 
-  getById(key: string, id: string): any {
-    return getById(key, id);
-  }
+    getById(key: string, id: string): any {
+        return getById(key, id);
+    }
 
-  update(key: string, id: string, value: any): void {
-    update(key, id, value);
-  }
+    update(key: string, id: string, value: any): void {
+        update(key, id, value);
+    }
 
-  deleteById(key: string, id: string): void {
-    deleteById(key, id);
-  }
+    deleteById(key: string, id: string): void {
+        deleteById(key, id);
+    }
 
-  loadInitialStorage(data: { categories: Category[], subCategories: SubCategory[], subSubCategories: SubSubCategory[] }): void {
-    loadInitialStorage(data);
-  }
+    loadInitialStorage(data: {
+        categories: Category[],
+        subCategories: SubCategory[],
+        subSubCategories: SubSubCategory[]
+    }): void {
+        loadInitialStorage(data);
+    }
 
 }
 
 
 export class FetchPersistStrategy implements PersistStrategy {
 
-  async save(key: string, value: any) {
-    const response = await fetch(`http://localhost:3000/${key}`, {
-      body: JSON.stringify(value),
-      headers: {
-        "Content-Type": "application/json"
-      },
-      method: "POST"
-    });
+    async save(key: string, value: any) {
+        const response = await fetch(`http://localhost:3000/${key}`, {
+            body: JSON.stringify(value),
+            headers: {
+                "Content-Type": "application/json"
+            },
+            method: "POST"
+        });
 
-    if (!response.ok) {
-      throw new Error("Failed to save");
-    }
-  }
-
-  async getAll(key: string) {
-    const response = await fetch(`http://localhost:3000/${key}`);
-
-    if (!response.ok) {
-      throw new Error("Failed to get");
+        if (!response.ok) {
+            throw new Error("Failed to save");
+        }
     }
 
-    return response.json();
-  }
+    async getAll(key: string) {
+        const response = await fetch(`http://localhost:3000/${key}`);
 
-  async getById(key: string, id: string) {
-    const response = await fetch(`http://localhost:3000/${key}/${id}`);
+        if (!response.ok) {
+            throw new Error("Failed to get");
+        }
 
-    if (!response.ok) {
-      throw new Error("Failed to get by id");
+        return response.json();
     }
 
-    return response.json();
-  }
+    async getById(key: string, id: string) {
+        const response = await fetch(`http://localhost:3000/${key}/${id}`);
 
-  async update(key: string, id: string, value: any) {
-    const response = await fetch(`http://localhost:3000/${key}/${id}`, {
-      body: JSON.stringify(value),
-      headers: {
-        "Content-Type": "application/json"
-      },
-      method: "PUT"
-    });
+        if (!response.ok) {
+            throw new Error("Failed to get by id");
+        }
 
-    if (!response.ok) {
-      throw new Error("Failed to update");
-    }
-  }
-
-  async deleteById(key: string, id: string) {
-    const response = await fetch(`http://localhost:3000/${key}/${id}`, {
-      method: "DELETE"
-    });
-
-    if (!response.ok) {
-      throw new Error("Failed to delete");
-    }
-  }
-
-  async loadInitialStorage(data: { categories: Category[], subCategories: SubCategory[], subSubCategories: SubSubCategory[] }) {
-    for (const category of data.categories) {
-      await this.save(StorageKeys.CATEGORY, category);
+        return response.json();
     }
 
-    for (const subCategory of data.subCategories) {
-      await this.save(StorageKeys.SUBCATEGORY, subCategory);
+    async update(key: string, id: string, value: any) {
+        const response = await fetch(`http://localhost:3000/${key}/${id}`, {
+            body: JSON.stringify(value),
+            headers: {
+                "Content-Type": "application/json"
+            },
+            method: "PUT"
+        });
+
+        if (!response.ok) {
+            throw new Error("Failed to update");
+        }
     }
 
-    for (const subSubCategory of data.subSubCategories) {
-      await this.save(StorageKeys.SUBSUBCATEGORY, subSubCategory);
+    async deleteById(key: string, id: string) {
+        const response = await fetch(`http://localhost:3000/${key}/${id}`, {
+            method: "DELETE"
+        });
+
+        if (!response.ok) {
+            throw new Error("Failed to delete");
+        }
     }
-  }
+
+    async loadInitialStorage(data: {
+        categories: Category[],
+        subCategories: SubCategory[],
+        subSubCategories: SubSubCategory[]
+    }) {
+        for (const category of data.categories) {
+            await this.save(StorageKeys.CATEGORY, category);
+        }
+
+        for (const subCategory of data.subCategories) {
+            await this.save(StorageKeys.SUBCATEGORY, subCategory);
+        }
+
+        for (const subSubCategory of data.subSubCategories) {
+            await this.save(StorageKeys.SUBSUBCATEGORY, subSubCategory);
+        }
+    }
 
 }

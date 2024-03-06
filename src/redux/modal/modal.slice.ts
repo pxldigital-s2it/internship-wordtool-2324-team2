@@ -7,34 +7,34 @@ import SubCategory from "../../types/SubCategory";
 
 
 export const initialState: ModalState = {
-  create: true,
-  open: false,
-  title: ""
+    create: true,
+    open: false,
+    title: ""
 }
 
 export const modalSlice = createSlice({
-  initialState,
-  name: "modal",
-  reducers: {
-    setCategory: (state, action: PayloadAction<Category>) => {
-      state.category = action.payload;
-    },
-    setCategoryId: (state, action: PayloadAction<string>) => {
-      state.categoryId = action.payload;
-    },
-    setCreate: (state, action: PayloadAction<boolean>) => {
-      state.create = action.payload;
-    },
-    setOpen: (state, action: PayloadAction<boolean>) => {
-      state.open = action.payload;
-    },
-    setSubCategory: (state, action: PayloadAction<SubCategory>) => {
-      state.subCategory = action.payload;
-    },
-    setTitle: (state, action: PayloadAction<string>) => {
-      state.title = action.payload;
+    initialState,
+    name: "modal",
+    reducers: {
+        setCategory: (state, action: PayloadAction<Category>) => {
+            state.category = action.payload;
+        },
+        setCategoryId: (state, action: PayloadAction<string>) => {
+            state.categoryId = action.payload;
+        },
+        setCreate: (state, action: PayloadAction<boolean>) => {
+            state.create = action.payload;
+        },
+        setOpen: (state, action: PayloadAction<boolean>) => {
+            state.open = action.payload;
+        },
+        setSubCategory: (state, action: PayloadAction<SubCategory>) => {
+            state.subCategory = action.payload;
+        },
+        setTitle: (state, action: PayloadAction<string>) => {
+            state.title = action.payload;
+        }
     }
-  }
 });
 
 

@@ -2,11 +2,11 @@ import { ReactNode } from "react";
 
 
 export interface ContextMenuProps {
-  trigger: ReactNode
-  menuItems: MenuItem[]
+    trigger: ReactNode
+    menuItems: MenuItem[]
 }
 
 export interface MenuItem {
-  handler: () => void
-  label: string
+    handler: () => void
+    label: string
 }

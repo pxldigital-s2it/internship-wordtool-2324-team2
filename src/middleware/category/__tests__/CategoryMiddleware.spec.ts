@@ -21,7 +21,9 @@ describe("CategoryMiddleware Test Suite", () => {
         });
 
         test("network error", async () => {
-            storageMock("getAll", () => {throw new Error("Network Error")});
+            storageMock("getAll", () => {
+                throw new Error("Network Error")
+            });
 
             await _callAndCheckDispatchCalls(CALLS_FAILURE);
         });

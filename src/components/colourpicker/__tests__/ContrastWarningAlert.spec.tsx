@@ -29,7 +29,7 @@ describe("ColourPickerComponent Test Suite", () => {
         jest.spyOn(require("../../../middleware/contrastwarningalert/ContrastWarningAlertMiddleware"), "closeContrastWarningAlert").mockImplementation(() => ({ type: "closeContrastWarningAlert" }));
 
         const { getByText } = renderWithProviders(<ContrastWarning/>, { preloadedState: openState });
-        
+
         fireEvent.click(getByText("Nee"));
 
         expect(dispatchMock).toHaveBeenCalledTimes(1);
@@ -43,13 +43,13 @@ describe("ColourPickerComponent Test Suite", () => {
 
         fireEvent.click(getByText("Ja"));
 
-        expect(dispatchMock).toHaveBeenCalledWith({ 
-            payload: true, 
+        expect(dispatchMock).toHaveBeenCalledWith({
+            payload: true,
             type: "contrast-warning-alert/setConfirmBeingHandled"
-            });
-        expect(dispatchMock).toHaveBeenCalledWith({ 
-            payload: true, 
+        });
+        expect(dispatchMock).toHaveBeenCalledWith({
+            payload: true,
             type: "contrast-warning-alert/setDisabled"
-            });
+        });
     });
 });

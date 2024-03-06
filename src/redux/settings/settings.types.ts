@@ -1,5 +1,5 @@
 export interface SettingsState {
-  alwaysInsertFullText: boolean;
-  favoritesHoisting: boolean;
-  favoritesHiding: boolean;
+    alwaysInsertFullText: boolean;
+    favoritesHoisting: boolean;
+    favoritesHiding: boolean;
 }

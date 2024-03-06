@@ -55,7 +55,7 @@ describe("ColourPickerComponent Test Suite", () => {
         expect(warningElement).toBeInTheDocument();
         expect(warningElement).toHaveTextContent("Laag contrast: slecht leesbaar");
     });
-    
+
     test("If change colour when not low contrast then show low contrast warning", async () => {
         jest.spyOn(require("../../../utils/ContrastUtils"), "isLowContrast").mockReturnValue(false);
         const { container } = renderWithProviders(
@@ -67,5 +67,5 @@ describe("ColourPickerComponent Test Suite", () => {
         expect(warningElement).toBeInTheDocument();
         expect(warningElement).toBeEmptyDOMElement();
     });
-    
+
 })

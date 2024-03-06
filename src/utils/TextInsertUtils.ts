@@ -1,7 +1,7 @@
 /* eslint-disable */
 /* global Word console */
 
-import { getCategory } from "../middleware/modal/ModalMiddleware";
+import {getCategory} from "../middleware/modal/ModalMiddleware";
 
 export const getCategoryText = async (title: string, shortTitle: string, alwaysInsertFullText: boolean) => {
     let result = ` (${title}) `;

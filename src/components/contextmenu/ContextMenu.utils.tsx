@@ -5,11 +5,11 @@ import type { MenuItem as IMenuItem } from "./ContextMenu.types";
 
 
 export const createContextMenu = (menuItems: IMenuItem[]) => (
-  <MenuPopover>
-    <MenuList>
-      {menuItems.map(({ label, handler }, index: number) => (
-        <MenuItem onClick={handler} key={index}>{label}</MenuItem>
-      ))}
-    </MenuList>
-  </MenuPopover>
+    <MenuPopover>
+        <MenuList>
+            {menuItems.map(({ label, handler }, index: number) => (
+                <MenuItem onClick={handler} key={index}>{label}</MenuItem>
+            ))}
+        </MenuList>
+    </MenuPopover>
 );

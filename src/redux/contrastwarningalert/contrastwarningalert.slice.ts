@@ -12,13 +12,13 @@ export const contrastWarningSlice = createSlice({
     initialState,
     name: "contrast-warning-alert",
     reducers: {
-        setConfirmBeingHandled : (state, action: PayloadAction<boolean>) => {
+        setConfirmBeingHandled: (state, action: PayloadAction<boolean>) => {
             state.confirmBeingHandled = action.payload;
         },
-        setDisabled : (state, action: PayloadAction<boolean>) => {
+        setDisabled: (state, action: PayloadAction<boolean>) => {
             state.disabled = action.payload;
         },
-        setOpen : (state, action: PayloadAction<boolean>) => {
+        setOpen: (state, action: PayloadAction<boolean>) => {
             state.open = action.payload;
         }
     }

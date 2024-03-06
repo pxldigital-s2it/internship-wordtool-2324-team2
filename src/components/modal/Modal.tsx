@@ -6,15 +6,15 @@ import CategoryForm from "../../forms/CategoryForm";
 
 
 const Modal = () => {
-  const open = useAppSelector(selectOpen);
+    const open = useAppSelector(selectOpen);
 
-  return (
-    <Dialog modalType="non-modal" open={open}>
-      <DialogSurface aria-describedby={undefined}>
-        <CategoryForm />
-      </DialogSurface>
-    </Dialog>
-  );
+    return (
+        <Dialog modalType="non-modal" open={open}>
+            <DialogSurface aria-describedby={undefined}>
+                <CategoryForm/>
+            </DialogSurface>
+        </Dialog>
+    );
 };
 
 export default Modal;

@@ -1,6 +1,6 @@
-const { setIconOptions } = require("@fluentui/react");
+const {setIconOptions} = require("@fluentui/react");
 require('@testing-library/jest-dom');
 
 setIconOptions({
-  disableWarnings: true
+    disableWarnings: true
 });

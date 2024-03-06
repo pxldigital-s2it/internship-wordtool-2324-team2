@@ -3,25 +3,25 @@ import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 
 export const initialState: SettingsState = {
-  alwaysInsertFullText: false,
-  favoritesHiding: false,
-  favoritesHoisting: false
+    alwaysInsertFullText: false,
+    favoritesHiding: false,
+    favoritesHoisting: false
 }
 
 export const settingsSlice = createSlice({
-  initialState,
-  name: "settings",
-  reducers: {
-    toggleAlwaysInsertFullText: (state) => {
-      state.alwaysInsertFullText = !state.alwaysInsertFullText;
-    },
-    toggleFavoritesHiding: (state) => {
-      state.favoritesHiding = !state.favoritesHiding;
-    },
-    toggleFavoritesHoisting: (state) => {
-      state.favoritesHoisting = !state.favoritesHoisting;
+    initialState,
+    name: "settings",
+    reducers: {
+        toggleAlwaysInsertFullText: (state) => {
+            state.alwaysInsertFullText = !state.alwaysInsertFullText;
+        },
+        toggleFavoritesHiding: (state) => {
+            state.favoritesHiding = !state.favoritesHiding;
+        },
+        toggleFavoritesHoisting: (state) => {
+            state.favoritesHoisting = !state.favoritesHoisting;
+        }
     }
-  }
 });
 
 export const { toggleAlwaysInsertFullText, toggleFavoritesHoisting, toggleFavoritesHiding } = settingsSlice.actions;

@@ -5,13 +5,13 @@ import type { MenuTriggerChildProps } from "@fluentui/react-components";
 
 
 const ContextMenuTrigger = forwardRef<HTMLDivElement, Partial<MenuTriggerChildProps> & {
-  children?: ReactNode
+    children?: ReactNode
 }>((props, ref) =>
-  (
-    <div {...props} ref={ref}>
-      { props.children }
-    </div>
-  ));
+    (
+        <div {...props} ref={ref}>
+            {props.children}
+        </div>
+    ));
 
 ContextMenuTrigger.displayName = "ContextMenuTrigger";
 

@@ -29,10 +29,10 @@ const useCategory = () => {
                 return;
             }
         }
-        
-      await saveData(formRef);
+
+        await saveData(formRef);
     };
-    
+
     const saveData = async (formRef: MutableRefObject<HTMLFormElement>) => {
         if (isCategory(data)) {
             const category = {

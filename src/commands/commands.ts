@@ -7,7 +7,7 @@
 /* global global, Office, self, window */
 
 Office.onReady(() => {
-  // If needed, Office.js is ready to be called
+    // If needed, Office.js is ready to be called
 });
 
 /**
@@ -15,28 +15,28 @@ Office.onReady(() => {
  * @param event
  */
 function action(event: Office.AddinCommands.Event) {
-  const message: Office.NotificationMessageDetails = {
-    icon: "Icon.80x80",
-    message: "Performed action.",
-    persistent: true,
-    type: Office.MailboxEnums.ItemNotificationMessageType.InformationalMessage
-  };
+    const message: Office.NotificationMessageDetails = {
+        icon: "Icon.80x80",
+        message: "Performed action.",
+        persistent: true,
+        type: Office.MailboxEnums.ItemNotificationMessageType.InformationalMessage
+    };
 
-  // Show a notification message
-  Office.context.mailbox.item.notificationMessages.replaceAsync("action", message);
+    // Show a notification message
+    Office.context.mailbox.item.notificationMessages.replaceAsync("action", message);
 
-  // Be sure to indicate when the add-in command function is complete
-  event.completed();
+    // Be sure to indicate when the add-in command function is complete
+    event.completed();
 }
 
 function getGlobal() {
-  return typeof self !== "undefined"
-    ? self
-    : typeof window !== "undefined"
-    ? window
-    : typeof global !== "undefined"
-    ? global
-    : undefined;
+    return typeof self !== "undefined"
+        ? self
+        : typeof window !== "undefined"
+            ? window
+            : typeof global !== "undefined"
+                ? global
+                : undefined;
 }
 
 const g = getGlobal() as any;

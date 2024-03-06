@@ -1,18 +1,18 @@
 import { setCategory, setCreate, setOpen, setSubCategory, setTitle } from "../../../redux/modal/modal.slice";
 import {
-  addStorageMockSupport,
-  callAndCheckDispatchCalls
+    addStorageMockSupport,
+    callAndCheckDispatchCalls
 } from "../../../__tests__/utils/TestUtils";
 import {
-  openCreateCategoryModal,
-  openCreateSubCategoryModal,
-  openUpdateCategoryModal,
-  saveCategory,
-  saveSubCategory,
-  saveSubSubCategory,
-  updateCategory,
-  updateSubCategory,
-  updateSubSubCategory
+    openCreateCategoryModal,
+    openCreateSubCategoryModal,
+    openUpdateCategoryModal,
+    saveCategory,
+    saveSubCategory,
+    saveSubSubCategory,
+    updateCategory,
+    updateSubCategory,
+    updateSubSubCategory
 } from "../ModalMiddleware";
 import Category from "../../../types/Category";
 import { setColour } from "../../../redux/category/category.slice";
@@ -20,310 +20,329 @@ import SubSubCategory from "../../../types/SubSubCategory";
 
 describe("ModalMiddleware Test Suite", () => {
 
-  const storageMock = addStorageMockSupport();
-  const consoleSpy = jest.spyOn(console, "error").mockImplementation(() => {});
-
-  beforeEach(() => {
-    jest.spyOn(require("../../category/CategoryMiddleware"), "loadData").mockImplementation(() => ({ type: "loadData" }));
-  })
-
-  afterEach(jest.resetAllMocks);
-  afterAll(jest.restoreAllMocks);
-
-  describe("openCreateCategoryModal", () => {
-
-
-    const _callAndCheckDispatchCalls = async (dispatchCalls: string[]) => await callAndCheckDispatchCalls(openCreateCategoryModal(), dispatchCalls);
-
-    test("happy path", async () => {
-      const dispatchCalls = [
-        setTitle.type,
-        setCreate.type,
-        setCategory.type,
-        setOpen.type
-      ];
-
-      await _callAndCheckDispatchCalls(dispatchCalls);
+    const storageMock = addStorageMockSupport();
+    const consoleSpy = jest.spyOn(console, "error").mockImplementation(() => {
     });
 
-  });
+    beforeEach(() => {
+        jest.spyOn(require("../../category/CategoryMiddleware"), "loadData").mockImplementation(() => ({ type: "loadData" }));
+    })
 
-  describe("openUpdateCategoryModal", () => {
+    afterEach(jest.resetAllMocks);
+    afterAll(jest.restoreAllMocks);
 
-    const categoryId = "123";
-
-    const category: Category = {
-      code: "Some code",
-      colour: "#000000",
-      id: categoryId,
-      title: "testTitle"
-    };
-
-    const _callAndCheckDispatchCalls = async (dispatchCalls) => await callAndCheckDispatchCalls(openUpdateCategoryModal(category), dispatchCalls);
-
-    test("happy path", async () => {
-      const dispatchCalls = [
-        setTitle.type,
-        setCreate.type,
-        setCategory.type,
-        setColour.type,
-        setSubCategory.type,
-        setOpen.type
-      ];
-
-      await _callAndCheckDispatchCalls(dispatchCalls);
-    });
-  });
-
-  describe("openCreateSubCategoryModal", () => {
-
-    const categoryId = "123";
-    const category = { code: "Some code", colour: "#000000", id: categoryId, title: "testTitle" };
-
-    const _callAndCheckDispatchCalls = async (dispatchCalls: string[])  => await callAndCheckDispatchCalls(openCreateSubCategoryModal(category), dispatchCalls);
-
-    test("happy path", async () => {
-      const dispatchCalls = [
-        setTitle.type,
-        setCreate.type,
-        setCategory.type,
-        setSubCategory.type,
-        setOpen.type
-      ];
-
-      await _callAndCheckDispatchCalls(dispatchCalls);
-    });
-  });
+    describe("openCreateCategoryModal", () => {
 
 
-  describe("saveCategory", () => {
+        const _callAndCheckDispatchCalls = async (dispatchCalls: string[]) => await callAndCheckDispatchCalls(openCreateCategoryModal(), dispatchCalls);
 
-    const category: Category = {
-      code: "Some code",
-      id: "Some categoryId"
-    };
+        test("happy path", async () => {
+            const dispatchCalls = [
+                setTitle.type,
+                setCreate.type,
+                setCategory.type,
+                setOpen.type
+            ];
 
-    const _callAndCheckDispatchCalls = async (dispatchCalls: (string | undefined)[]) => await callAndCheckDispatchCalls(saveCategory(category), dispatchCalls);
+            await _callAndCheckDispatchCalls(dispatchCalls);
+        });
 
-
-    test("happy path", async () => {
-      const dispatchCalls = [
-        "loadData",
-        undefined,
-        setOpen.type,
-        setSubCategory.type,
-        setTitle.type,
-        setCategory.type,
-        setColour.type
-      ];
-
-      storageMock("save", () => {});
-
-      await _callAndCheckDispatchCalls(dispatchCalls);
     });
 
-    test("network error", async () => {
-      const dispatchCalls = [];
+    describe("openUpdateCategoryModal", () => {
 
-      storageMock("save", () => {throw new Error("Network Error")});
+        const categoryId = "123";
 
-      await _callAndCheckDispatchCalls(dispatchCalls);
-      expect(consoleSpy).toHaveBeenCalledTimes(1);
-      expect(consoleSpy).toHaveBeenCalledWith("Network Error");
-    });
-  });
+        const category: Category = {
+            code: "Some code",
+            colour: "#000000",
+            id: categoryId,
+            title: "testTitle"
+        };
 
-  describe("updateCategory", () => {
+        const _callAndCheckDispatchCalls = async (dispatchCalls) => await callAndCheckDispatchCalls(openUpdateCategoryModal(category), dispatchCalls);
 
-    const category: Category = {
-      code: "Some code",
-      id: "123"
-    };
+        test("happy path", async () => {
+            const dispatchCalls = [
+                setTitle.type,
+                setCreate.type,
+                setCategory.type,
+                setColour.type,
+                setSubCategory.type,
+                setOpen.type
+            ];
 
-    const _callAndCheckDispatchCalls = async (dispatchCalls) => await callAndCheckDispatchCalls(updateCategory("123", category), dispatchCalls);
-
-
-    test("happy path", async () => {
-      const dispatchCalls = [
-        "loadData",
-        undefined,
-        setOpen.type,
-        setSubCategory.type,
-        setTitle.type,
-        setCategory.type,
-        setColour.type
-      ];
-
-      storageMock("update", () => {});
-
-      await _callAndCheckDispatchCalls(dispatchCalls);
+            await _callAndCheckDispatchCalls(dispatchCalls);
+        });
     });
 
-    test("network error", async () => {
-      const dispatchCalls = [];
+    describe("openCreateSubCategoryModal", () => {
 
-      storageMock("update", () => {throw new Error("Network Error")});
+        const categoryId = "123";
+        const category = { code: "Some code", colour: "#000000", id: categoryId, title: "testTitle" };
 
-      await _callAndCheckDispatchCalls(dispatchCalls);
-      expect(consoleSpy).toHaveBeenCalledTimes(1);
-      expect(consoleSpy).toHaveBeenCalledWith("Network Error");
-    });
-  });
+        const _callAndCheckDispatchCalls = async (dispatchCalls: string[]) => await callAndCheckDispatchCalls(openCreateSubCategoryModal(category), dispatchCalls);
 
-  describe("saveSubCategory", () => {
+        test("happy path", async () => {
+            const dispatchCalls = [
+                setTitle.type,
+                setCreate.type,
+                setCategory.type,
+                setSubCategory.type,
+                setOpen.type
+            ];
 
-    const subCategory = {
-      categoryId: "Some categoryId",
-      code: "Some code",
-      description: "Some description",
-      id: "Some id",
-      isFavorite: false
-    };
-
-    const _callAndCheckDispatchCalls = async (dispatchCalls: (string | undefined)[]) => await callAndCheckDispatchCalls(saveSubCategory(subCategory), dispatchCalls);
-
-
-    test("happy path", async () => {
-      const dispatchCalls = [
-        "loadData",
-        undefined,
-        setOpen.type,
-        setSubCategory.type,
-        setTitle.type,
-        setCategory.type,
-        setColour.type
-      ];
-
-      storageMock("save", () => {});
-
-      await _callAndCheckDispatchCalls(dispatchCalls);
+            await _callAndCheckDispatchCalls(dispatchCalls);
+        });
     });
 
-    test("network error", async () => {
-      const dispatchCalls = [];
 
-      storageMock("save", () => {throw new Error("Network Error")});
+    describe("saveCategory", () => {
 
-      await _callAndCheckDispatchCalls(dispatchCalls);
-      expect(consoleSpy).toHaveBeenCalledTimes(1);
-      expect(consoleSpy).toHaveBeenCalledWith("Network Error");
-    });
-  });
+        const category: Category = {
+            code: "Some code",
+            id: "Some categoryId"
+        };
 
-  describe("updateSubCategory", () => {
-
-    const subCategory = {
-      categoryId: "Some categoryId",
-      code: "Some code",
-      description: "Some description",
-      id: "123",
-      isFavorite: false
-    };
-
-    const _callAndCheckDispatchCalls = async (dispatchCalls) => await callAndCheckDispatchCalls(updateSubCategory("123", subCategory), dispatchCalls);
+        const _callAndCheckDispatchCalls = async (dispatchCalls: (string | undefined)[]) => await callAndCheckDispatchCalls(saveCategory(category), dispatchCalls);
 
 
-    test("happy path", async () => {
-      const dispatchCalls = [
-        "loadData",
-        undefined,
-        setOpen.type,
-        setSubCategory.type,
-        setTitle.type,
-        setCategory.type,
-        setColour.type
-      ];
+        test("happy path", async () => {
+            const dispatchCalls = [
+                "loadData",
+                undefined,
+                setOpen.type,
+                setSubCategory.type,
+                setTitle.type,
+                setCategory.type,
+                setColour.type
+            ];
 
-      storageMock("update", () => {});
+            storageMock("save", () => {
+            });
 
-      await _callAndCheckDispatchCalls(dispatchCalls);
-    });
+            await _callAndCheckDispatchCalls(dispatchCalls);
+        });
 
-    test("network error", async () => {
-      const dispatchCalls = [];
+        test("network error", async () => {
+            const dispatchCalls = [];
 
-      storageMock("update", () => {throw new Error("Network Error")});
+            storageMock("save", () => {
+                throw new Error("Network Error")
+            });
 
-      await _callAndCheckDispatchCalls(dispatchCalls);
-      expect(consoleSpy).toHaveBeenCalledTimes(1);
-      expect(consoleSpy).toHaveBeenCalledWith("Network Error");
-    });
-  });
-
-  describe("saveSubSubCategory", () => {
-
-    const subSubCategory: SubSubCategory = {
-      description: "Some description",
-      id: "Some id",
-      subCategoryId: "Some subCategoryId"
-    };
-
-    const _callAndCheckDispatchCalls = async (dispatchCalls: (string | undefined)[]) => await callAndCheckDispatchCalls(saveSubSubCategory(subSubCategory), dispatchCalls);
-
-
-    test("happy path", async () => {
-      const dispatchCalls = [
-        "loadData",
-        undefined,
-        setOpen.type,
-        setSubCategory.type,
-        setTitle.type,
-        setCategory.type,
-        setColour.type
-      ];
-
-      storageMock("save", () => {});
-
-      await _callAndCheckDispatchCalls(dispatchCalls);
+            await _callAndCheckDispatchCalls(dispatchCalls);
+            expect(consoleSpy).toHaveBeenCalledTimes(1);
+            expect(consoleSpy).toHaveBeenCalledWith("Network Error");
+        });
     });
 
-    test("network error", async () => {
-      const dispatchCalls = [];
+    describe("updateCategory", () => {
 
-      storageMock("save", () => {throw new Error("Network Error")});
+        const category: Category = {
+            code: "Some code",
+            id: "123"
+        };
 
-      await _callAndCheckDispatchCalls(dispatchCalls);
-      expect(consoleSpy).toHaveBeenCalledTimes(1);
-      expect(consoleSpy).toHaveBeenCalledWith("Network Error");
+        const _callAndCheckDispatchCalls = async (dispatchCalls) => await callAndCheckDispatchCalls(updateCategory("123", category), dispatchCalls);
+
+
+        test("happy path", async () => {
+            const dispatchCalls = [
+                "loadData",
+                undefined,
+                setOpen.type,
+                setSubCategory.type,
+                setTitle.type,
+                setCategory.type,
+                setColour.type
+            ];
+
+            storageMock("update", () => {
+            });
+
+            await _callAndCheckDispatchCalls(dispatchCalls);
+        });
+
+        test("network error", async () => {
+            const dispatchCalls = [];
+
+            storageMock("update", () => {
+                throw new Error("Network Error")
+            });
+
+            await _callAndCheckDispatchCalls(dispatchCalls);
+            expect(consoleSpy).toHaveBeenCalledTimes(1);
+            expect(consoleSpy).toHaveBeenCalledWith("Network Error");
+        });
     });
-  });
 
-  describe("updateSubSubCategory", () => {
+    describe("saveSubCategory", () => {
 
-    const subSubCategory: SubSubCategory = {
-      description: "Some description",
-      id: "123",
-      subCategoryId: "Some subCategoryId"
-    };
+        const subCategory = {
+            categoryId: "Some categoryId",
+            code: "Some code",
+            description: "Some description",
+            id: "Some id",
+            isFavorite: false
+        };
 
-    const _callAndCheckDispatchCalls = async (dispatchCalls) => await callAndCheckDispatchCalls(updateSubSubCategory("123", subSubCategory), dispatchCalls);
+        const _callAndCheckDispatchCalls = async (dispatchCalls: (string | undefined)[]) => await callAndCheckDispatchCalls(saveSubCategory(subCategory), dispatchCalls);
 
 
-    test("happy path", async () => {
-      const dispatchCalls = [
-        "loadData",
-        undefined,
-        setOpen.type,
-        setSubCategory.type,
-        setTitle.type,
-        setCategory.type,
-        setColour.type
-      ];
+        test("happy path", async () => {
+            const dispatchCalls = [
+                "loadData",
+                undefined,
+                setOpen.type,
+                setSubCategory.type,
+                setTitle.type,
+                setCategory.type,
+                setColour.type
+            ];
 
-      storageMock("update", () => {});
+            storageMock("save", () => {
+            });
 
-      await _callAndCheckDispatchCalls(dispatchCalls);
+            await _callAndCheckDispatchCalls(dispatchCalls);
+        });
+
+        test("network error", async () => {
+            const dispatchCalls = [];
+
+            storageMock("save", () => {
+                throw new Error("Network Error")
+            });
+
+            await _callAndCheckDispatchCalls(dispatchCalls);
+            expect(consoleSpy).toHaveBeenCalledTimes(1);
+            expect(consoleSpy).toHaveBeenCalledWith("Network Error");
+        });
     });
 
-    test("network error", async () => {
-      const dispatchCalls = [];
+    describe("updateSubCategory", () => {
 
-      storageMock("update", () => {throw new Error("Network Error")});
+        const subCategory = {
+            categoryId: "Some categoryId",
+            code: "Some code",
+            description: "Some description",
+            id: "123",
+            isFavorite: false
+        };
 
-      await _callAndCheckDispatchCalls(dispatchCalls);
-      expect(consoleSpy).toHaveBeenCalledTimes(1);
-      expect(consoleSpy).toHaveBeenCalledWith("Network Error");
+        const _callAndCheckDispatchCalls = async (dispatchCalls) => await callAndCheckDispatchCalls(updateSubCategory("123", subCategory), dispatchCalls);
+
+
+        test("happy path", async () => {
+            const dispatchCalls = [
+                "loadData",
+                undefined,
+                setOpen.type,
+                setSubCategory.type,
+                setTitle.type,
+                setCategory.type,
+                setColour.type
+            ];
+
+            storageMock("update", () => {
+            });
+
+            await _callAndCheckDispatchCalls(dispatchCalls);
+        });
+
+        test("network error", async () => {
+            const dispatchCalls = [];
+
+            storageMock("update", () => {
+                throw new Error("Network Error")
+            });
+
+            await _callAndCheckDispatchCalls(dispatchCalls);
+            expect(consoleSpy).toHaveBeenCalledTimes(1);
+            expect(consoleSpy).toHaveBeenCalledWith("Network Error");
+        });
     });
-  });
+
+    describe("saveSubSubCategory", () => {
+
+        const subSubCategory: SubSubCategory = {
+            description: "Some description",
+            id: "Some id",
+            subCategoryId: "Some subCategoryId"
+        };
+
+        const _callAndCheckDispatchCalls = async (dispatchCalls: (string | undefined)[]) => await callAndCheckDispatchCalls(saveSubSubCategory(subSubCategory), dispatchCalls);
+
+
+        test("happy path", async () => {
+            const dispatchCalls = [
+                "loadData",
+                undefined,
+                setOpen.type,
+                setSubCategory.type,
+                setTitle.type,
+                setCategory.type,
+                setColour.type
+            ];
+
+            storageMock("save", () => {
+            });
+
+            await _callAndCheckDispatchCalls(dispatchCalls);
+        });
+
+        test("network error", async () => {
+            const dispatchCalls = [];
+
+            storageMock("save", () => {
+                throw new Error("Network Error")
+            });
+
+            await _callAndCheckDispatchCalls(dispatchCalls);
+            expect(consoleSpy).toHaveBeenCalledTimes(1);
+            expect(consoleSpy).toHaveBeenCalledWith("Network Error");
+        });
+    });
+
+    describe("updateSubSubCategory", () => {
+
+        const subSubCategory: SubSubCategory = {
+            description: "Some description",
+            id: "123",
+            subCategoryId: "Some subCategoryId"
+        };
+
+        const _callAndCheckDispatchCalls = async (dispatchCalls) => await callAndCheckDispatchCalls(updateSubSubCategory("123", subSubCategory), dispatchCalls);
+
+
+        test("happy path", async () => {
+            const dispatchCalls = [
+                "loadData",
+                undefined,
+                setOpen.type,
+                setSubCategory.type,
+                setTitle.type,
+                setCategory.type,
+                setColour.type
+            ];
+
+            storageMock("update", () => {
+            });
+
+            await _callAndCheckDispatchCalls(dispatchCalls);
+        });
+
+        test("network error", async () => {
+            const dispatchCalls = [];
+
+            storageMock("update", () => {
+                throw new Error("Network Error")
+            });
+
+            await _callAndCheckDispatchCalls(dispatchCalls);
+            expect(consoleSpy).toHaveBeenCalledTimes(1);
+            expect(consoleSpy).toHaveBeenCalledWith("Network Error");
+        });
+    });
 
 });

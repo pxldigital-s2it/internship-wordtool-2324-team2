@@ -4,8 +4,8 @@ import { ContrastWarningAlertState } from "./contrastwarningalert/contrastwarnin
 import { SettingsState } from "./settings/settings.types";
 
 export interface State {
-  category: CategoryState
-  contrastWarningAlert: ContrastWarningAlertState
-  modal: ModalState
-  settings: SettingsState
+    category: CategoryState
+    contrastWarningAlert: ContrastWarningAlertState
+    modal: ModalState
+    settings: SettingsState
 }

@@ -41,7 +41,7 @@ describe("useCategory Test Suite", () => {
             category: { code: "123", colour: "#FFFFFF", id: "123", title: "123" }
         }
     };
-    
+
     const stateWithCategoryWithLowContrast = {
         ...STATE,
         category: {
@@ -132,7 +132,7 @@ describe("useCategory Test Suite", () => {
         });
 
         test("update subCategory", async () => {
-            await act(() => {
+            act(() => {
                 const { unmount } = renderHookWithProviders(async () => {
                     const result = useCategory();
 
@@ -171,7 +171,7 @@ describe("useCategory Test Suite", () => {
         });
 
         test("create category", async () => {
-            await act(() => {
+            act(() => {
                 const { unmount } = renderHookWithProviders(async () => {
                     const result = useCategory();
                     const form = addFormSupport(new Map([
@@ -194,7 +194,7 @@ describe("useCategory Test Suite", () => {
         });
 
         test("update category", async () => {
-            await act(() => {
+            act(() => {
                 const { unmount } = renderHookWithProviders(async () => {
                     const result = useCategory();
 
@@ -227,12 +227,12 @@ describe("useCategory Test Suite", () => {
         describe("ContractWarning", () => {
             const type = "OPEN_CONTRAST_WARNING_ALERT";
 
-            test("If low contrast when handle submit then show contrast warning popup", async() => {
+            test("If low contrast when handle submit then show contrast warning popup", async () => {
                 const mockDispatch = jest.fn();
                 jest.spyOn(require("../../redux/hooks"), "useAppDispatch").mockImplementation(() => mockDispatch);
                 jest.spyOn(require("../../middleware/contrastwarningalert/ContrastWarningAlertMiddleware"), "openContrastWarningAlert").mockImplementation(() => ({ type }));
 
-                await act(() => {
+                act(() => {
                     const { unmount } = renderHookWithProviders(async () => {
                         const result = useCategory();
 
@@ -258,13 +258,13 @@ describe("useCategory Test Suite", () => {
                 });
             });
 
-            test("If high contrast when handle submit then show contrast warning popup", async() => {
+            test("If high contrast when handle submit then show contrast warning popup", async () => {
 
                 const mockDispatch = jest.fn();
                 jest.spyOn(require("../../redux/hooks"), "useAppDispatch").mockImplementation(() => mockDispatch);
                 jest.spyOn(require("../../middleware/contrastwarningalert/ContrastWarningAlertMiddleware"), "openContrastWarningAlert").mockImplementation(() => ({ type }));
 
-                await act(() => {
+                act(() => {
                     const { unmount } = renderHookWithProviders(async () => {
                         const result = useCategory();
 

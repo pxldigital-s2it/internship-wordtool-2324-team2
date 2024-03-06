@@ -1,3 +1,3 @@
 export interface ColourSquareProps {
-  colour: string
+    colour: string
 }

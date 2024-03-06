@@ -7,22 +7,22 @@ import { fireEvent } from "@testing-library/react";
 
 
 describe('AddButton Test Suite', () => {
-  test('Initial Render', () => {
-    const { getByText } = renderWithProviders(<AddButton />, { preloadedState: initialState });
+    test('Initial Render', () => {
+        const { getByText } = renderWithProviders(<AddButton/>, { preloadedState: initialState });
 
-    expect(getByText(STRING_RESOURCES.buttons.add.label)).toBeInTheDocument();
-  });
+        expect(getByText(STRING_RESOURCES.buttons.add.label)).toBeInTheDocument();
+    });
 
-  test("Clicking the button should call the onClick function", () => {
-    const dispatchMock = jest.fn();
-    jest.spyOn(require("../../../redux/hooks"), 'useAppDispatch').mockReturnValue(dispatchMock);
-    jest.spyOn(require("../../../middleware/modal/ModalMiddleware"), 'openCreateCategoryModal').mockReturnValue({ type: 'OPEN_CREATE_CATEGORY_MODAL' });
-    const { getByText } = renderWithProviders(<AddButton  />, { preloadedState: initialState });
+    test("Clicking the button should call the onClick function", () => {
+        const dispatchMock = jest.fn();
+        jest.spyOn(require("../../../redux/hooks"), 'useAppDispatch').mockReturnValue(dispatchMock);
+        jest.spyOn(require("../../../middleware/modal/ModalMiddleware"), 'openCreateCategoryModal').mockReturnValue({ type: 'OPEN_CREATE_CATEGORY_MODAL' });
+        const { getByText } = renderWithProviders(<AddButton/>, { preloadedState: initialState });
 
-    fireEvent.click(getByText(STRING_RESOURCES.buttons.add.label));
+        fireEvent.click(getByText(STRING_RESOURCES.buttons.add.label));
 
-    expect(dispatchMock).toHaveBeenCalledTimes(1);
-    expect(dispatchMock).toHaveBeenCalledWith({ type: 'OPEN_CREATE_CATEGORY_MODAL' });
-  });
+        expect(dispatchMock).toHaveBeenCalledTimes(1);
+        expect(dispatchMock).toHaveBeenCalledWith({ type: 'OPEN_CREATE_CATEGORY_MODAL' });
+    });
 
 });

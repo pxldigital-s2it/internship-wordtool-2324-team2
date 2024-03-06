@@ -6,39 +6,46 @@ import { CategoryState } from "./category.types";
 
 
 export const initialState: CategoryState = {
-  isLoading: false
+    isLoading: false
 }
 
 export const categorySlice = createSlice({
-  initialState,
-  name: "category",
-  reducers: {
-    loadDataFailure: (state, action: PayloadAction<string>) => {
-      state.error = action.payload;
-      state.isLoading = false;
-    },
-    loadDataStart: (state) => {
-      state.isLoading = true;
-    },
-    loadDataSuccess: (state, action: PayloadAction<Category[]>) => {
-      state.categories = action.payload;
-      state.isLoading = false;
-    },
-    setCategory: (state, action: PayloadAction<Category>) => {
-      state.category = action.payload;
-    },
-    setCategoryId: (state, action: PayloadAction<string>) => {
-      state.categoryId = action.payload;
-    },
-    setColour: (state, action: PayloadAction<string>) => {
-      state.colour = action.payload;
+    initialState,
+    name: "category",
+    reducers: {
+        loadDataFailure: (state, action: PayloadAction<string>) => {
+            state.error = action.payload;
+            state.isLoading = false;
+        },
+        loadDataStart: (state) => {
+            state.isLoading = true;
+        },
+        loadDataSuccess: (state, action: PayloadAction<Category[]>) => {
+            state.categories = action.payload;
+            state.isLoading = false;
+        },
+        setCategory: (state, action: PayloadAction<Category>) => {
+            state.category = action.payload;
+        },
+        setCategoryId: (state, action: PayloadAction<string>) => {
+            state.categoryId = action.payload;
+        },
+        setColour: (state, action: PayloadAction<string>) => {
+            state.colour = action.payload;
+        }
     }
-  }
 });
 
 
 /* ACTIONS */
-export const { loadDataFailure, loadDataStart, loadDataSuccess, setCategory, setCategoryId, setColour } = categorySlice.actions
+export const {
+    loadDataFailure,
+    loadDataStart,
+    loadDataSuccess,
+    setCategory,
+    setCategoryId,
+    setColour
+} = categorySlice.actions
 
 
 /* SELECTORS */
