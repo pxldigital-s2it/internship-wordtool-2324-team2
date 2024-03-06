@@ -7,13 +7,13 @@ import { fireEvent } from '@testing-library/react';
 
 describe('SettingsPanel Test Suite', () => {
     test('initial render', () => {
-        const { getByLabelText } = renderWithProviders(<SettingsPanel  />, { preloadedState: initialState });
+        const { getByLabelText } = renderWithProviders(<SettingsPanel/>, { preloadedState: initialState });
 
         expect(getByLabelText(STRING_RESOURCES.settings.buttons.settingsText)).toBeInTheDocument();
     });
 
     test('click on the settings button opens the panel', () => {
-        const { getByLabelText, getByText } = renderWithProviders(<SettingsPanel  />, { preloadedState: initialState });
+        const { getByLabelText, getByText } = renderWithProviders(<SettingsPanel/>, { preloadedState: initialState });
 
         fireEvent.click(getByLabelText(STRING_RESOURCES.settings.buttons.settingsText));
 
@@ -24,7 +24,7 @@ describe('SettingsPanel Test Suite', () => {
     });
 
     test('favoritesHoisting is changed when toggle is clicked', () => {
-        const { getByLabelText, store } = renderWithProviders(<SettingsPanel  />, { preloadedState: initialState });
+        const { getByLabelText, store } = renderWithProviders(<SettingsPanel/>, { preloadedState: initialState });
 
         fireEvent.click(getByLabelText(STRING_RESOURCES.settings.buttons.settingsText));
 
@@ -38,7 +38,7 @@ describe('SettingsPanel Test Suite', () => {
     });
 
     test('favoritesHiding is changed when toggle is clicked', () => {
-        const { getByLabelText, store } = renderWithProviders(<SettingsPanel  />, { preloadedState: initialState });
+        const { getByLabelText, store } = renderWithProviders(<SettingsPanel/>, { preloadedState: initialState });
 
         fireEvent.click(getByLabelText(STRING_RESOURCES.settings.buttons.settingsText));
 
@@ -52,7 +52,7 @@ describe('SettingsPanel Test Suite', () => {
     });
 
     test('alwaysInsertFullText is changed when toggle is clicked', () => {
-        const { getByLabelText, store } = renderWithProviders(<SettingsPanel  />, { preloadedState: initialState });
+        const { getByLabelText, store } = renderWithProviders(<SettingsPanel/>, { preloadedState: initialState });
 
         fireEvent.click(getByLabelText(STRING_RESOURCES.settings.buttons.settingsText));
 
@@ -66,7 +66,7 @@ describe('SettingsPanel Test Suite', () => {
     });
 
     test('click on the cancel button closes the panel', () => {
-        const { getByLabelText, getByText } = renderWithProviders(<SettingsPanel  />, { preloadedState: initialState });
+        const { getByLabelText, getByText } = renderWithProviders(<SettingsPanel/>, { preloadedState: initialState });
 
         fireEvent.click(getByLabelText(STRING_RESOURCES.settings.buttons.settingsText));
 

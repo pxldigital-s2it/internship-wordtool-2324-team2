@@ -35,9 +35,12 @@ export const SettingsPanel: React.FunctionComponent = () => {
     const onRenderFooterContent = React.useCallback(
         () => (
             <div>
-                <SettingsToggle label={STRING_RESOURCES.settings.labels.favoritesHoisting} checked={favoritesHoisting} onChange={setFavoritesHoisting} />
-                <SettingsToggle label={STRING_RESOURCES.settings.labels.favoritesHiding} checked={favoritesHiding} onChange={setFavoritesHiding} />
-                <SettingsToggle label={STRING_RESOURCES.settings.labels.alwaysInsertFullText} checked={alwaysInsertFullText} onChange={setAlwaysInsertFullText} />
+                <SettingsToggle label={STRING_RESOURCES.settings.labels.favoritesHoisting} checked={favoritesHoisting}
+                                onChange={setFavoritesHoisting}/>
+                <SettingsToggle label={STRING_RESOURCES.settings.labels.favoritesHiding} checked={favoritesHiding}
+                                onChange={setFavoritesHiding}/>
+                <SettingsToggle label={STRING_RESOURCES.settings.labels.alwaysInsertFullText}
+                                checked={alwaysInsertFullText} onChange={setAlwaysInsertFullText}/>
                 <DefaultButton onClick={dismissPanel}>{STRING_RESOURCES.settings.buttons.cancelText}</DefaultButton>
             </div>
         ),
@@ -46,7 +49,8 @@ export const SettingsPanel: React.FunctionComponent = () => {
 
     return (
         <div>
-            <DefaultButton onClick={openPanel} iconProps={{ iconName: 'Settings' }} aria-label={STRING_RESOURCES.settings.buttons.settingsText} />
+            <DefaultButton onClick={openPanel} iconProps={{ iconName: 'Settings' }}
+                           aria-label={STRING_RESOURCES.settings.buttons.settingsText}/>
             <Panel
                 isOpen={isOpen}
                 onDismiss={dismissPanel}

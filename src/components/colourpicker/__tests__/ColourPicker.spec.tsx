@@ -5,7 +5,7 @@ import ColourPicker from "../ColourPicker";
 describe("ColourPicker Test Suite", () => {
     const setSelectedColor = jest.fn();
     const createComponent = (selectedColor: string = "#000000") => (
-        <ColourPicker selectedColor={selectedColor} setSelectedColor={setSelectedColor} />);
+        <ColourPicker selectedColor={selectedColor} setSelectedColor={setSelectedColor}/>);
 
     test("Initial render", () => {
         const { getByLabelText, rerender } = render(createComponent());

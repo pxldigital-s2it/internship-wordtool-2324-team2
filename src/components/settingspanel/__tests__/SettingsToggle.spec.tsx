@@ -6,7 +6,9 @@ import SettingsToggle from "../SettingsToggle";
 
 describe('SettingsToggle Test Suite', () => {
     test('Initial render', () => {
-        const { getByText } = renderWithProviders(<SettingsToggle label={STRING_RESOURCES.settings.labels.favoritesHoisting} checked={true} onChange={() => false} />, { preloadedState: initialState });
+        const { getByText } = renderWithProviders(<SettingsToggle
+            label={STRING_RESOURCES.settings.labels.favoritesHoisting} checked={true}
+            onChange={() => false}/>, { preloadedState: initialState });
 
         expect(getByText(STRING_RESOURCES.settings.labels.favoritesHoisting)).toBeInTheDocument();
     });

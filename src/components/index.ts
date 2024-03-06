@@ -5,9 +5,9 @@ import AddButton from './buttons/AddButton';
 import CategoryComponent from './category/maincategory/CategoryComponent';
 
 export {
-  AddButton,
-  CategoryComponent,
-  ColourPickerComponent,
-  ContextMenu,
-  Modal
+    AddButton,
+    CategoryComponent,
+    ColourPickerComponent,
+    ContextMenu,
+    Modal
 };

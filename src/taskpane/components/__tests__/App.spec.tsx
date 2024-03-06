@@ -7,8 +7,8 @@ import React from "react";
 
 jest.mock("../../../utils/StorageUtils");
 describe("App Test Suite", () => {
-  it("should loadInitialData on app render", () => {
-    renderWithProviders(<App/>, { preloadedState: initialState })
-    expect(loadInitialStorage).toHaveBeenCalledTimes(1);
-  });
+    it("should loadInitialData on app render", () => {
+        renderWithProviders(<App/>, { preloadedState: initialState })
+        expect(loadInitialStorage).toHaveBeenCalledTimes(1);
+    });
 });

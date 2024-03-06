@@ -13,62 +13,71 @@ import FreeFeedbackInput from "../../freefeedbackinput/FreeFeedbackInput";
 import { selectAlwaysInsertFullText } from "../../../redux/settings/settings.slice";
 
 const CategoryComponent: React.FC<Category> = ({ id, title, colour, subCategories, code }) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const dispatch = useAppDispatch();
-  const alwaysInsertFullText = useAppSelector(selectAlwaysInsertFullText);
+    const [isOpen, setIsOpen] = useState(false);
+    const dispatch = useAppDispatch();
+    const alwaysInsertFullText = useAppSelector(selectAlwaysInsertFullText);
 
-  return (
-    <table style={{
-      backgroundColor: colour + "1A",
-      borderCollapse: "collapse",
-      tableLayout: "fixed",
-      width: "100%"
-    }}>
-      <thead>
-      </thead>
-      <tbody>
-      <tr>
-        <ContextMenu trigger={<CategoryHeader colour={colour} id={id} code={code} isOpen={isOpen} setIsOpen={setIsOpen}
-                                              sections={subCategories.length}
-                                              name={id == "favorites" ? `${code} ${title}` : `${title}`} alwaysInsertFullText={alwaysInsertFullText}/>}
-                     menuItems={
-                       [
-                         {
-                           handler: () => dispatch(openCreateSubCategoryModal({
-                             code,
-                             colour,
-                             id,
-                             subCategories,
-                             title
-                           })),
-                           label: categoryContextMenu.getSubCategoryLabel()
-                         },
-                         {
-                           handler: () => dispatch(openUpdateCategoryModal({ code, colour, id, subCategories, title })),
-                           label: categoryContextMenu.getEditLabel()
-                         },
-                         {
-                           handler: () => dispatch(deleteCategory(id)),
-                           label: categoryContextMenu.getDeleteLabel()
-                         }
-                       ]
-                     }
-        />
-      </tr>
-      {isOpen && (
-          <tr className={categoryClassNames.categoryContent}>
-            {subCategories && subCategories.length > 0 ? (
-                subCategories.map((subCategory) => (
-                    <SubCategoryComponent key={subCategory.id} {...subCategory} backgroundColor={colour} shortCode={subCategory.shortCode} />
-                ))
-            ) : (
-                <FreeFeedbackInput categoryId={id} description={title} />
+    return (
+        <table style={{
+            backgroundColor: colour + "1A",
+            borderCollapse: "collapse",
+            tableLayout: "fixed",
+            width: "100%"
+        }}>
+            <thead>
+            </thead>
+            <tbody>
+            <tr>
+                <ContextMenu
+                    trigger={<CategoryHeader colour={colour} id={id} code={code} isOpen={isOpen} setIsOpen={setIsOpen}
+                                             sections={subCategories.length}
+                                             name={id == "favorites" ? `${code} ${title}` : `${title}`}
+                                             alwaysInsertFullText={alwaysInsertFullText}/>}
+                    menuItems={
+                        [
+                            {
+                                handler: () => dispatch(openCreateSubCategoryModal({
+                                    code,
+                                    colour,
+                                    id,
+                                    subCategories,
+                                    title
+                                })),
+                                label: categoryContextMenu.getSubCategoryLabel()
+                            },
+                            {
+                                handler: () => dispatch(openUpdateCategoryModal({
+                                    code,
+                                    colour,
+                                    id,
+                                    subCategories,
+                                    title
+                                })),
+                                label: categoryContextMenu.getEditLabel()
+                            },
+                            {
+                                handler: () => dispatch(deleteCategory(id)),
+                                label: categoryContextMenu.getDeleteLabel()
+                            }
+                        ]
+                    }
+                />
+            </tr>
+            {isOpen && (
+                <tr className={categoryClassNames.categoryContent}>
+                    {subCategories && subCategories.length > 0 ? (
+                        subCategories.map((subCategory) => (
+                            <SubCategoryComponent key={subCategory.id} {...subCategory} backgroundColor={colour}
+                                                  shortCode={subCategory.shortCode}/>
+                        ))
+                    ) : (
+                        <FreeFeedbackInput categoryId={id} description={title}/>
+                    )}
+                </tr>
             )}
-          </tr>
-      )}
-      </tbody>
-    </table>
-  );
+            </tbody>
+        </table>
+    );
 };
 
 export default CategoryComponent;

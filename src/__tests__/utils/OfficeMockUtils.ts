@@ -10,10 +10,10 @@ const getOfficeMock = (originalStyle: string, mockReturnValue: string[], isEmpty
         context: {
             document: {
                 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                addStyle: function(name: string, _: string) {
+                addStyle: function (name: string, _: string) {
                     return {
                         font: {},
-                        load: function() {
+                        load: function () {
                             return this;
                         },
                         shading: {},
@@ -24,26 +24,26 @@ const getOfficeMock = (originalStyle: string, mockReturnValue: string[], isEmpty
                     // eslint-disable-next-line @typescript-eslint/no-unused-vars
                     search: jest.fn().mockImplementation((_) => ({
                         items: mockReturnValue,
-                        load: function() {
+                        load: function () {
                             return this;
                         }
                     }))
                 },
-                getSelection: function() {
+                getSelection: function () {
                     return this.range;
                 },
-                getStyles: function() {
+                getStyles: function () {
                     return this.styles;
                 },
                 range: {
                     font: {},
-                    insertHtml: function(html: string, insertLocation: unknown) {
+                    insertHtml: function (html: string, insertLocation: unknown) {
                         this.html = html;
                         this.insertLocation = insertLocation;
                         return this;
                     },
                     insertLocation: undefined,
-                    insertText: function(text: string, insertLocation: unknown) {
+                    insertText: function (text: string, insertLocation: unknown) {
                         this.text = text;
                         this.insertLocation = insertLocation;
                         return this;
@@ -53,14 +53,14 @@ const getOfficeMock = (originalStyle: string, mockReturnValue: string[], isEmpty
                     text: "This is a test"
                 },
                 styles: {
-                    getByNameOrNullObject: function() {
+                    getByNameOrNullObject: function () {
                         return {
                             font: {
                                 color: "black",
                                 highlightColor: "white"
                             },
                             isNullObject,
-                            load: function() {
+                            load: function () {
                                 return this;
                             },
                             shading: {
@@ -68,19 +68,19 @@ const getOfficeMock = (originalStyle: string, mockReturnValue: string[], isEmpty
                             }
                         };
                     },
-                    load: function() {
+                    load: function () {
                         return this;
                     }
                 }
             },
             trackedObjects: {
-                add: function() {
+                add: function () {
                     return this;
                 }
             }
         },
         // Mock the Word.run function.
-        run: async function(callback) {
+        run: async function (callback) {
             await callback(this.context);
         }
     });

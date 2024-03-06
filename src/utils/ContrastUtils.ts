@@ -2,7 +2,7 @@
 
 export const isLowContrast = (backgroundColour: IColor): boolean => {
     const contrastTreshold = 7;
-    
+
     let contrastWithBlackText = calculateContrastRatioWithBlackText(backgroundColour);
 
     return contrastWithBlackText < contrastTreshold;

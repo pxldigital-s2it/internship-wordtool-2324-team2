@@ -26,6 +26,7 @@ exports[`CategoryForm Test Suite initial render 1`] = `
             >
               <td
                 class="fui-TableCell ___18c4fhz_1qt9bvz f10pi13n f1nbblvp f1vdfbxk f1ov4xf1 f1f5gg8d fz36nt7 f9znhxp fqrak0z f1o2ludy f1kjnpwc fxmnebo f1witrsb f15pt5es fmrv4ls f1ft4266"
+                style="width: 20%;"
               >
                 <label
                   class="fui-Label ___1yevxz2_yljzsa0 fk6fouc f19n0e5 fkhj508 f1i3iumi"
@@ -49,6 +50,7 @@ exports[`CategoryForm Test Suite initial render 1`] = `
             >
               <td
                 class="fui-TableCell ___18c4fhz_1qt9bvz f10pi13n f1nbblvp f1vdfbxk f1ov4xf1 f1f5gg8d fz36nt7 f9znhxp fqrak0z f1o2ludy f1kjnpwc fxmnebo f1witrsb f15pt5es fmrv4ls f1ft4266"
+                style="width: 20%;"
               >
                 <label
                   class="fui-Label ___1yevxz2_yljzsa0 fk6fouc f19n0e5 fkhj508 f1i3iumi"

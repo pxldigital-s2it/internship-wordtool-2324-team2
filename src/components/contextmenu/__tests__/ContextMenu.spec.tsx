@@ -5,28 +5,28 @@ import ContextMenu from "../ContextMenu";
 
 describe("ContextMenu Test Suite", () => {
 
-  const trigger = <h1 role="trigger">Trigger</h1>;
-  const menuItems = [{ handler: jest.fn(), label: "Label 1" }];
-  const renderComponent = () => (render(<ContextMenu trigger={trigger} menuItems={menuItems}/>));
+    const trigger = <h1 role="trigger">Trigger</h1>;
+    const menuItems = [{ handler: jest.fn(), label: "Label 1" }];
+    const renderComponent = () => (render(<ContextMenu trigger={trigger} menuItems={menuItems}/>));
 
-  test("Initial render", () => {
-    const { baseElement } = renderComponent();
+    test("Initial render", () => {
+        const { baseElement } = renderComponent();
 
-    expect(baseElement).toMatchSnapshot();
-  });
+        expect(baseElement).toMatchSnapshot();
+    });
 
-  test("Initially open = false", () => {
-    const { queryByRole } = renderComponent();
+    test("Initially open = false", () => {
+        const { queryByRole } = renderComponent();
 
-    expect(queryByRole("menu")).not.toBeInTheDocument();
-  });
+        expect(queryByRole("menu")).not.toBeInTheDocument();
+    });
 
-  test("onOpenChange", () => {
-    const { getByRole } = renderComponent();
+    test("onOpenChange", () => {
+        const { getByRole } = renderComponent();
 
-    fireEvent.contextMenu(getByRole("trigger"));
+        fireEvent.contextMenu(getByRole("trigger"));
 
-    expect(getByRole("menu")).toBeInTheDocument();
-  });
+        expect(getByRole("menu")).toBeInTheDocument();
+    });
 
 });

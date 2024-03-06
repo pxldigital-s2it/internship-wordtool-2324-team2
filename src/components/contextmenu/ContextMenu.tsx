@@ -8,21 +8,21 @@ import type { ContextMenuProps } from "./ContextMenu.types";
 
 const ContextMenu: React.FC<ContextMenuProps> = ({ trigger, menuItems }) => {
 
-  const [open, setOpen] = React.useState(false);
-  const onOpenChange: MenuProps["onOpenChange"] = (_, data) => {
-    setOpen(data.open);
-  };
+    const [open, setOpen] = React.useState(false);
+    const onOpenChange: MenuProps["onOpenChange"] = (_, data) => {
+        setOpen(data.open);
+    };
 
-  return (
-    <Menu open={open} onOpenChange={onOpenChange} openOnContext={true}>
-      <MenuTrigger disableButtonEnhancement>
-        <ContextMenuTrigger>
-          { trigger }
-        </ContextMenuTrigger>
-      </MenuTrigger>
-      { createContextMenu(menuItems) }
-    </Menu>
-  );
+    return (
+        <Menu open={open} onOpenChange={onOpenChange} openOnContext={true}>
+            <MenuTrigger disableButtonEnhancement>
+                <ContextMenuTrigger>
+                    {trigger}
+                </ContextMenuTrigger>
+            </MenuTrigger>
+            {createContextMenu(menuItems)}
+        </Menu>
+    );
 
 };
 

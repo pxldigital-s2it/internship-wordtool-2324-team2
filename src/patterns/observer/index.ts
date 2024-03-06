@@ -8,10 +8,10 @@ const contextMenuData = new ContextMenuData();
 const categoryContextMenu = new CategoryContextMenu(contextMenuData);
 const subCategoryContextMenu = new SubCategoryContextMenu(contextMenuData);
 contextMenuData.setLabels(new Map<LabelKey, string>([
-  [LabelKey.SUB_CAT, "Subcategorie toevoegen"],
-  [LabelKey.FAVORITE, "Favoriet maken"],
-  [LabelKey.EDIT, "Wijzigen"],
-  [LabelKey.DELETE, "Verwijderen"]
+    [LabelKey.SUB_CAT, "Subcategorie toevoegen"],
+    [LabelKey.FAVORITE, "Favoriet maken"],
+    [LabelKey.EDIT, "Wijzigen"],
+    [LabelKey.DELETE, "Verwijderen"]
 ]));
 contextMenuData.labelsChanged();
 

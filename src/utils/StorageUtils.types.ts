@@ -1,5 +1,5 @@
 export enum StorageKeys {
-  CATEGORY = 'categories',
-  SUBCATEGORY = 'subCategories',
-  SUBSUBCATEGORY = 'subSubCategories'
+    CATEGORY = 'categories',
+    SUBCATEGORY = 'subCategories',
+    SUBSUBCATEGORY = 'subSubCategories'
 }

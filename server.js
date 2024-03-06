@@ -9,10 +9,10 @@ app.use(express.static(path.join(__dirname, 'dist')));
 
 // Route to serve the taskpane.html file
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'dist', 'taskpane.html'));
+    res.sendFile(path.join(__dirname, 'dist', 'taskpane.html'));
 });
 
 // Start the server
 app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+    console.log(`Server is running on http://localhost:${PORT}`);
 });

@@ -19,14 +19,16 @@ describe('FreeFeedbackInput Integration Test Suite', () => {
     };
 
     test('Initial render', () => {
-        const { getByTitle, getByPlaceholderText } = renderWithProviders(<FreeFeedbackInput  />, { preloadedState: initialState });
+        const { getByTitle, getByPlaceholderText } = renderWithProviders(
+            <FreeFeedbackInput/>, { preloadedState: initialState });
 
         expect(getByTitle(STRING_RESOURCES.freefeedbackinput.button.title)).toBeInTheDocument();
         expect(getByPlaceholderText(STRING_RESOURCES.freefeedbackinput.textarea.placeholder)).toBeInTheDocument();
     });
 
     test('FreeFeedbackInput onClick to insert text should call insertFreeFeedback when button is clicked', () => {
-        const { getByTitle, getByPlaceholderText } = renderWithProviders(<FreeFeedbackInput  />, { preloadedState: initialState });
+        const { getByTitle, getByPlaceholderText } = renderWithProviders(
+            <FreeFeedbackInput/>, { preloadedState: initialState });
 
         fireEvent.change(getByPlaceholderText(STRING_RESOURCES.freefeedbackinput.textarea.placeholder), { target: { value: "Test feedback" } });
 
@@ -36,7 +38,7 @@ describe('FreeFeedbackInput Integration Test Suite', () => {
     });
 
     test('FreeFeedbackInput key down enter to insert text should call insertFreeFeedback', async () => {
-        const { getByPlaceholderText } = renderWithProviders(<FreeFeedbackInput  />, { preloadedState: initialState });
+        const { getByPlaceholderText } = renderWithProviders(<FreeFeedbackInput/>, { preloadedState: initialState });
 
         const freeInputTextarea = getByPlaceholderText(STRING_RESOURCES.freefeedbackinput.textarea.placeholder);
 
@@ -54,7 +56,7 @@ describe('FreeFeedbackInput Integration Test Suite', () => {
     });
 
     test('FreeFeedbackInput key down escape to clear textarea', () => {
-        const { getByPlaceholderText } = renderWithProviders(<FreeFeedbackInput  />, { preloadedState: initialState });
+        const { getByPlaceholderText } = renderWithProviders(<FreeFeedbackInput/>, { preloadedState: initialState });
 
         const freeInputTextarea = getByPlaceholderText(STRING_RESOURCES.freefeedbackinput.textarea.placeholder);
 
@@ -66,7 +68,10 @@ describe('FreeFeedbackInput Integration Test Suite', () => {
     });
 
     test('FreeFeedbackInput onClick to insert text should call insertAndHighlightText when button is clicked and categoryId and description are provided', async () => {
-        const { getByTitle, getByPlaceholderText } = renderWithProviders(createComponentWithProps(freeFeedbackInputProps), { preloadedState: initialState });
+        const {
+            getByTitle,
+            getByPlaceholderText
+        } = renderWithProviders(createComponentWithProps(freeFeedbackInputProps), { preloadedState: initialState });
 
         fireEvent.change(getByPlaceholderText(STRING_RESOURCES.freefeedbackinput.textarea.placeholder), { target: { value: "Test feedback" } });
 

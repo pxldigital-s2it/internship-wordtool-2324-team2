@@ -4,10 +4,10 @@ import ContextMenuTrigger from "../ContextMenuTrigger";
 
 describe("ContextMenuTrigger Test Suite", () => {
 
-  test("Renders correctly with children", () => {
-    const { container } = render(<ContextMenuTrigger><h1>Test</h1></ContextMenuTrigger>);
+    test("Renders correctly with children", () => {
+        const { container } = render(<ContextMenuTrigger><h1>Test</h1></ContextMenuTrigger>);
 
-    expect(container).toMatchSnapshot();
-  });
+        expect(container).toMatchSnapshot();
+    });
 
 });

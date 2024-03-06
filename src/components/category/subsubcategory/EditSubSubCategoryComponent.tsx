@@ -9,59 +9,59 @@ import { useAppDispatch } from "../../../redux/hooks";
 import SubSubCategory from "../../../types/SubSubCategory";
 
 const EditSubSubCategoryComponent: React.FC<
-  {
-    setIsEditing: Dispatch<SetStateAction<boolean>>,
-    subSubCategory: SubSubCategory
-  }> = ({  setIsEditing, subSubCategory }) => {
-  const [description, setDescription] = useState(subSubCategory.description);
-  const [url, setUrl] = useState(subSubCategory.url);
+    {
+        setIsEditing: Dispatch<SetStateAction<boolean>>,
+        subSubCategory: SubSubCategory
+    }> = ({ setIsEditing, subSubCategory }) => {
+    const [description, setDescription] = useState(subSubCategory.description);
+    const [url, setUrl] = useState(subSubCategory.url);
 
-  const textareaRef = useRef(null);
+    const textareaRef = useRef(null);
 
-  const dispatch = useAppDispatch();
+    const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    if (textareaRef.current) {
-      textareaRef.current.focus();
-      const length = textareaRef.current.value.length;
-      textareaRef.current.setSelectionRange(length, length);
-    }
-  }, []);
+    useEffect(() => {
+        if (textareaRef.current) {
+            textareaRef.current.focus();
+            const length = textareaRef.current.value.length;
+            textareaRef.current.setSelectionRange(length, length);
+        }
+    }, []);
 
 
-  const handleEditSave = () => {
-    if (description.trim() !== "") {
-      dispatch(updateSubSubCategory(subSubCategory.id, { description: description.trim(), url: url.trim() }));
-    }
+    const handleEditSave = () => {
+        if (description.trim() !== "") {
+            dispatch(updateSubSubCategory(subSubCategory.id, { description: description.trim(), url: url.trim() }));
+        }
 
-    resetEdit();
-  };
+        resetEdit();
+    };
 
-  const resetEdit = () => {
-    setIsEditing(false);
-  };
+    const resetEdit = () => {
+        setIsEditing(false);
+    };
 
-  return <>
-    <IconWithText icon={"Comment"} text={"Beschrijving"} />
-    <EditableTextArea
-      ref={textareaRef}
-      placeholder={"Beschrijving"}
-      value={description}
-      onChange={setDescription}
-      onEnter={handleEditSave}
-      onEscape={resetEdit} />
+    return <>
+        <IconWithText icon={"Comment"} text={"Beschrijving"}/>
+        <EditableTextArea
+            ref={textareaRef}
+            placeholder={"Beschrijving"}
+            value={description}
+            onChange={setDescription}
+            onEnter={handleEditSave}
+            onEscape={resetEdit}/>
 
-    <IconWithText icon={"Link"} text={"Hyperlink"} />
-    <EditableTextArea
-      placeholder={"https://www.voorbeeld.com"}
-      value={url}
-      onChange={setUrl}
-      onEnter={handleEditSave}
-      onEscape={resetEdit}
-    />
-    <PrimaryButton onClick={handleEditSave}>Opslaan</PrimaryButton>
-    <Button onClick={resetEdit}>Annuleren</Button>
-  </>
+        <IconWithText icon={"Link"} text={"Hyperlink"}/>
+        <EditableTextArea
+            placeholder={"https://www.voorbeeld.com"}
+            value={url}
+            onChange={setUrl}
+            onEnter={handleEditSave}
+            onEscape={resetEdit}
+        />
+        <PrimaryButton onClick={handleEditSave}>Opslaan</PrimaryButton>
+        <Button onClick={resetEdit}>Annuleren</Button>
+    </>
 }
 
 export default EditSubSubCategoryComponent;
