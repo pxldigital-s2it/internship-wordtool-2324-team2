@@ -21,12 +21,12 @@ describe("EditSubSubCategoryComponent Test Suite", () => {
         subSubCategory: {
             description: "description",
             id: "1",
-            subCategoryId: "subcat-1"
+            subCategoryId: "subcat-1",
+            url: undefined
         }
     }
 
     const createComponent = (props = DEFAULT_PROPS) => (<EditSubSubCategoryComponent {...props} />);
-    const createComponentWithoutUrl = (props = PROPS_NO_URL) => (<EditSubSubCategoryComponent {...props} />);
 
     test("Initial render", () => {
         const {
@@ -114,7 +114,7 @@ describe("EditSubSubCategoryComponent Test Suite", () => {
         const {
             getByText,
             getByPlaceholderText
-        } = renderWithProviders(createComponentWithoutUrl(), { preloadedState: initialState });
+        } = renderWithProviders(createComponent(PROPS_NO_URL), { preloadedState: initialState });
 
         const newDescription = "new description";
         fireEvent.change(getByPlaceholderText("Beschrijving"), { target: { value: newDescription } });
