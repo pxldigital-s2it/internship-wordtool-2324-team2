@@ -1,8 +1,8 @@
 const strings = {
     settings: {
         buttons: {
-            cancelText: "Cancel",
-            settingsText: "Settings"
+            cancelText: "Sluiten",
+            settingsText: "Instellingen"
         },
         labels: {
             alwaysInsertFullText: "Altijd de volledige omschrijving invoegen",
