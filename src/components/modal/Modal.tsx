@@ -10,7 +10,7 @@ const Modal = () => {
 
     return (
         <Dialog modalType="non-modal" open={open}>
-            <DialogSurface aria-describedby={undefined}>
+            <DialogSurface aria-describedby={undefined} backdrop={''}>
                 <CategoryForm/>
             </DialogSurface>
         </Dialog>
