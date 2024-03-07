@@ -31,7 +31,7 @@ const EditSubSubCategoryComponent: React.FC<
 
     const handleEditSave = () => {
         if (description.trim() !== "") {
-            dispatch(updateSubSubCategory(subSubCategory.id, { description: description.trim(), url: url.trim() }));
+            dispatch(updateSubSubCategory(subSubCategory.id, { description: description.trim(), url: url?.trim() }));
         }
 
         resetEdit();
