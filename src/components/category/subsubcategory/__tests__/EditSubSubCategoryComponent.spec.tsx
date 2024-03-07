@@ -16,6 +16,16 @@ describe("EditSubSubCategoryComponent Test Suite", () => {
         }
     }
 
+    const PROPS_NO_URL = {
+        setIsEditing,
+        subSubCategory: {
+            description: "description",
+            id: "1",
+            subCategoryId: "subcat-1",
+            url: undefined
+        }
+    }
+
     const createComponent = (props = DEFAULT_PROPS) => (<EditSubSubCategoryComponent {...props} />);
 
     test("Initial render", () => {
@@ -87,6 +97,33 @@ describe("EditSubSubCategoryComponent Test Suite", () => {
         expect(spyInstance).toHaveBeenCalledWith("1", {
             description: newDescription,
             url: newUrl
+        });
+        expect(setIsEditing).toHaveBeenCalledWith(false);
+    });
+
+    test("Clicking on the save button without url calls dispatch - changes done", () => {
+        const type = "UPDATE_SUB_SUB_CATEGORY";
+
+        const dispatchMock = jest.fn();
+        jest.spyOn(require("../../../../redux/hooks"), "useAppDispatch").mockImplementation(() => dispatchMock);
+        const spyInstance = jest.spyOn(require("../../../../middleware/modal/ModalMiddleware"), "updateSubSubCategory").mockImplementation((args) => ({
+            payload: args,
+            type
+        }));
+
+        const {
+            getByText,
+            getByPlaceholderText
+        } = renderWithProviders(createComponent(PROPS_NO_URL), { preloadedState: initialState });
+
+        const newDescription = "new description";
+        fireEvent.change(getByPlaceholderText("Beschrijving"), { target: { value: newDescription } });
+
+        getByText("Opslaan").click();
+
+        expect(dispatchMock.mock.calls[0][0].type).toBe(type);
+        expect(spyInstance).toHaveBeenCalledWith("1", {
+            description: newDescription
         });
         expect(setIsEditing).toHaveBeenCalledWith(false);
     });
