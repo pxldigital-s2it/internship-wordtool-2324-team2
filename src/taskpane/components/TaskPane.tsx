@@ -87,7 +87,6 @@ const TaskPane: React.FC = () => {
 
     return (
         <div className={taskPaneClassNames.taskPane}>
-            <div className={taskPaneClassNames.titleBar}>MayDay</div>
             <div className={taskPaneClassNames.fixedInputBox}>
                 <FreeFeedbackInput/>
             </div>
