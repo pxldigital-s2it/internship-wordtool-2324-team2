@@ -54,8 +54,8 @@ export const SettingsPanel: React.FunctionComponent = () => {
             <Panel
                 isOpen={isOpen}
                 onDismiss={dismissPanel}
-                headerText="Settings"
-                closeButtonAriaLabel="Close"
+                headerText={STRING_RESOURCES.settings.buttons.settingsText}
+                hasCloseButton={false}
                 onRenderFooterContent={onRenderFooterContent}
                 // Stretch panel content to fill the available height so the footer is positioned
                 // at the bottom of the page
