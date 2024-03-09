@@ -2,9 +2,10 @@ import { loadDataFailure, loadDataStart, loadDataSuccess } from "../../redux/cat
 import { AppDispatch } from "../../redux/store";
 import Category from "../../types/Category";
 import SubCategory from "../../types/SubCategory";
-import { deleteById, getAll, update } from "../../utils/StorageUtils";
+import { clearLocalStorage, deleteById, getAll, loadInitialStorage, update } from "../../utils/StorageUtils";
 import { StorageKeys } from "../../utils/StorageUtils.types";
 import SubSubCategory from "../../types/SubSubCategory";
+import { readImport } from "../../utils/TextInsertUtils";
 
 export const loadData = () => {
     return async (dispatch: AppDispatch) => {
@@ -110,3 +111,19 @@ export const getCategoryDataById = (categoryId: string) => {
         }
     };
 };
+
+export const importFromWord = () => {
+    return async (dispatch: AppDispatch) => {
+        const data = await readImport();
+        clearLocalStorage();
+        loadInitialStorage(data);
+        await dispatch(loadData());
+    }
+}
+
+export const _clearLocalStorage = () => {
+    return async (dispatch: AppDispatch) => {
+        clearLocalStorage();
+        await dispatch(loadData());
+    }
+}

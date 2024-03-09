@@ -79,6 +79,17 @@ export const save = (key: string, value: any) => {
     }
 };
 
+export const prepareExport = () =>
+  JSON.stringify({
+      categories: getAll(StorageKeys.CATEGORY),
+      subCategories: getAll(StorageKeys.SUBCATEGORY),
+      subSubCategories: getAll(StorageKeys.SUBSUBCATEGORY)
+  })
+
+export const clearLocalStorage = () => {
+    localStorage.clear();
+}
+
 export const getAll = (key: string) => {
     const items = localStorage.getItem(key);
 
