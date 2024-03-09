@@ -1,5 +1,5 @@
 import Category from "../../types/Category";
-import { deleteById, getAll, getById, loadInitialStorage, save, update, write } from "../StorageUtils";
+import { clearLocalStorage, deleteById, getAll, getById, loadInitialStorage, prepareExport, save, update, write } from "../StorageUtils";
 import { StorageKeys } from "../StorageUtils.types";
 
 describe("Storage Test Suite", () => {
@@ -8,6 +8,8 @@ describe("Storage Test Suite", () => {
         Storage.prototype.setItem = jest.fn();
         jest.spyOn(Storage.prototype, "getItem");
         Storage.prototype.getItem = jest.fn();
+        jest.spyOn(Storage.prototype, "clear");
+        Storage.prototype.clear = jest.fn();
 
         Storage.prototype.getItem = jest.fn().mockReturnValue(JSON.stringify(initialCategories));
     });
@@ -439,6 +441,26 @@ describe("Storage Test Suite", () => {
                     shortCode: "4"
                 }
             ]));
+        });
+
+    });
+
+    describe("export", () => {
+
+        test("prepareExport", () => {
+            const data = {
+                categories: initialCategories,
+                subCategories: initialCategories,
+                subSubCategories: initialCategories
+            };
+
+            expect(prepareExport()).toEqual(JSON.stringify(data));
+        });
+
+        test("should clear localStorage", () => {
+            clearLocalStorage();
+
+            expect(localStorage.clear).toHaveBeenCalled();
         });
 
     });
