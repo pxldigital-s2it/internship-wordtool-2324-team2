@@ -27,7 +27,8 @@ const getOfficeMock = (originalStyle: string, mockReturnValue: string[], isEmpty
                         load: function () {
                             return this;
                         }
-                    }))
+                    })),
+                    text: "{\"categories\":[],\"subCategories\":[],\"subSubCategories\":[]}"
                 },
                 getSelection: function () {
                     return this.range;
