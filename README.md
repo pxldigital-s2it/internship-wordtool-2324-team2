@@ -75,7 +75,7 @@ Klik op "Add" om de add-in toe te voegen. De add-in wordt bovenaan in de ribbon 
 
 ### 1.2 Technische installatie
 
-Dit deel is bedoeld voor iedereen die de solution wilt testen en opstarten.
+Dit deel is bedoeld voor iedereen die de solution wil testen en opstarten.
 
 Om de solution te builden voert u volgend commando uit:
 
@@ -314,3 +314,14 @@ Vinkt u "Favorieten apart bovenaan tonen" aan, dan zullen de favorieten ook in e
 
 Als het nodig is om toch nog eens de volledige commentaar in te voegen, kan u "Altijd de volledige omschrijving invoegen" aanvinken.
 Dit zorgt ervoor dat steeds de volledige omschrijving wordt ingevoegd en niet enkel de code.
+
+Er zijn ook enkele import en export functionaliteiten toegevoegd.
+
+![exportimportfunctions.png](assets/images/exportimportfunctions.png)
+
+Als u exporteert naar Word, zal er een json tekst gegenereerd worden met alle informatie voor de add-in.
+Deze kan dan gekopieerd worden naar Word op een andere laptop met de add-in geïnstalleerd.
+Importeer deze informatie door op de knop te klikken en de categorieën en andere informatie worden geïmorteerd.
+
+Moest u terug willen keren naar enkel de begincategorieën, kies dan "Opslag leegmaken".
+Start de add-in terug op en enkel de begincategorieën zullen opnieuw ingeladen worden.
