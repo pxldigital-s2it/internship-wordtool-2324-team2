@@ -21,40 +21,6 @@ Klik op "Share" (Deel) en onthoud de netwerklocatie in het volgende scherm.
 
 Kopieer het bestand "manifest.xml" dat u ter beschikking wordt gesteld naar de gedeelde folder.
 
-Open een tekstbewerker zoals Word of Notepad en voeg de volgende inhoud toe:
-
-`Windows Registry Editor Version 5.00`
-
-`[HKEY_CURRENT_USER\Software\Microsoft\Office\16.0\WEF\TrustedCatalogs\{-random-GUID-here-}]`
-
-`"Id"="{-random-GUID-here-}"`
-
-`"Url"="\\\\-share-\\-folder-"`
-
-`"Flags"=dword:00000001`
-
-Ga naar [de Guid generator](https://guidgenerator.com/) en genereer een Guid (Klik op "Generate some GUIDs!" zonder instellingen aan te passen).
-Vul deze in bij "-random-GUID-here-".
-Vervang vervolgens "\\\\\\\\-share-\\\\-folder-" door de netwerklocatie van de gedeelde folder.
-Elke "\\" moet u dubbel weergeven.
-
-Ingevuld zou het bestand er ongeveer zo moeten uitzien:
-
-`Windows Registry Editor Version 5.00`
-
-`[HKEY_CURRENT_USER\Software\Microsoft\Office\16.0\WEF\TrustedCatalogs\{16778291-cd6b-4e3e-90ad-fce730ac6a7e}]`
-
-`"Id"="{16778291-cd6b-4e3e-90ad-fce730ac6a7e}"`
-
-`"Url"="\\\\LAPTOP-CH0CBFQD\\MayDay"`
-
-`"Flags"=dword:00000001`
-
-Sla het bestand op onder de volgende naam: TrustNetworkShareCatalog.reg
-
-Dubbelklik vervolgens op het bestand zoals u een applicatie opent.
-De nodige items worden toegevoegd aan de registry.
-
 Open hierna een nieuw document in Word en kies "File" (Bestand) en vervolgens "Options" (Opties).
 Ga naar het "Trust Center" (Vertrouwenscentrum) en kies "Trust Center Settings" (Instellingen voor het Vertrouwenscentrum) en vervolgens "Trusted Add-in Catalogs" (Vertrouwde invoegtoepassingen).
 Onder de "Catalog Url" vult u de netwerklocatie van de gedeelde folder in en voeg deze toe.
@@ -72,6 +38,10 @@ In het scherm dat opent gaat u naar "Shared Folder" en kies vervolgens de folder
 Klik op "Add" (Toevoegen) om de add-in toe te voegen. De add-in wordt bovenaan in de ribbon getoond.
 
 ![addininribon.png](assets/images/addininribon.png)
+
+U kan deze link volgen voor een uitgebreidere handleiding:
+
+[installatievideo](https://youtu.be/XXsAw2UUiQo)
 
 ### 1.2 Technische installatie
 
