@@ -7,15 +7,15 @@ Deze add-in is ontwikkeld als ondersteuning bij het verbeteren van eindwerken.
 
 ### 1.1 Klanten
 
-Maak op een zelf gekozen locatie een nieuwe folder aan. Noem de folder bv. MayDay.
-Klik met de rechtermuisknop op de folder en kies "Properties".
-Kies vervolgens "Sharing" en "Share..." om de folder te delen.
+Maak op een zelfgekozen locatie een nieuwe folder aan. Noem de folder bv. MayDay.
+Klik met de rechtermuisknop op de folder en kies "Properties" (Eigenschappen).
+Kies vervolgens "Sharing" (Delen) en "Share..." (Deel...) om de folder te delen.
 
 ![folderproperties.png](assets/images/folderproperties.png)
 
 Voeg uzelf en iedereen die toegang moet hebben tot de add-in toe.
 U heeft minstens Read/Write toegang nodig.
-Klik op "Share" en onthoud de netwerklocatie in het volgende scherm.
+Klik op "Share" (Deel) en onthoud de netwerklocatie in het volgende scherm.
 
 ![sharelocation.png](assets/images/sharelocation.png)
 
@@ -33,10 +33,10 @@ Open een tekstbewerker zoals Word of Notepad en voeg de volgende inhoud toe:
 
 `"Flags"=dword:00000001`
 
-Ga naar [de Guid generator](https://guidgenerator.com/) en genereer een Guid.
+Ga naar [de Guid generator](https://guidgenerator.com/) en genereer een Guid (Klik op "Generate some GUIDs!" zonder instellingen aan te passen).
 Vul deze in bij "-random-GUID-here-".
-Vervang vervolgens "\\\\-share-\\-folder-" door de netwerklocatie van de gedeelde folder.
-Elke "\" moet u dubbel weergeven.
+Vervang vervolgens "\\\\\\\\-share-\\\\-folder-" door de netwerklocatie van de gedeelde folder.
+Elke "\\" moet u dubbel weergeven.
 
 Ingevuld zou het bestand er ongeveer zo moeten uitzien:
 
@@ -55,8 +55,8 @@ Sla het bestand op onder de volgende naam: TrustNetworkShareCatalog.reg
 Dubbelklik vervolgens op het bestand zoals u een applicatie opent.
 De nodige items worden toegevoegd aan de registry.
 
-Open hierna een nieuw document in Word en kies "File" en vervolgens "Options".
-Ga naar het "Trust Center" en kies "Trust Center Settings" en vervolgens "Trusted Add-in Catalogs".
+Open hierna een nieuw document in Word en kies "File" (Bestand) en vervolgens "Options" (Opties).
+Ga naar het "Trust Center" (Vertrouwenscentrum) en kies "Trust Center Settings" (Instellingen voor het Vertrouwenscentrum) en vervolgens "Trusted Add-in Catalogs" (Vertrouwde invoegtoepassingen).
 Onder de "Catalog Url" vult u de netwerklocatie van de gedeelde folder in en voeg deze toe.
 Zorg dat het vinkje onder "Show in Menu" aangevinkt is.
 
@@ -64,12 +64,12 @@ Zorg dat het vinkje onder "Show in Menu" aangevinkt is.
 
 Klik op "Ok" en start Word opnieuw op.
 
-Klik vervolgens op "Home" en dan "Add-ins". Kies hierna "More Add-ins".
+Klik vervolgens op "Home" (Start) en dan "Add-ins". Kies hierna "More Add-ins" (Meer Add-ins).
 In het scherm dat opent gaat u naar "Shared Folder" en kies vervolgens de folder die u gedeeld heeft.
 
 ![addaddin.png](assets/images/addaddin.png)
 
-Klik op "Add" om de add-in toe te voegen. De add-in wordt bovenaan in de ribbon getoond.
+Klik op "Add" (Toevoegen) om de add-in toe te voegen. De add-in wordt bovenaan in de ribbon getoond.
 
 ![addininribon.png](assets/images/addininribon.png)
 
